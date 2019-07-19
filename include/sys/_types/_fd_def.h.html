@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>_fd_def.h source code [include/sys/_types/_fd_def.h] - Woboq Code Browser</title>
+<meta name="woboq:interestingDefinitions" content="fd_set "/>
+<link rel="stylesheet" href="https://code.woboq.org/data/qtcreator.css" title="QtCreator"/>
+<link rel="alternate stylesheet" href="https://code.woboq.org/data/kdevelop.css" title="KDevelop"/>
+<script type="text/javascript" src="https://code.woboq.org/data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="https://code.woboq.org/data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/sys/_types/_fd_def.h'; var root_path = '../../..'; var data_path = 'https://code.woboq.org/data';</script>
+<script src='https://code.woboq.org/data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Browse the source code of </span><a href='../..'>include</a>/<a href='..'>sys</a>/<a href='./'>_types</a>/<a href='_fd_def.h.html'>_fd_def.h</a></h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (c) 2003-2012 Apple Inc. All rights reserved.</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * @APPLE_OSREFERENCE_LICENSE_HEADER_START@</i></td></tr>
+<tr><th id="5">5</th><td><i> *</i></td></tr>
+<tr><th id="6">6</th><td><i> * This file contains Original Code and/or Modifications of Original Code</i></td></tr>
+<tr><th id="7">7</th><td><i> * as defined in and that are subject to the Apple Public Source License</i></td></tr>
+<tr><th id="8">8</th><td><i> * Version 2.0 (the 'License'). You may not use this file except in</i></td></tr>
+<tr><th id="9">9</th><td><i> * compliance with the License. The rights granted to you under the License</i></td></tr>
+<tr><th id="10">10</th><td><i> * may not be used to create, or enable the creation or redistribution of,</i></td></tr>
+<tr><th id="11">11</th><td><i> * unlawful or unlicensed copies of an Apple operating system, or to</i></td></tr>
+<tr><th id="12">12</th><td><i> * circumvent, violate, or enable the circumvention or violation of, any</i></td></tr>
+<tr><th id="13">13</th><td><i> * terms of an Apple operating system software license agreement.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * Please obtain a copy of the License at</i></td></tr>
+<tr><th id="16">16</th><td><i> * <a href="http://www.opensource.apple.com/apsl/">http://www.opensource.apple.com/apsl/</a> and read it before using this file.</i></td></tr>
+<tr><th id="17">17</th><td><i> *</i></td></tr>
+<tr><th id="18">18</th><td><i> * The Original Code and all software distributed under the License are</i></td></tr>
+<tr><th id="19">19</th><td><i> * distributed on an 'AS IS' basis, WITHOUT WARRANTY OF ANY KIND, EITHER</i></td></tr>
+<tr><th id="20">20</th><td><i> * EXPRESS OR IMPLIED, AND APPLE HEREBY DISCLAIMS ALL SUCH WARRANTIES,</i></td></tr>
+<tr><th id="21">21</th><td><i> * INCLUDING WITHOUT LIMITATION, ANY WARRANTIES OF MERCHANTABILITY,</i></td></tr>
+<tr><th id="22">22</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE, QUIET ENJOYMENT OR NON-INFRINGEMENT.</i></td></tr>
+<tr><th id="23">23</th><td><i> * Please see the License for the specific language governing rights and</i></td></tr>
+<tr><th id="24">24</th><td><i> * limitations under the License.</i></td></tr>
+<tr><th id="25">25</th><td><i> *</i></td></tr>
+<tr><th id="26">26</th><td><i> * @APPLE_OSREFERENCE_LICENSE_HEADER_END@</i></td></tr>
+<tr><th id="27">27</th><td><i> */</i></td></tr>
+<tr><th id="28">28</th><td><u>#<span data-ppcond="28">ifndef</span> <span class="macro" data-ref="_M/_FD_SET">_FD_SET</span></u></td></tr>
+<tr><th id="29">29</th><td><u>#define <dfn class="macro" id="_M/_FD_SET" data-ref="_M/_FD_SET">_FD_SET</dfn></u></td></tr>
+<tr><th id="30">30</th><td></td></tr>
+<tr><th id="31">31</th><td><u>#include <a href="../../machine/types.h.html">&lt;machine/types.h&gt;</a> /* __int32_t */</u></td></tr>
+<tr><th id="32">32</th><td></td></tr>
+<tr><th id="33">33</th><td><i>/*</i></td></tr>
+<tr><th id="34">34</th><td><i> * Select uses bit masks of file descriptors in longs.  These macros</i></td></tr>
+<tr><th id="35">35</th><td><i> * manipulate such bit fields (the filesystem macros use chars).  The</i></td></tr>
+<tr><th id="36">36</th><td><i> * extra protection here is to permit application redefinition above</i></td></tr>
+<tr><th id="37">37</th><td><i> * the default size.</i></td></tr>
+<tr><th id="38">38</th><td><i> */</i></td></tr>
+<tr><th id="39">39</th><td><u>#<span data-ppcond="39">ifdef</span> <span class="macro" data-ref="_M/FD_SETSIZE">FD_SETSIZE</span></u></td></tr>
+<tr><th id="40">40</th><td><u>#define __DARWIN_FD_SETSIZE     FD_SETSIZE</u></td></tr>
+<tr><th id="41">41</th><td><u>#<span data-ppcond="39">else</span> /* !FD_SETSIZE */</u></td></tr>
+<tr><th id="42">42</th><td><u>#define <dfn class="macro" id="_M/__DARWIN_FD_SETSIZE" data-ref="_M/__DARWIN_FD_SETSIZE">__DARWIN_FD_SETSIZE</dfn>     1024</u></td></tr>
+<tr><th id="43">43</th><td><u>#<span data-ppcond="39">endif</span> /* FD_SETSIZE */</u></td></tr>
+<tr><th id="44">44</th><td><u>#define <dfn class="macro" id="_M/__DARWIN_NBBY" data-ref="_M/__DARWIN_NBBY">__DARWIN_NBBY</dfn>           8                               /* bits in a byte */</u></td></tr>
+<tr><th id="45">45</th><td><u>#define <dfn class="macro" id="_M/__DARWIN_NFDBITS" data-ref="_M/__DARWIN_NFDBITS">__DARWIN_NFDBITS</dfn>        (sizeof(<a class="typedef" href="../../i386/_types.h.html#__int32_t" title='__int32_t' data-type='int' data-ref="__int32_t">__int32_t</a>) * __DARWIN_NBBY) /* bits per mask */</u></td></tr>
+<tr><th id="46">46</th><td><u>#define <dfn class="macro" id="_M/__DARWIN_howmany" data-ref="_M/__DARWIN_howmany">__DARWIN_howmany</dfn>(x, y)  ((((x) % (y)) == 0) ? ((x) / (y)) : (((x) / (y)) + 1)) /* # y's == x bits? */</u></td></tr>
+<tr><th id="47">47</th><td></td></tr>
+<tr><th id="48">48</th><td><a class="macro" href="../cdefs.h.html#74" title="" data-ref="_M/__BEGIN_DECLS">__BEGIN_DECLS</a></td></tr>
+<tr><th id="49">49</th><td><b>typedef</b> <b>struct</b> <dfn class="type def" id="fd_set" title='fd_set' data-ref="fd_set"><a class="type" href="#fd_set" title='fd_set' data-ref="fd_set">fd_set</a></dfn> {</td></tr>
+<tr><th id="50">50</th><td>	<a class="typedef" href="../../i386/_types.h.html#__int32_t" title='__int32_t' data-type='int' data-ref="__int32_t">__int32_t</a>       <dfn class="decl" id="fd_set::fds_bits" title='fd_set::fds_bits' data-ref="fd_set::fds_bits">fds_bits</dfn>[<a class="macro" href="#46" title="((((1024) % ((sizeof(__int32_t) * 8))) == 0) ? ((1024) / ((sizeof(__int32_t) * 8))) : (((1024) / ((sizeof(__int32_t) * 8))) + 1))" data-ref="_M/__DARWIN_howmany">__DARWIN_howmany</a>(<a class="macro" href="#42" title="1024" data-ref="_M/__DARWIN_FD_SETSIZE">__DARWIN_FD_SETSIZE</a>, <a class="macro" href="#45" title="(sizeof(__int32_t) * 8)" data-ref="_M/__DARWIN_NFDBITS">__DARWIN_NFDBITS</a>)];</td></tr>
+<tr><th id="51">51</th><td>} <dfn class="typedef" id="fd_set" title='fd_set' data-type='struct fd_set' data-ref="fd_set">fd_set</dfn>;</td></tr>
+<tr><th id="52">52</th><td><a class="macro" href="../cdefs.h.html#75" title="" data-ref="_M/__END_DECLS">__END_DECLS</a></td></tr>
+<tr><th id="53">53</th><td></td></tr>
+<tr><th id="54">54</th><td><i>/* This inline avoids argument side-effect issues with FD_ISSET() */</i></td></tr>
+<tr><th id="55">55</th><td><em>static</em> <b>__inline</b> <em>int</em></td></tr>
+<tr><th id="56">56</th><td><dfn class="decl def" id="__darwin_fd_isset" title='__darwin_fd_isset' data-ref="__darwin_fd_isset">__darwin_fd_isset</dfn>(<em>int</em> <dfn class="local col8 decl" id="68_n" title='_n' data-type='int' data-ref="68_n">_n</dfn>, <em>const</em> <b>struct</b> <a class="type" href="#fd_set" title='fd_set' data-ref="fd_set">fd_set</a> *<dfn class="local col9 decl" id="69_p" title='_p' data-type='const struct fd_set *' data-ref="69_p">_p</dfn>)</td></tr>
+<tr><th id="57">57</th><td>{</td></tr>
+<tr><th id="58">58</th><td>	<b>return</b> <a class="local col9 ref" href="#69_p" title='_p' data-ref="69_p">_p</a>-&gt;<a class="ref" href="#fd_set::fds_bits" title='fd_set::fds_bits' data-ref="fd_set::fds_bits">fds_bits</a>[(<em>unsigned</em> <em>long</em>)<a class="local col8 ref" href="#68_n" title='_n' data-ref="68_n">_n</a> / <a class="macro" href="#45" title="(sizeof(__int32_t) * 8)" data-ref="_M/__DARWIN_NFDBITS">__DARWIN_NFDBITS</a>] &amp; ((<a class="typedef" href="../../i386/_types.h.html#__int32_t" title='__int32_t' data-type='int' data-ref="__int32_t">__int32_t</a>)(((<em>unsigned</em> <em>long</em>)<var>1</var>) &lt;&lt; ((<em>unsigned</em> <em>long</em>)<a class="local col8 ref" href="#68_n" title='_n' data-ref="68_n">_n</a> % <a class="macro" href="#45" title="(sizeof(__int32_t) * 8)" data-ref="_M/__DARWIN_NFDBITS">__DARWIN_NFDBITS</a>)));</td></tr>
+<tr><th id="59">59</th><td>}</td></tr>
+<tr><th id="60">60</th><td></td></tr>
+<tr><th id="61">61</th><td><u>#define <dfn class="macro" id="_M/__DARWIN_FD_SET" data-ref="_M/__DARWIN_FD_SET">__DARWIN_FD_SET</dfn>(n, p)   do { int __fd = (n); ((p)-&gt;fds_bits[(unsigned long)__fd/__DARWIN_NFDBITS] |= ((__int32_t)(((unsigned long)1)&lt;&lt;((unsigned long)__fd % __DARWIN_NFDBITS)))); } while(0)</u></td></tr>
+<tr><th id="62">62</th><td><u>#define <dfn class="macro" id="_M/__DARWIN_FD_CLR" data-ref="_M/__DARWIN_FD_CLR">__DARWIN_FD_CLR</dfn>(n, p)   do { int __fd = (n); ((p)-&gt;fds_bits[(unsigned long)__fd/__DARWIN_NFDBITS] &amp;= ~((__int32_t)(((unsigned long)1)&lt;&lt;((unsigned long)__fd % __DARWIN_NFDBITS)))); } while(0)</u></td></tr>
+<tr><th id="63">63</th><td><u>#define <dfn class="macro" id="_M/__DARWIN_FD_ISSET" data-ref="_M/__DARWIN_FD_ISSET">__DARWIN_FD_ISSET</dfn>(n, p) __darwin_fd_isset((n), (p))</u></td></tr>
+<tr><th id="64">64</th><td></td></tr>
+<tr><th id="65">65</th><td><u>#<span data-ppcond="65">if</span> <span class="macro" title="4" data-ref="_M/__GNUC__">__GNUC__</span> &gt; 3 || <span class="macro" title="4" data-ref="_M/__GNUC__">__GNUC__</span> == 3 &amp;&amp; <span class="macro" title="2" data-ref="_M/__GNUC_MINOR__">__GNUC_MINOR__</span> &gt;= 3</u></td></tr>
+<tr><th id="66">66</th><td><i>/*</i></td></tr>
+<tr><th id="67">67</th><td><i> * Use the built-in bzero function instead of the library version so that</i></td></tr>
+<tr><th id="68">68</th><td><i> * we do not pollute the namespace or introduce prototype warnings.</i></td></tr>
+<tr><th id="69">69</th><td><i> */</i></td></tr>
+<tr><th id="70">70</th><td><u>#define <dfn class="macro" id="_M/__DARWIN_FD_ZERO" data-ref="_M/__DARWIN_FD_ZERO">__DARWIN_FD_ZERO</dfn>(p)     __builtin_bzero(p, sizeof(*(p)))</u></td></tr>
+<tr><th id="71">71</th><td><u>#<span data-ppcond="65">else</span></u></td></tr>
+<tr><th id="72">72</th><td><u>#define __DARWIN_FD_ZERO(p)     bzero(p, sizeof(*(p)))</u></td></tr>
+<tr><th id="73">73</th><td><u>#<span data-ppcond="65">endif</span></u></td></tr>
+<tr><th id="74">74</th><td></td></tr>
+<tr><th id="75">75</th><td><u>#define <dfn class="macro" id="_M/__DARWIN_FD_COPY" data-ref="_M/__DARWIN_FD_COPY">__DARWIN_FD_COPY</dfn>(f, t)  bcopy(f, t, sizeof(*(f)))</u></td></tr>
+<tr><th id="76">76</th><td><u>#<span data-ppcond="28">endif</span> /* _FD_SET */</u></td></tr>
+<tr><th id="77">77</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../xv6/mkfs.c.html'>xv6/mkfs.c</a><br/>Generated on <em>2019-Jul-19</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 2.1
+<br/>Generator usage only permitted with license.</p>
+</div></body></html>

@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>entry.S source code [xv6/entry.S] - Woboq Code Browser</title>
+<link rel="stylesheet" href="https://code.woboq.org/data/qtcreator.css" title="QtCreator"/>
+<link rel="alternate stylesheet" href="https://code.woboq.org/data/kdevelop.css" title="KDevelop"/>
+<script type="text/javascript" src="https://code.woboq.org/data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="https://code.woboq.org/data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'xv6/entry.S'; var root_path = '..'; var data_path = 'https://code.woboq.org/data';</script>
+<script src='https://code.woboq.org/data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Browse the source code of </span><a href='./'>xv6</a>/<a href='entry.S.html'>entry.S</a></h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><u><span class='error' title="expected identifier or &apos;(&apos;">#</span> The xv6 kernel starts executing in this file. This file is linked with</u></td></tr>
+<tr><th id="2">2</th><td><u># the kernel C code, so it can refer to kernel symbols such as main().</u></td></tr>
+<tr><th id="3">3</th><td><u># The boot block (bootasm.S and bootmain.c) jumps to entry below.</u></td></tr>
+<tr><th id="4">4</th><td>        </td></tr>
+<tr><th id="5">5</th><td><u># Multiboot header, for multiboot boot loaders like GNU Grub.</u></td></tr>
+<tr><th id="6">6</th><td><u># http://www.gnu.org/software/grub/manual/multiboot/multiboot.html</u></td></tr>
+<tr><th id="7">7</th><td><u>#</u></td></tr>
+<tr><th id="8">8</th><td><u># Using GRUB 2, you can boot xv6 from a file stored in a</u></td></tr>
+<tr><th id="9">9</th><td><u># Linux file system by copying kernel or kernelmemfs to /boot</u></td></tr>
+<tr><th id="10">10</th><td><u># and then adding this menu entry:</u></td></tr>
+<tr><th id="11">11</th><td><u>#</u></td></tr>
+<tr><th id="12">12</th><td><u># menuentry "xv6" {</u></td></tr>
+<tr><th id="13">13</th><td><u># 	insmod ext2</u></td></tr>
+<tr><th id="14">14</th><td><u># 	set root='(hd0,msdos1)'</u></td></tr>
+<tr><th id="15">15</th><td><u># 	set kernel='/boot/kernel'</u></td></tr>
+<tr><th id="16">16</th><td><u># 	echo "Loading ${kernel}..."</u></td></tr>
+<tr><th id="17">17</th><td><u># 	multiboot ${kernel} ${kernel}</u></td></tr>
+<tr><th id="18">18</th><td><u># 	boot</u></td></tr>
+<tr><th id="19">19</th><td><u># }</u><span class='error' title="expected identifier or &apos;(&apos;"></span></td></tr>
+<tr><th id="20">20</th><td></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="asm.h.html">"asm.h"</a></u></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="memlayout.h.html">"memlayout.h"</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="mmu.h.html">"mmu.h"</a></u></td></tr>
+<tr><th id="24">24</th><td><u>#include <a href="param.h.html">"param.h"</a></u></td></tr>
+<tr><th id="25">25</th><td></td></tr>
+<tr><th id="26">26</th><td><u># Multiboot header.  Data to direct multiboot loader.</u></td></tr>
+<tr><th id="27">27</th><td>.p2align <var>2</var></td></tr>
+<tr><th id="28">28</th><td>.text</td></tr>
+<tr><th id="29">29</th><td>.globl multiboot_header</td></tr>
+<tr><th id="30">30</th><td>multiboot_header:</td></tr>
+<tr><th id="31">31</th><td>  <u>#define <dfn class="macro" id="_M/magic" data-ref="_M/magic">magic</dfn> 0x1badb002</u></td></tr>
+<tr><th id="32">32</th><td>  <u>#define <dfn class="macro" id="_M/flags" data-ref="_M/flags">flags</dfn> 0</u></td></tr>
+<tr><th id="33">33</th><td>  .<em>long</em> <a class="macro" href="#31" title="0x1badb002" data-ref="_M/magic">magic</a></td></tr>
+<tr><th id="34">34</th><td>  .<em>long</em> <a class="macro" href="#32" title="0" data-ref="_M/flags">flags</a></td></tr>
+<tr><th id="35">35</th><td>  .<em>long</em> (-<a class="macro" href="#31" title="0x1badb002" data-ref="_M/magic">magic</a>-<a class="macro" href="#32" title="0" data-ref="_M/flags">flags</a>)</td></tr>
+<tr><th id="36">36</th><td></td></tr>
+<tr><th id="37">37</th><td><u># By convention, the _start symbol specifies the ELF entry point.</u></td></tr>
+<tr><th id="38">38</th><td><u># Since we haven't set up virtual memory yet, our entry point is</u></td></tr>
+<tr><th id="39">39</th><td><u># the physical address of 'entry'.</u></td></tr>
+<tr><th id="40">40</th><td>.globl _start</td></tr>
+<tr><th id="41">41</th><td>_start = <a class="macro" href="memlayout.h.html#14" title="((entry) - 0x80000000)" data-ref="_M/V2P_WO">V2P_WO</a>(entry)</td></tr>
+<tr><th id="42">42</th><td></td></tr>
+<tr><th id="43">43</th><td><u># Entering xv6 on boot processor, with paging off.</u></td></tr>
+<tr><th id="44">44</th><td>.globl entry</td></tr>
+<tr><th id="45">45</th><td>entry:</td></tr>
+<tr><th id="46">46</th><td>  <u># Turn on page size extension for 4Mbyte pages</u></td></tr>
+<tr><th id="47">47</th><td>  movl    %cr4, %eax</td></tr>
+<tr><th id="48">48</th><td>  orl     $(<a class="macro" href="mmu.h.html#12" title="0x00000010" data-ref="_M/CR4_PSE">CR4_PSE</a>), %eax</td></tr>
+<tr><th id="49">49</th><td>  movl    %eax, %cr4</td></tr>
+<tr><th id="50">50</th><td>  <u># Set page directory</u></td></tr>
+<tr><th id="51">51</th><td>  movl    $(<a class="macro" href="memlayout.h.html#14" title="((entrypgdir) - 0x80000000)" data-ref="_M/V2P_WO">V2P_WO</a>(entrypgdir)), %eax</td></tr>
+<tr><th id="52">52</th><td>  movl    %eax, %cr3</td></tr>
+<tr><th id="53">53</th><td>  <u># Turn on paging.</u></td></tr>
+<tr><th id="54">54</th><td>  movl    %cr0, %eax</td></tr>
+<tr><th id="55">55</th><td>  orl     $(<a class="macro" href="mmu.h.html#10" title="0x80000000" data-ref="_M/CR0_PG">CR0_PG</a>|<a class="macro" href="mmu.h.html#9" title="0x00010000" data-ref="_M/CR0_WP">CR0_WP</a>), %eax</td></tr>
+<tr><th id="56">56</th><td>  movl    %eax, %cr0</td></tr>
+<tr><th id="57">57</th><td></td></tr>
+<tr><th id="58">58</th><td>  <u># Set up the stack pointer.</u></td></tr>
+<tr><th id="59">59</th><td>  movl $(stack + <a class="macro" href="param.h.html#2" title="4096" data-ref="_M/KSTACKSIZE">KSTACKSIZE</a>), %esp</td></tr>
+<tr><th id="60">60</th><td></td></tr>
+<tr><th id="61">61</th><td>  <u># Jump to main(), and switch to executing at</u></td></tr>
+<tr><th id="62">62</th><td>  <u># high addresses. The indirect call is needed because</u></td></tr>
+<tr><th id="63">63</th><td>  <u># the assembler produces a PC-relative instruction</u></td></tr>
+<tr><th id="64">64</th><td>  <u># for a direct jump.</u></td></tr>
+<tr><th id="65">65</th><td>  mov $main, %eax</td></tr>
+<tr><th id="66">66</th><td>  jmp *%eax</td></tr>
+<tr><th id="67">67</th><td></td></tr>
+<tr><th id="68">68</th><td>.comm stack, <a class="macro" href="param.h.html#2" title="4096" data-ref="_M/KSTACKSIZE">KSTACKSIZE</a></td></tr>
+<tr><th id="69">69</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2019-Jul-19</em> from project xv6 revision <em>xv6-rev11</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 2.1
+<br/>Generator usage only permitted with license.</p>
+</div></body></html>

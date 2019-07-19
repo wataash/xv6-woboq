@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>initcode.S source code [xv6/initcode.S] - Woboq Code Browser</title>
+<link rel="stylesheet" href="https://code.woboq.org/data/qtcreator.css" title="QtCreator"/>
+<link rel="alternate stylesheet" href="https://code.woboq.org/data/kdevelop.css" title="KDevelop"/>
+<script type="text/javascript" src="https://code.woboq.org/data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="https://code.woboq.org/data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'xv6/initcode.S'; var root_path = '..'; var data_path = 'https://code.woboq.org/data';</script>
+<script src='https://code.woboq.org/data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Browse the source code of </span><a href='./'>xv6</a>/<a href='initcode.S.html'>initcode.S</a></h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><u><span class='error' title="expected identifier or &apos;(&apos;">#</span> Initial process execs /init.</u></td></tr>
+<tr><th id="2">2</th><td><u># This code runs in user space.</u></td></tr>
+<tr><th id="3">3</th><td></td></tr>
+<tr><th id="4">4</th><td><u>#include <a href="syscall.h.html">"syscall.h"</a></u></td></tr>
+<tr><th id="5">5</th><td><u>#include <a href="traps.h.html">"traps.h"</a></u></td></tr>
+<tr><th id="6">6</th><td></td></tr>
+<tr><th id="7">7</th><td></td></tr>
+<tr><th id="8">8</th><td><u># exec(init, argv)</u></td></tr>
+<tr><th id="9">9</th><td>.globl start</td></tr>
+<tr><th id="10">10</th><td>start:</td></tr>
+<tr><th id="11">11</th><td>  pushl $argv</td></tr>
+<tr><th id="12">12</th><td>  pushl $init</td></tr>
+<tr><th id="13">13</th><td>  pushl $<var>0</var>  <i>// where caller pc would be</i></td></tr>
+<tr><th id="14">14</th><td>  movl $<a class="macro" href="syscall.h.html#8" title="7" data-ref="_M/SYS_exec">SYS_exec</a>, %eax</td></tr>
+<tr><th id="15">15</th><td>  <em>int</em> $<a class="macro" href="traps.h.html#27" title="64" data-ref="_M/T_SYSCALL">T_SYSCALL</a></td></tr>
+<tr><th id="16">16</th><td></td></tr>
+<tr><th id="17">17</th><td><u># for(;;) exit();</u><span class='error' title="expected identifier or &apos;(&apos;"></span></td></tr>
+<tr><th id="18">18</th><td>exit:</td></tr>
+<tr><th id="19">19</th><td>  movl $<a class="macro" href="syscall.h.html#3" title="2" data-ref="_M/SYS_exit">SYS_exit</a>, %eax</td></tr>
+<tr><th id="20">20</th><td>  <em>int</em> $<a class="macro" href="traps.h.html#27" title="64" data-ref="_M/T_SYSCALL">T_SYSCALL</a></td></tr>
+<tr><th id="21">21</th><td>  jmp exit</td></tr>
+<tr><th id="22">22</th><td></td></tr>
+<tr><th id="23">23</th><td><u># char init[] = "/init\0";</u><span class='error' title="expected identifier or &apos;(&apos;"></span></td></tr>
+<tr><th id="24">24</th><td>init:</td></tr>
+<tr><th id="25">25</th><td>  .string <q>"/init\0"</q></td></tr>
+<tr><th id="26">26</th><td></td></tr>
+<tr><th id="27">27</th><td><u># char *argv[] = { init, 0 };</u><span class='error' title="expected identifier or &apos;(&apos;"></span></td></tr>
+<tr><th id="28">28</th><td>.p2align <var>2</var></td></tr>
+<tr><th id="29">29</th><td>argv:</td></tr>
+<tr><th id="30">30</th><td>  .<em>long</em> init</td></tr>
+<tr><th id="31">31</th><td>  .<em>long</em> <var>0</var></td></tr>
+<tr><th id="32">32</th><td></td></tr>
+<tr><th id="33">33</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2019-Jul-19</em> from project xv6 revision <em>xv6-rev11</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 2.1
+<br/>Generator usage only permitted with license.</p>
+</div></body></html>

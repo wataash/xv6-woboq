@@ -1,0 +1,411 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>signal.h source code [include/sys/signal.h] - Woboq Code Browser</title>
+<meta name="woboq:interestingDefinitions" content="__sigaction,__sigaction_u,__siginfo,sigaction,sigevent,sigstack,sigval,sigvec "/>
+<link rel="stylesheet" href="https://code.woboq.org/data/qtcreator.css" title="QtCreator"/>
+<link rel="alternate stylesheet" href="https://code.woboq.org/data/kdevelop.css" title="KDevelop"/>
+<script type="text/javascript" src="https://code.woboq.org/data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="https://code.woboq.org/data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/sys/signal.h'; var root_path = '../..'; var data_path = 'https://code.woboq.org/data';</script>
+<script src='https://code.woboq.org/data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Browse the source code of </span><a href='..'>include</a>/<a href='./'>sys</a>/<a href='signal.h.html'>signal.h</a></h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (c) 2000-2006 Apple Computer, Inc. All rights reserved.</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * @APPLE_OSREFERENCE_LICENSE_HEADER_START@</i></td></tr>
+<tr><th id="5">5</th><td><i> *</i></td></tr>
+<tr><th id="6">6</th><td><i> * This file contains Original Code and/or Modifications of Original Code</i></td></tr>
+<tr><th id="7">7</th><td><i> * as defined in and that are subject to the Apple Public Source License</i></td></tr>
+<tr><th id="8">8</th><td><i> * Version 2.0 (the 'License'). You may not use this file except in</i></td></tr>
+<tr><th id="9">9</th><td><i> * compliance with the License. The rights granted to you under the License</i></td></tr>
+<tr><th id="10">10</th><td><i> * may not be used to create, or enable the creation or redistribution of,</i></td></tr>
+<tr><th id="11">11</th><td><i> * unlawful or unlicensed copies of an Apple operating system, or to</i></td></tr>
+<tr><th id="12">12</th><td><i> * circumvent, violate, or enable the circumvention or violation of, any</i></td></tr>
+<tr><th id="13">13</th><td><i> * terms of an Apple operating system software license agreement.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * Please obtain a copy of the License at</i></td></tr>
+<tr><th id="16">16</th><td><i> * <a href="http://www.opensource.apple.com/apsl/">http://www.opensource.apple.com/apsl/</a> and read it before using this file.</i></td></tr>
+<tr><th id="17">17</th><td><i> *</i></td></tr>
+<tr><th id="18">18</th><td><i> * The Original Code and all software distributed under the License are</i></td></tr>
+<tr><th id="19">19</th><td><i> * distributed on an 'AS IS' basis, WITHOUT WARRANTY OF ANY KIND, EITHER</i></td></tr>
+<tr><th id="20">20</th><td><i> * EXPRESS OR IMPLIED, AND APPLE HEREBY DISCLAIMS ALL SUCH WARRANTIES,</i></td></tr>
+<tr><th id="21">21</th><td><i> * INCLUDING WITHOUT LIMITATION, ANY WARRANTIES OF MERCHANTABILITY,</i></td></tr>
+<tr><th id="22">22</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE, QUIET ENJOYMENT OR NON-INFRINGEMENT.</i></td></tr>
+<tr><th id="23">23</th><td><i> * Please see the License for the specific language governing rights and</i></td></tr>
+<tr><th id="24">24</th><td><i> * limitations under the License.</i></td></tr>
+<tr><th id="25">25</th><td><i> *</i></td></tr>
+<tr><th id="26">26</th><td><i> * @APPLE_OSREFERENCE_LICENSE_HEADER_END@</i></td></tr>
+<tr><th id="27">27</th><td><i> */</i></td></tr>
+<tr><th id="28">28</th><td><i>/* Copyright (c) 1995 NeXT Computer, Inc. All Rights Reserved */</i></td></tr>
+<tr><th id="29">29</th><td><i>/*</i></td></tr>
+<tr><th id="30">30</th><td><i> * Copyright (c) 1982, 1986, 1989, 1991, 1993</i></td></tr>
+<tr><th id="31">31</th><td><i> *	The Regents of the University of California.  All rights reserved.</i></td></tr>
+<tr><th id="32">32</th><td><i> * (c) UNIX System Laboratories, Inc.</i></td></tr>
+<tr><th id="33">33</th><td><i> * All or some portions of this file are derived from material licensed</i></td></tr>
+<tr><th id="34">34</th><td><i> * to the University of California by American Telephone and Telegraph</i></td></tr>
+<tr><th id="35">35</th><td><i> * Co. or Unix System Laboratories, Inc. and are reproduced herein with</i></td></tr>
+<tr><th id="36">36</th><td><i> * the permission of UNIX System Laboratories, Inc.</i></td></tr>
+<tr><th id="37">37</th><td><i> *</i></td></tr>
+<tr><th id="38">38</th><td><i> * Redistribution and use in source and binary forms, with or without</i></td></tr>
+<tr><th id="39">39</th><td><i> * modification, are permitted provided that the following conditions</i></td></tr>
+<tr><th id="40">40</th><td><i> * are met:</i></td></tr>
+<tr><th id="41">41</th><td><i> * 1. Redistributions of source code must retain the above copyright</i></td></tr>
+<tr><th id="42">42</th><td><i> *    notice, this list of conditions and the following disclaimer.</i></td></tr>
+<tr><th id="43">43</th><td><i> * 2. Redistributions in binary form must reproduce the above copyright</i></td></tr>
+<tr><th id="44">44</th><td><i> *    notice, this list of conditions and the following disclaimer in the</i></td></tr>
+<tr><th id="45">45</th><td><i> *    documentation and/or other materials provided with the distribution.</i></td></tr>
+<tr><th id="46">46</th><td><i> * 3. All advertising materials mentioning features or use of this software</i></td></tr>
+<tr><th id="47">47</th><td><i> *    must display the following acknowledgement:</i></td></tr>
+<tr><th id="48">48</th><td><i> *	This product includes software developed by the University of</i></td></tr>
+<tr><th id="49">49</th><td><i> *	California, Berkeley and its contributors.</i></td></tr>
+<tr><th id="50">50</th><td><i> * 4. Neither the name of the University nor the names of its contributors</i></td></tr>
+<tr><th id="51">51</th><td><i> *    may be used to endorse or promote products derived from this software</i></td></tr>
+<tr><th id="52">52</th><td><i> *    without specific prior written permission.</i></td></tr>
+<tr><th id="53">53</th><td><i> *</i></td></tr>
+<tr><th id="54">54</th><td><i> * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND</i></td></tr>
+<tr><th id="55">55</th><td><i> * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE</i></td></tr>
+<tr><th id="56">56</th><td><i> * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE</i></td></tr>
+<tr><th id="57">57</th><td><i> * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE</i></td></tr>
+<tr><th id="58">58</th><td><i> * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL</i></td></tr>
+<tr><th id="59">59</th><td><i> * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS</i></td></tr>
+<tr><th id="60">60</th><td><i> * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)</i></td></tr>
+<tr><th id="61">61</th><td><i> * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT</i></td></tr>
+<tr><th id="62">62</th><td><i> * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY</i></td></tr>
+<tr><th id="63">63</th><td><i> * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF</i></td></tr>
+<tr><th id="64">64</th><td><i> * SUCH DAMAGE.</i></td></tr>
+<tr><th id="65">65</th><td><i> *</i></td></tr>
+<tr><th id="66">66</th><td><i> *	@(#)signal.h	8.2 (Berkeley) 1/21/94</i></td></tr>
+<tr><th id="67">67</th><td><i> */</i></td></tr>
+<tr><th id="68">68</th><td></td></tr>
+<tr><th id="69">69</th><td><u>#<span data-ppcond="69">ifndef</span> <span class="macro" data-ref="_M/_SYS_SIGNAL_H_">_SYS_SIGNAL_H_</span></u></td></tr>
+<tr><th id="70">70</th><td><u>#define <dfn class="macro" id="_M/_SYS_SIGNAL_H_" data-ref="_M/_SYS_SIGNAL_H_">_SYS_SIGNAL_H_</dfn></u></td></tr>
+<tr><th id="71">71</th><td></td></tr>
+<tr><th id="72">72</th><td><u>#include <a href="cdefs.h.html">&lt;sys/cdefs.h&gt;</a></u></td></tr>
+<tr><th id="73">73</th><td><u>#include <a href="appleapiopts.h.html">&lt;sys/appleapiopts.h&gt;</a></u></td></tr>
+<tr><th id="74">74</th><td><u>#include <a href="../Availability.h.html">&lt;Availability.h&gt;</a></u></td></tr>
+<tr><th id="75">75</th><td></td></tr>
+<tr><th id="76">76</th><td><u>#define <dfn class="macro" id="_M/__DARWIN_NSIG" data-ref="_M/__DARWIN_NSIG">__DARWIN_NSIG</dfn>   32      /* counting 0; could be 33 (mask is 1-32) */</u></td></tr>
+<tr><th id="77">77</th><td></td></tr>
+<tr><th id="78">78</th><td><u>#<span data-ppcond="78">if</span> !defined(<span class="macro" data-ref="_M/_ANSI_SOURCE">_ANSI_SOURCE</span>) &amp;&amp; (!defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>) || defined(<span class="macro" data-ref="_M/_DARWIN_C_SOURCE">_DARWIN_C_SOURCE</span>))</u></td></tr>
+<tr><th id="79">79</th><td><u>#define <dfn class="macro" id="_M/NSIG" data-ref="_M/NSIG">NSIG</dfn>    __DARWIN_NSIG</u></td></tr>
+<tr><th id="80">80</th><td><u>#<span data-ppcond="78">endif</span></u></td></tr>
+<tr><th id="81">81</th><td></td></tr>
+<tr><th id="82">82</th><td><u>#include <a href="../machine/signal.h.html">&lt;machine/signal.h&gt;</a>     /* sigcontext; codes for SIGILL, SIGFPE */</u></td></tr>
+<tr><th id="83">83</th><td></td></tr>
+<tr><th id="84">84</th><td><u>#define <dfn class="macro" id="_M/SIGHUP" data-ref="_M/SIGHUP">SIGHUP</dfn>  1       /* hangup */</u></td></tr>
+<tr><th id="85">85</th><td><u>#define <dfn class="macro" id="_M/SIGINT" data-ref="_M/SIGINT">SIGINT</dfn>  2       /* interrupt */</u></td></tr>
+<tr><th id="86">86</th><td><u>#define <dfn class="macro" id="_M/SIGQUIT" data-ref="_M/SIGQUIT">SIGQUIT</dfn> 3       /* quit */</u></td></tr>
+<tr><th id="87">87</th><td><u>#define <dfn class="macro" id="_M/SIGILL" data-ref="_M/SIGILL">SIGILL</dfn>  4       /* illegal instruction (not reset when caught) */</u></td></tr>
+<tr><th id="88">88</th><td><u>#define <dfn class="macro" id="_M/SIGTRAP" data-ref="_M/SIGTRAP">SIGTRAP</dfn> 5       /* trace trap (not reset when caught) */</u></td></tr>
+<tr><th id="89">89</th><td><u>#define <dfn class="macro" id="_M/SIGABRT" data-ref="_M/SIGABRT">SIGABRT</dfn> 6       /* abort() */</u></td></tr>
+<tr><th id="90">90</th><td><u>#<span data-ppcond="90">if</span>  (defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>) &amp;&amp; !defined(<span class="macro" data-ref="_M/_DARWIN_C_SOURCE">_DARWIN_C_SOURCE</span>))</u></td></tr>
+<tr><th id="91">91</th><td><u>#define SIGPOLL 7       /* pollable event ([XSR] generated, not supported) */</u></td></tr>
+<tr><th id="92">92</th><td><u>#<span data-ppcond="90">else</span>   /* (!_POSIX_C_SOURCE || _DARWIN_C_SOURCE) */</u></td></tr>
+<tr><th id="93">93</th><td><u>#define <dfn class="macro" id="_M/SIGIOT" data-ref="_M/SIGIOT">SIGIOT</dfn>  SIGABRT /* compatibility */</u></td></tr>
+<tr><th id="94">94</th><td><u>#define <dfn class="macro" id="_M/SIGEMT" data-ref="_M/SIGEMT">SIGEMT</dfn>  7       /* EMT instruction */</u></td></tr>
+<tr><th id="95">95</th><td><u>#<span data-ppcond="90">endif</span>  /* (!_POSIX_C_SOURCE || _DARWIN_C_SOURCE) */</u></td></tr>
+<tr><th id="96">96</th><td><u>#define <dfn class="macro" id="_M/SIGFPE" data-ref="_M/SIGFPE">SIGFPE</dfn>  8       /* floating point exception */</u></td></tr>
+<tr><th id="97">97</th><td><u>#define <dfn class="macro" id="_M/SIGKILL" data-ref="_M/SIGKILL">SIGKILL</dfn> 9       /* kill (cannot be caught or ignored) */</u></td></tr>
+<tr><th id="98">98</th><td><u>#define <dfn class="macro" id="_M/SIGBUS" data-ref="_M/SIGBUS">SIGBUS</dfn>  10      /* bus error */</u></td></tr>
+<tr><th id="99">99</th><td><u>#define <dfn class="macro" id="_M/SIGSEGV" data-ref="_M/SIGSEGV">SIGSEGV</dfn> 11      /* segmentation violation */</u></td></tr>
+<tr><th id="100">100</th><td><u>#define <dfn class="macro" id="_M/SIGSYS" data-ref="_M/SIGSYS">SIGSYS</dfn>  12      /* bad argument to system call */</u></td></tr>
+<tr><th id="101">101</th><td><u>#define <dfn class="macro" id="_M/SIGPIPE" data-ref="_M/SIGPIPE">SIGPIPE</dfn> 13      /* write on a pipe with no one to read it */</u></td></tr>
+<tr><th id="102">102</th><td><u>#define <dfn class="macro" id="_M/SIGALRM" data-ref="_M/SIGALRM">SIGALRM</dfn> 14      /* alarm clock */</u></td></tr>
+<tr><th id="103">103</th><td><u>#define <dfn class="macro" id="_M/SIGTERM" data-ref="_M/SIGTERM">SIGTERM</dfn> 15      /* software termination signal from kill */</u></td></tr>
+<tr><th id="104">104</th><td><u>#define <dfn class="macro" id="_M/SIGURG" data-ref="_M/SIGURG">SIGURG</dfn>  16      /* urgent condition on IO channel */</u></td></tr>
+<tr><th id="105">105</th><td><u>#define <dfn class="macro" id="_M/SIGSTOP" data-ref="_M/SIGSTOP">SIGSTOP</dfn> 17      /* sendable stop signal not from tty */</u></td></tr>
+<tr><th id="106">106</th><td><u>#define <dfn class="macro" id="_M/SIGTSTP" data-ref="_M/SIGTSTP">SIGTSTP</dfn> 18      /* stop signal from tty */</u></td></tr>
+<tr><th id="107">107</th><td><u>#define <dfn class="macro" id="_M/SIGCONT" data-ref="_M/SIGCONT">SIGCONT</dfn> 19      /* continue a stopped process */</u></td></tr>
+<tr><th id="108">108</th><td><u>#define <dfn class="macro" id="_M/SIGCHLD" data-ref="_M/SIGCHLD">SIGCHLD</dfn> 20      /* to parent on child stop or exit */</u></td></tr>
+<tr><th id="109">109</th><td><u>#define <dfn class="macro" id="_M/SIGTTIN" data-ref="_M/SIGTTIN">SIGTTIN</dfn> 21      /* to readers pgrp upon background tty read */</u></td></tr>
+<tr><th id="110">110</th><td><u>#define <dfn class="macro" id="_M/SIGTTOU" data-ref="_M/SIGTTOU">SIGTTOU</dfn> 22      /* like TTIN for output if (tp-&gt;t_local&amp;LTOSTOP) */</u></td></tr>
+<tr><th id="111">111</th><td><u>#<span data-ppcond="111">if</span>  (!defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>) || defined(<span class="macro" data-ref="_M/_DARWIN_C_SOURCE">_DARWIN_C_SOURCE</span>))</u></td></tr>
+<tr><th id="112">112</th><td><u>#define <dfn class="macro" id="_M/SIGIO" data-ref="_M/SIGIO">SIGIO</dfn>   23      /* input/output possible signal */</u></td></tr>
+<tr><th id="113">113</th><td><u>#<span data-ppcond="111">endif</span></u></td></tr>
+<tr><th id="114">114</th><td><u>#define <dfn class="macro" id="_M/SIGXCPU" data-ref="_M/SIGXCPU">SIGXCPU</dfn> 24      /* exceeded CPU time limit */</u></td></tr>
+<tr><th id="115">115</th><td><u>#define <dfn class="macro" id="_M/SIGXFSZ" data-ref="_M/SIGXFSZ">SIGXFSZ</dfn> 25      /* exceeded file size limit */</u></td></tr>
+<tr><th id="116">116</th><td><u>#define <dfn class="macro" id="_M/SIGVTALRM" data-ref="_M/SIGVTALRM">SIGVTALRM</dfn> 26    /* virtual time alarm */</u></td></tr>
+<tr><th id="117">117</th><td><u>#define <dfn class="macro" id="_M/SIGPROF" data-ref="_M/SIGPROF">SIGPROF</dfn> 27      /* profiling time alarm */</u></td></tr>
+<tr><th id="118">118</th><td><u>#<span data-ppcond="118">if</span>  (!defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>) || defined(<span class="macro" data-ref="_M/_DARWIN_C_SOURCE">_DARWIN_C_SOURCE</span>))</u></td></tr>
+<tr><th id="119">119</th><td><u>#define <dfn class="macro" id="_M/SIGWINCH" data-ref="_M/SIGWINCH">SIGWINCH</dfn> 28     /* window size changes */</u></td></tr>
+<tr><th id="120">120</th><td><u>#define <dfn class="macro" id="_M/SIGINFO" data-ref="_M/SIGINFO">SIGINFO</dfn> 29      /* information request */</u></td></tr>
+<tr><th id="121">121</th><td><u>#<span data-ppcond="118">endif</span></u></td></tr>
+<tr><th id="122">122</th><td><u>#define <dfn class="macro" id="_M/SIGUSR1" data-ref="_M/SIGUSR1">SIGUSR1</dfn> 30      /* user defined signal 1 */</u></td></tr>
+<tr><th id="123">123</th><td><u>#define <dfn class="macro" id="_M/SIGUSR2" data-ref="_M/SIGUSR2">SIGUSR2</dfn> 31      /* user defined signal 2 */</u></td></tr>
+<tr><th id="124">124</th><td></td></tr>
+<tr><th id="125">125</th><td><u>#<span data-ppcond="125">if</span> defined(<span class="macro" data-ref="_M/_ANSI_SOURCE">_ANSI_SOURCE</span>) || <a class="macro" href="cdefs.h.html#487" title="1" data-ref="_M/__DARWIN_UNIX03">__DARWIN_UNIX03</a> || defined(<span class="macro" data-ref="_M/__cplusplus">__cplusplus</span>)</u></td></tr>
+<tr><th id="126">126</th><td><i>/*</i></td></tr>
+<tr><th id="127">127</th><td><i> * Language spec sez we must list exactly one parameter, even though we</i></td></tr>
+<tr><th id="128">128</th><td><i> * actually supply three.  Ugh!</i></td></tr>
+<tr><th id="129">129</th><td><i> * SIG_HOLD is chosen to avoid KERN_SIG_* values in &lt;sys/signalvar.h&gt;</i></td></tr>
+<tr><th id="130">130</th><td><i> */</i></td></tr>
+<tr><th id="131">131</th><td><u>#define <dfn class="macro" id="_M/SIG_DFL" data-ref="_M/SIG_DFL">SIG_DFL</dfn>         (void (*)(int))0</u></td></tr>
+<tr><th id="132">132</th><td><u>#define <dfn class="macro" id="_M/SIG_IGN" data-ref="_M/SIG_IGN">SIG_IGN</dfn>         (void (*)(int))1</u></td></tr>
+<tr><th id="133">133</th><td><u>#define <dfn class="macro" id="_M/SIG_HOLD" data-ref="_M/SIG_HOLD">SIG_HOLD</dfn>        (void (*)(int))5</u></td></tr>
+<tr><th id="134">134</th><td><u>#define <dfn class="macro" id="_M/SIG_ERR" data-ref="_M/SIG_ERR">SIG_ERR</dfn>         ((void (*)(int))-1)</u></td></tr>
+<tr><th id="135">135</th><td><u>#<span data-ppcond="125">else</span></u></td></tr>
+<tr><th id="136">136</th><td><i>/* DO NOT REMOVE THE COMMENTED OUT int: fixincludes needs to see them */</i></td></tr>
+<tr><th id="137">137</th><td><u>#define SIG_DFL         (void (*)( /*int*/ ))0</u></td></tr>
+<tr><th id="138">138</th><td><u>#define SIG_IGN         (void (*)( /*int*/ ))1</u></td></tr>
+<tr><th id="139">139</th><td><u>#define SIG_HOLD        (void (*)( /*int*/ ))5</u></td></tr>
+<tr><th id="140">140</th><td><u>#define SIG_ERR         ((void (*)( /*int*/ ))-1)</u></td></tr>
+<tr><th id="141">141</th><td><u>#<span data-ppcond="125">endif</span></u></td></tr>
+<tr><th id="142">142</th><td></td></tr>
+<tr><th id="143">143</th><td><u>#<span data-ppcond="143">ifndef</span> <span class="macro" data-ref="_M/_ANSI_SOURCE">_ANSI_SOURCE</span></u></td></tr>
+<tr><th id="144">144</th><td><u>#include <a href="_types.h.html">&lt;sys/_types.h&gt;</a></u></td></tr>
+<tr><th id="145">145</th><td></td></tr>
+<tr><th id="146">146</th><td><u>#include <a href="../machine/_mcontext.h.html">&lt;machine/_mcontext.h&gt;</a></u></td></tr>
+<tr><th id="147">147</th><td></td></tr>
+<tr><th id="148">148</th><td><u>#include <a href="_pthread/_pthread_attr_t.h.html">&lt;sys/_pthread/_pthread_attr_t.h&gt;</a></u></td></tr>
+<tr><th id="149">149</th><td></td></tr>
+<tr><th id="150">150</th><td><u>#include <a href="_types/_sigaltstack.h.html">&lt;sys/_types/_sigaltstack.h&gt;</a></u></td></tr>
+<tr><th id="151">151</th><td><u>#include <a href="_types/_ucontext.h.html">&lt;sys/_types/_ucontext.h&gt;</a></u></td></tr>
+<tr><th id="152">152</th><td></td></tr>
+<tr><th id="153">153</th><td><u>#include <a href="_types/_pid_t.h.html">&lt;sys/_types/_pid_t.h&gt;</a></u></td></tr>
+<tr><th id="154">154</th><td><u>#include <a href="_types/_sigset_t.h.html">&lt;sys/_types/_sigset_t.h&gt;</a></u></td></tr>
+<tr><th id="155">155</th><td><u>#include <a href="_types/_size_t.h.html">&lt;sys/_types/_size_t.h&gt;</a></u></td></tr>
+<tr><th id="156">156</th><td><u>#include <a href="_types/_uid_t.h.html">&lt;sys/_types/_uid_t.h&gt;</a></u></td></tr>
+<tr><th id="157">157</th><td></td></tr>
+<tr><th id="158">158</th><td><b>union</b> <dfn class="type def" id="sigval" title='sigval' data-ref="sigval">sigval</dfn> {</td></tr>
+<tr><th id="159">159</th><td>	<i>/* Members as suggested by Annex C of POSIX 1003.1b. */</i></td></tr>
+<tr><th id="160">160</th><td>	<em>int</em>     <dfn class="decl" id="sigval::sival_int" title='sigval::sival_int' data-ref="sigval::sival_int">sival_int</dfn>;</td></tr>
+<tr><th id="161">161</th><td>	<em>void</em>    *<dfn class="decl" id="sigval::sival_ptr" title='sigval::sival_ptr' data-ref="sigval::sival_ptr">sival_ptr</dfn>;</td></tr>
+<tr><th id="162">162</th><td>};</td></tr>
+<tr><th id="163">163</th><td></td></tr>
+<tr><th id="164">164</th><td><u>#define <dfn class="macro" id="_M/SIGEV_NONE" data-ref="_M/SIGEV_NONE">SIGEV_NONE</dfn>      0       /* No async notification */</u></td></tr>
+<tr><th id="165">165</th><td><u>#define <dfn class="macro" id="_M/SIGEV_SIGNAL" data-ref="_M/SIGEV_SIGNAL">SIGEV_SIGNAL</dfn>    1       /* aio - completion notification */</u></td></tr>
+<tr><th id="166">166</th><td><u>#define <dfn class="macro" id="_M/SIGEV_THREAD" data-ref="_M/SIGEV_THREAD">SIGEV_THREAD</dfn>    3       /* [NOTIMP] [RTS] call notification function */</u></td></tr>
+<tr><th id="167">167</th><td></td></tr>
+<tr><th id="168">168</th><td><b>struct</b> <dfn class="type def" id="sigevent" title='sigevent' data-ref="sigevent">sigevent</dfn> {</td></tr>
+<tr><th id="169">169</th><td>	<em>int</em>                             <dfn class="decl" id="sigevent::sigev_notify" title='sigevent::sigev_notify' data-ref="sigevent::sigev_notify">sigev_notify</dfn>;                           <i>/* Notification type */</i></td></tr>
+<tr><th id="170">170</th><td>	<em>int</em>                             <dfn class="decl" id="sigevent::sigev_signo" title='sigevent::sigev_signo' data-ref="sigevent::sigev_signo">sigev_signo</dfn>;                            <i>/* Signal number */</i></td></tr>
+<tr><th id="171">171</th><td>	<b>union</b> <a class="type" href="#sigval" title='sigval' data-ref="sigval">sigval</a>    <dfn class="decl" id="sigevent::sigev_value" title='sigevent::sigev_value' data-ref="sigevent::sigev_value">sigev_value</dfn>;                            <i>/* Signal value */</i></td></tr>
+<tr><th id="172">172</th><td>	<em>void</em>                    (*<dfn class="decl" id="sigevent::sigev_notify_function" title='sigevent::sigev_notify_function' data-ref="sigevent::sigev_notify_function">sigev_notify_function</dfn>)(<b>union</b> <a class="type" href="#sigval" title='sigval' data-ref="sigval">sigval</a>);   <i>/* Notification function */</i></td></tr>
+<tr><th id="173">173</th><td>	<a class="typedef" href="_pthread/_pthread_attr_t.h.html#pthread_attr_t" title='pthread_attr_t' data-type='__darwin_pthread_attr_t' data-ref="pthread_attr_t">pthread_attr_t</a>  *<dfn class="decl" id="sigevent::sigev_notify_attributes" title='sigevent::sigev_notify_attributes' data-ref="sigevent::sigev_notify_attributes">sigev_notify_attributes</dfn>;       <i>/* Notification attributes */</i></td></tr>
+<tr><th id="174">174</th><td>};</td></tr>
+<tr><th id="175">175</th><td></td></tr>
+<tr><th id="176">176</th><td></td></tr>
+<tr><th id="177">177</th><td><b>typedef</b> <b>struct</b> <dfn class="type def" id="__siginfo" title='__siginfo' data-ref="__siginfo"><a class="type" href="#__siginfo" title='__siginfo' data-ref="__siginfo">__siginfo</a></dfn> {</td></tr>
+<tr><th id="178">178</th><td>	<em>int</em>     <dfn class="decl" id="__siginfo::si_signo" title='__siginfo::si_signo' data-ref="__siginfo::si_signo">si_signo</dfn>;               <i>/* signal number */</i></td></tr>
+<tr><th id="179">179</th><td>	<em>int</em>     <dfn class="decl" id="__siginfo::si_errno" title='__siginfo::si_errno' data-ref="__siginfo::si_errno">si_errno</dfn>;               <i>/* errno association */</i></td></tr>
+<tr><th id="180">180</th><td>	<em>int</em>     <dfn class="decl" id="__siginfo::si_code" title='__siginfo::si_code' data-ref="__siginfo::si_code">si_code</dfn>;                <i>/* signal code */</i></td></tr>
+<tr><th id="181">181</th><td>	<a class="typedef" href="_types/_pid_t.h.html#pid_t" title='pid_t' data-type='__darwin_pid_t' data-ref="pid_t">pid_t</a>   <dfn class="decl" id="__siginfo::si_pid" title='__siginfo::si_pid' data-ref="__siginfo::si_pid">si_pid</dfn>;                 <i>/* sending process */</i></td></tr>
+<tr><th id="182">182</th><td>	<a class="typedef" href="_types/_uid_t.h.html#uid_t" title='uid_t' data-type='__darwin_uid_t' data-ref="uid_t">uid_t</a>   <dfn class="decl" id="__siginfo::si_uid" title='__siginfo::si_uid' data-ref="__siginfo::si_uid">si_uid</dfn>;                 <i>/* sender's ruid */</i></td></tr>
+<tr><th id="183">183</th><td>	<em>int</em>     <dfn class="decl" id="__siginfo::si_status" title='__siginfo::si_status' data-ref="__siginfo::si_status">si_status</dfn>;              <i>/* exit value */</i></td></tr>
+<tr><th id="184">184</th><td>	<em>void</em>    *<dfn class="decl" id="__siginfo::si_addr" title='__siginfo::si_addr' data-ref="__siginfo::si_addr">si_addr</dfn>;               <i>/* faulting instruction */</i></td></tr>
+<tr><th id="185">185</th><td>	<b>union</b> <a class="type" href="#sigval" title='sigval' data-ref="sigval">sigval</a> <dfn class="decl" id="__siginfo::si_value" title='__siginfo::si_value' data-ref="__siginfo::si_value">si_value</dfn>;          <i>/* signal value */</i></td></tr>
+<tr><th id="186">186</th><td>	<em>long</em>    <dfn class="decl" id="__siginfo::si_band" title='__siginfo::si_band' data-ref="__siginfo::si_band">si_band</dfn>;                <i>/* band event for SIGPOLL */</i></td></tr>
+<tr><th id="187">187</th><td>	<em>unsigned</em> <em>long</em>   <dfn class="decl" id="__siginfo::__pad" title='__siginfo::__pad' data-ref="__siginfo::__pad">__pad</dfn>[<var>7</var>];       <i>/* Reserved for Future Use */</i></td></tr>
+<tr><th id="188">188</th><td>} <dfn class="typedef" id="siginfo_t" title='siginfo_t' data-type='struct __siginfo' data-ref="siginfo_t">siginfo_t</dfn>;</td></tr>
+<tr><th id="189">189</th><td></td></tr>
+<tr><th id="190">190</th><td></td></tr>
+<tr><th id="191">191</th><td><i>/*</i></td></tr>
+<tr><th id="192">192</th><td><i> * When the signal is SIGILL or SIGFPE, si_addr contains the address of</i></td></tr>
+<tr><th id="193">193</th><td><i> * the faulting instruction.</i></td></tr>
+<tr><th id="194">194</th><td><i> * When the signal is SIGSEGV or SIGBUS, si_addr contains the address of</i></td></tr>
+<tr><th id="195">195</th><td><i> * the faulting memory reference. Although for x86 there are cases of SIGSEGV</i></td></tr>
+<tr><th id="196">196</th><td><i> * for which si_addr cannot be determined and is NULL.</i></td></tr>
+<tr><th id="197">197</th><td><i> * If the signal is SIGCHLD, the si_pid field will contain the child process ID,</i></td></tr>
+<tr><th id="198">198</th><td><i> *  si_status contains the exit value or signal and</i></td></tr>
+<tr><th id="199">199</th><td><i> *  si_uid contains the real user ID of the process that sent the signal.</i></td></tr>
+<tr><th id="200">200</th><td><i> */</i></td></tr>
+<tr><th id="201">201</th><td></td></tr>
+<tr><th id="202">202</th><td><i>/* Values for si_code */</i></td></tr>
+<tr><th id="203">203</th><td></td></tr>
+<tr><th id="204">204</th><td><i>/* Codes for SIGILL */</i></td></tr>
+<tr><th id="205">205</th><td><u>#<span data-ppcond="205">if</span> !defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>) || defined(<span class="macro" data-ref="_M/_DARWIN_C_SOURCE">_DARWIN_C_SOURCE</span>)</u></td></tr>
+<tr><th id="206">206</th><td><u>#define <dfn class="macro" id="_M/ILL_NOOP" data-ref="_M/ILL_NOOP">ILL_NOOP</dfn>        0       /* if only I knew... */</u></td></tr>
+<tr><th id="207">207</th><td><u>#<span data-ppcond="205">endif</span></u></td></tr>
+<tr><th id="208">208</th><td><u>#define <dfn class="macro" id="_M/ILL_ILLOPC" data-ref="_M/ILL_ILLOPC">ILL_ILLOPC</dfn>      1       /* [XSI] illegal opcode */</u></td></tr>
+<tr><th id="209">209</th><td><u>#define <dfn class="macro" id="_M/ILL_ILLTRP" data-ref="_M/ILL_ILLTRP">ILL_ILLTRP</dfn>      2       /* [XSI] illegal trap */</u></td></tr>
+<tr><th id="210">210</th><td><u>#define <dfn class="macro" id="_M/ILL_PRVOPC" data-ref="_M/ILL_PRVOPC">ILL_PRVOPC</dfn>      3       /* [XSI] privileged opcode */</u></td></tr>
+<tr><th id="211">211</th><td><u>#define <dfn class="macro" id="_M/ILL_ILLOPN" data-ref="_M/ILL_ILLOPN">ILL_ILLOPN</dfn>      4       /* [XSI] illegal operand -NOTIMP */</u></td></tr>
+<tr><th id="212">212</th><td><u>#define <dfn class="macro" id="_M/ILL_ILLADR" data-ref="_M/ILL_ILLADR">ILL_ILLADR</dfn>      5       /* [XSI] illegal addressing mode -NOTIMP */</u></td></tr>
+<tr><th id="213">213</th><td><u>#define <dfn class="macro" id="_M/ILL_PRVREG" data-ref="_M/ILL_PRVREG">ILL_PRVREG</dfn>      6       /* [XSI] privileged register -NOTIMP */</u></td></tr>
+<tr><th id="214">214</th><td><u>#define <dfn class="macro" id="_M/ILL_COPROC" data-ref="_M/ILL_COPROC">ILL_COPROC</dfn>      7       /* [XSI] coprocessor error -NOTIMP */</u></td></tr>
+<tr><th id="215">215</th><td><u>#define <dfn class="macro" id="_M/ILL_BADSTK" data-ref="_M/ILL_BADSTK">ILL_BADSTK</dfn>      8       /* [XSI] internal stack error -NOTIMP */</u></td></tr>
+<tr><th id="216">216</th><td></td></tr>
+<tr><th id="217">217</th><td><i>/* Codes for SIGFPE */</i></td></tr>
+<tr><th id="218">218</th><td><u>#<span data-ppcond="218">if</span> !defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>) || defined(<span class="macro" data-ref="_M/_DARWIN_C_SOURCE">_DARWIN_C_SOURCE</span>)</u></td></tr>
+<tr><th id="219">219</th><td><u>#define <dfn class="macro" id="_M/FPE_NOOP" data-ref="_M/FPE_NOOP">FPE_NOOP</dfn>        0       /* if only I knew... */</u></td></tr>
+<tr><th id="220">220</th><td><u>#<span data-ppcond="218">endif</span></u></td></tr>
+<tr><th id="221">221</th><td><u>#define <dfn class="macro" id="_M/FPE_FLTDIV" data-ref="_M/FPE_FLTDIV">FPE_FLTDIV</dfn>      1       /* [XSI] floating point divide by zero */</u></td></tr>
+<tr><th id="222">222</th><td><u>#define <dfn class="macro" id="_M/FPE_FLTOVF" data-ref="_M/FPE_FLTOVF">FPE_FLTOVF</dfn>      2       /* [XSI] floating point overflow */</u></td></tr>
+<tr><th id="223">223</th><td><u>#define <dfn class="macro" id="_M/FPE_FLTUND" data-ref="_M/FPE_FLTUND">FPE_FLTUND</dfn>      3       /* [XSI] floating point underflow */</u></td></tr>
+<tr><th id="224">224</th><td><u>#define <dfn class="macro" id="_M/FPE_FLTRES" data-ref="_M/FPE_FLTRES">FPE_FLTRES</dfn>      4       /* [XSI] floating point inexact result */</u></td></tr>
+<tr><th id="225">225</th><td><u>#define <dfn class="macro" id="_M/FPE_FLTINV" data-ref="_M/FPE_FLTINV">FPE_FLTINV</dfn>      5       /* [XSI] invalid floating point operation */</u></td></tr>
+<tr><th id="226">226</th><td><u>#define <dfn class="macro" id="_M/FPE_FLTSUB" data-ref="_M/FPE_FLTSUB">FPE_FLTSUB</dfn>      6       /* [XSI] subscript out of range -NOTIMP */</u></td></tr>
+<tr><th id="227">227</th><td><u>#define <dfn class="macro" id="_M/FPE_INTDIV" data-ref="_M/FPE_INTDIV">FPE_INTDIV</dfn>      7       /* [XSI] integer divide by zero */</u></td></tr>
+<tr><th id="228">228</th><td><u>#define <dfn class="macro" id="_M/FPE_INTOVF" data-ref="_M/FPE_INTOVF">FPE_INTOVF</dfn>      8       /* [XSI] integer overflow */</u></td></tr>
+<tr><th id="229">229</th><td></td></tr>
+<tr><th id="230">230</th><td><i>/* Codes for SIGSEGV */</i></td></tr>
+<tr><th id="231">231</th><td><u>#<span data-ppcond="231">if</span> !defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>) || defined(<span class="macro" data-ref="_M/_DARWIN_C_SOURCE">_DARWIN_C_SOURCE</span>)</u></td></tr>
+<tr><th id="232">232</th><td><u>#define <dfn class="macro" id="_M/SEGV_NOOP" data-ref="_M/SEGV_NOOP">SEGV_NOOP</dfn>       0       /* if only I knew... */</u></td></tr>
+<tr><th id="233">233</th><td><u>#<span data-ppcond="231">endif</span></u></td></tr>
+<tr><th id="234">234</th><td><u>#define <dfn class="macro" id="_M/SEGV_MAPERR" data-ref="_M/SEGV_MAPERR">SEGV_MAPERR</dfn>     1       /* [XSI] address not mapped to object */</u></td></tr>
+<tr><th id="235">235</th><td><u>#define <dfn class="macro" id="_M/SEGV_ACCERR" data-ref="_M/SEGV_ACCERR">SEGV_ACCERR</dfn>     2       /* [XSI] invalid permission for mapped object */</u></td></tr>
+<tr><th id="236">236</th><td></td></tr>
+<tr><th id="237">237</th><td><i>/* Codes for SIGBUS */</i></td></tr>
+<tr><th id="238">238</th><td><u>#<span data-ppcond="238">if</span> !defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>) || defined(<span class="macro" data-ref="_M/_DARWIN_C_SOURCE">_DARWIN_C_SOURCE</span>)</u></td></tr>
+<tr><th id="239">239</th><td><u>#define <dfn class="macro" id="_M/BUS_NOOP" data-ref="_M/BUS_NOOP">BUS_NOOP</dfn>        0       /* if only I knew... */</u></td></tr>
+<tr><th id="240">240</th><td><u>#<span data-ppcond="238">endif</span></u></td></tr>
+<tr><th id="241">241</th><td><u>#define <dfn class="macro" id="_M/BUS_ADRALN" data-ref="_M/BUS_ADRALN">BUS_ADRALN</dfn>      1       /* [XSI] Invalid address alignment */</u></td></tr>
+<tr><th id="242">242</th><td><u>#define <dfn class="macro" id="_M/BUS_ADRERR" data-ref="_M/BUS_ADRERR">BUS_ADRERR</dfn>      2       /* [XSI] Nonexistent physical address -NOTIMP */</u></td></tr>
+<tr><th id="243">243</th><td><u>#define <dfn class="macro" id="_M/BUS_OBJERR" data-ref="_M/BUS_OBJERR">BUS_OBJERR</dfn>      3       /* [XSI] Object-specific HW error - NOTIMP */</u></td></tr>
+<tr><th id="244">244</th><td></td></tr>
+<tr><th id="245">245</th><td><i>/* Codes for SIGTRAP */</i></td></tr>
+<tr><th id="246">246</th><td><u>#define <dfn class="macro" id="_M/TRAP_BRKPT" data-ref="_M/TRAP_BRKPT">TRAP_BRKPT</dfn>      1       /* [XSI] Process breakpoint -NOTIMP */</u></td></tr>
+<tr><th id="247">247</th><td><u>#define <dfn class="macro" id="_M/TRAP_TRACE" data-ref="_M/TRAP_TRACE">TRAP_TRACE</dfn>      2       /* [XSI] Process trace trap -NOTIMP */</u></td></tr>
+<tr><th id="248">248</th><td></td></tr>
+<tr><th id="249">249</th><td><i>/* Codes for SIGCHLD */</i></td></tr>
+<tr><th id="250">250</th><td><u>#<span data-ppcond="250">if</span> !defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>) || defined(<span class="macro" data-ref="_M/_DARWIN_C_SOURCE">_DARWIN_C_SOURCE</span>)</u></td></tr>
+<tr><th id="251">251</th><td><u>#define <dfn class="macro" id="_M/CLD_NOOP" data-ref="_M/CLD_NOOP">CLD_NOOP</dfn>        0       /* if only I knew... */</u></td></tr>
+<tr><th id="252">252</th><td><u>#<span data-ppcond="250">endif</span></u></td></tr>
+<tr><th id="253">253</th><td><u>#define <dfn class="macro" id="_M/CLD_EXITED" data-ref="_M/CLD_EXITED">CLD_EXITED</dfn>      1       /* [XSI] child has exited */</u></td></tr>
+<tr><th id="254">254</th><td><u>#define <dfn class="macro" id="_M/CLD_KILLED" data-ref="_M/CLD_KILLED">CLD_KILLED</dfn>      2       /* [XSI] terminated abnormally, no core file */</u></td></tr>
+<tr><th id="255">255</th><td><u>#define <dfn class="macro" id="_M/CLD_DUMPED" data-ref="_M/CLD_DUMPED">CLD_DUMPED</dfn>      3       /* [XSI] terminated abnormally, core file */</u></td></tr>
+<tr><th id="256">256</th><td><u>#define <dfn class="macro" id="_M/CLD_TRAPPED" data-ref="_M/CLD_TRAPPED">CLD_TRAPPED</dfn>     4       /* [XSI] traced child has trapped */</u></td></tr>
+<tr><th id="257">257</th><td><u>#define <dfn class="macro" id="_M/CLD_STOPPED" data-ref="_M/CLD_STOPPED">CLD_STOPPED</dfn>     5       /* [XSI] child has stopped */</u></td></tr>
+<tr><th id="258">258</th><td><u>#define <dfn class="macro" id="_M/CLD_CONTINUED" data-ref="_M/CLD_CONTINUED">CLD_CONTINUED</dfn>   6       /* [XSI] stopped child has continued */</u></td></tr>
+<tr><th id="259">259</th><td></td></tr>
+<tr><th id="260">260</th><td><i>/* Codes for SIGPOLL */</i></td></tr>
+<tr><th id="261">261</th><td><u>#define <dfn class="macro" id="_M/POLL_IN" data-ref="_M/POLL_IN">POLL_IN</dfn>         1       /* [XSR] Data input available */</u></td></tr>
+<tr><th id="262">262</th><td><u>#define <dfn class="macro" id="_M/POLL_OUT" data-ref="_M/POLL_OUT">POLL_OUT</dfn>        2       /* [XSR] Output buffers available */</u></td></tr>
+<tr><th id="263">263</th><td><u>#define <dfn class="macro" id="_M/POLL_MSG" data-ref="_M/POLL_MSG">POLL_MSG</dfn>        3       /* [XSR] Input message available */</u></td></tr>
+<tr><th id="264">264</th><td><u>#define <dfn class="macro" id="_M/POLL_ERR" data-ref="_M/POLL_ERR">POLL_ERR</dfn>        4       /* [XSR] I/O error */</u></td></tr>
+<tr><th id="265">265</th><td><u>#define <dfn class="macro" id="_M/POLL_PRI" data-ref="_M/POLL_PRI">POLL_PRI</dfn>        5       /* [XSR] High priority input available */</u></td></tr>
+<tr><th id="266">266</th><td><u>#define <dfn class="macro" id="_M/POLL_HUP" data-ref="_M/POLL_HUP">POLL_HUP</dfn>        6       /* [XSR] Device disconnected */</u></td></tr>
+<tr><th id="267">267</th><td></td></tr>
+<tr><th id="268">268</th><td><i>/* union for signal handlers */</i></td></tr>
+<tr><th id="269">269</th><td><b>union</b> <dfn class="type def" id="__sigaction_u" title='__sigaction_u' data-ref="__sigaction_u">__sigaction_u</dfn> {</td></tr>
+<tr><th id="270">270</th><td>	<em>void</em>    (*<dfn class="decl" id="__sigaction_u::__sa_handler" title='__sigaction_u::__sa_handler' data-ref="__sigaction_u::__sa_handler">__sa_handler</dfn>)(<em>int</em>);</td></tr>
+<tr><th id="271">271</th><td>	<em>void</em>    (*<dfn class="decl" id="__sigaction_u::__sa_sigaction" title='__sigaction_u::__sa_sigaction' data-ref="__sigaction_u::__sa_sigaction">__sa_sigaction</dfn>)(<em>int</em>, <b>struct</b> <a class="type" href="#__siginfo" title='__siginfo' data-ref="__siginfo">__siginfo</a> *,</td></tr>
+<tr><th id="272">272</th><td>	    <em>void</em> *);</td></tr>
+<tr><th id="273">273</th><td>};</td></tr>
+<tr><th id="274">274</th><td></td></tr>
+<tr><th id="275">275</th><td><i>/* Signal vector template for Kernel user boundary */</i></td></tr>
+<tr><th id="276">276</th><td><b>struct</b>  <dfn class="type def" id="__sigaction" title='__sigaction' data-ref="__sigaction">__sigaction</dfn> {</td></tr>
+<tr><th id="277">277</th><td>	<b>union</b> <a class="type" href="#__sigaction_u" title='__sigaction_u' data-ref="__sigaction_u">__sigaction_u</a> <dfn class="decl" id="__sigaction::__sigaction_u" title='__sigaction::__sigaction_u' data-ref="__sigaction::__sigaction_u">__sigaction_u</dfn>;  <i>/* signal handler */</i></td></tr>
+<tr><th id="278">278</th><td>	<em>void</em>    (*<dfn class="decl" id="__sigaction::sa_tramp" title='__sigaction::sa_tramp' data-ref="__sigaction::sa_tramp">sa_tramp</dfn>)(<em>void</em> *, <em>int</em>, <em>int</em>, <a class="typedef" href="#siginfo_t" title='siginfo_t' data-type='struct __siginfo' data-ref="siginfo_t">siginfo_t</a> *, <em>void</em> *);</td></tr>
+<tr><th id="279">279</th><td>	<a class="typedef" href="_types/_sigset_t.h.html#sigset_t" title='sigset_t' data-type='__darwin_sigset_t' data-ref="sigset_t">sigset_t</a> <dfn class="decl" id="__sigaction::sa_mask" title='__sigaction::sa_mask' data-ref="__sigaction::sa_mask">sa_mask</dfn>;               <i>/* signal mask to apply */</i></td></tr>
+<tr><th id="280">280</th><td>	<em>int</em>     <dfn class="decl" id="__sigaction::sa_flags" title='__sigaction::sa_flags' data-ref="__sigaction::sa_flags">sa_flags</dfn>;               <i>/* see signal options below */</i></td></tr>
+<tr><th id="281">281</th><td>};</td></tr>
+<tr><th id="282">282</th><td></td></tr>
+<tr><th id="283">283</th><td><i>/*</i></td></tr>
+<tr><th id="284">284</th><td><i> * Signal vector "template" used in sigaction call.</i></td></tr>
+<tr><th id="285">285</th><td><i> */</i></td></tr>
+<tr><th id="286">286</th><td><b>struct</b>  <dfn class="type def" id="sigaction" title='sigaction' data-ref="sigaction">sigaction</dfn> {</td></tr>
+<tr><th id="287">287</th><td>	<b>union</b> <a class="type" href="#__sigaction_u" title='__sigaction_u' data-ref="__sigaction_u">__sigaction_u</a> <dfn class="decl" id="sigaction::__sigaction_u" title='sigaction::__sigaction_u' data-ref="sigaction::__sigaction_u">__sigaction_u</dfn>;  <i>/* signal handler */</i></td></tr>
+<tr><th id="288">288</th><td>	<a class="typedef" href="_types/_sigset_t.h.html#sigset_t" title='sigset_t' data-type='__darwin_sigset_t' data-ref="sigset_t">sigset_t</a> <dfn class="decl" id="sigaction::sa_mask" title='sigaction::sa_mask' data-ref="sigaction::sa_mask">sa_mask</dfn>;               <i>/* signal mask to apply */</i></td></tr>
+<tr><th id="289">289</th><td>	<em>int</em>     <dfn class="decl" id="sigaction::sa_flags" title='sigaction::sa_flags' data-ref="sigaction::sa_flags">sa_flags</dfn>;               <i>/* see signal options below */</i></td></tr>
+<tr><th id="290">290</th><td>};</td></tr>
+<tr><th id="291">291</th><td></td></tr>
+<tr><th id="292">292</th><td></td></tr>
+<tr><th id="293">293</th><td></td></tr>
+<tr><th id="294">294</th><td><i>/* if SA_SIGINFO is set, sa_sigaction is to be used instead of sa_handler. */</i></td></tr>
+<tr><th id="295">295</th><td><u>#define <dfn class="macro" id="_M/sa_handler" data-ref="_M/sa_handler">sa_handler</dfn>      __sigaction_u.__sa_handler</u></td></tr>
+<tr><th id="296">296</th><td><u>#define <dfn class="macro" id="_M/sa_sigaction" data-ref="_M/sa_sigaction">sa_sigaction</dfn>    __sigaction_u.__sa_sigaction</u></td></tr>
+<tr><th id="297">297</th><td></td></tr>
+<tr><th id="298">298</th><td><u>#define <dfn class="macro" id="_M/SA_ONSTACK" data-ref="_M/SA_ONSTACK">SA_ONSTACK</dfn>      0x0001  /* take signal on signal stack */</u></td></tr>
+<tr><th id="299">299</th><td><u>#define <dfn class="macro" id="_M/SA_RESTART" data-ref="_M/SA_RESTART">SA_RESTART</dfn>      0x0002  /* restart system on signal return */</u></td></tr>
+<tr><th id="300">300</th><td><u>#define <dfn class="macro" id="_M/SA_RESETHAND" data-ref="_M/SA_RESETHAND">SA_RESETHAND</dfn>    0x0004  /* reset to SIG_DFL when taking signal */</u></td></tr>
+<tr><th id="301">301</th><td><u>#define <dfn class="macro" id="_M/SA_NOCLDSTOP" data-ref="_M/SA_NOCLDSTOP">SA_NOCLDSTOP</dfn>    0x0008  /* do not generate SIGCHLD on child stop */</u></td></tr>
+<tr><th id="302">302</th><td><u>#define <dfn class="macro" id="_M/SA_NODEFER" data-ref="_M/SA_NODEFER">SA_NODEFER</dfn>      0x0010  /* don't mask the signal we're delivering */</u></td></tr>
+<tr><th id="303">303</th><td><u>#define <dfn class="macro" id="_M/SA_NOCLDWAIT" data-ref="_M/SA_NOCLDWAIT">SA_NOCLDWAIT</dfn>    0x0020  /* don't keep zombies around */</u></td></tr>
+<tr><th id="304">304</th><td><u>#define <dfn class="macro" id="_M/SA_SIGINFO" data-ref="_M/SA_SIGINFO">SA_SIGINFO</dfn>      0x0040  /* signal handler with SA_SIGINFO args */</u></td></tr>
+<tr><th id="305">305</th><td><u>#<span data-ppcond="305">if</span> !defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>) || defined(<span class="macro" data-ref="_M/_DARWIN_C_SOURCE">_DARWIN_C_SOURCE</span>)</u></td></tr>
+<tr><th id="306">306</th><td><u>#define <dfn class="macro" id="_M/SA_USERTRAMP" data-ref="_M/SA_USERTRAMP">SA_USERTRAMP</dfn>    0x0100  /* do not bounce off kernel's sigtramp */</u></td></tr>
+<tr><th id="307">307</th><td><i>/* This will provide 64bit register set in a 32bit user address space */</i></td></tr>
+<tr><th id="308">308</th><td><u>#define <dfn class="macro" id="_M/SA_64REGSET" data-ref="_M/SA_64REGSET">SA_64REGSET</dfn>     0x0200  /* signal handler with SA_SIGINFO args with 64bit regs information */</u></td></tr>
+<tr><th id="309">309</th><td><u>#<span data-ppcond="305">endif</span> /* (!_POSIX_C_SOURCE || _DARWIN_C_SOURCE) */</u></td></tr>
+<tr><th id="310">310</th><td></td></tr>
+<tr><th id="311">311</th><td><i>/* the following are the only bits we support from user space, the</i></td></tr>
+<tr><th id="312">312</th><td><i> * rest are for kernel use only.</i></td></tr>
+<tr><th id="313">313</th><td><i> */</i></td></tr>
+<tr><th id="314">314</th><td><u>#define <dfn class="macro" id="_M/SA_USERSPACE_MASK" data-ref="_M/SA_USERSPACE_MASK">SA_USERSPACE_MASK</dfn> (SA_ONSTACK | SA_RESTART | SA_RESETHAND | SA_NOCLDSTOP | SA_NODEFER | SA_NOCLDWAIT | SA_SIGINFO)</u></td></tr>
+<tr><th id="315">315</th><td></td></tr>
+<tr><th id="316">316</th><td><i>/*</i></td></tr>
+<tr><th id="317">317</th><td><i> * Flags for sigprocmask:</i></td></tr>
+<tr><th id="318">318</th><td><i> */</i></td></tr>
+<tr><th id="319">319</th><td><u>#define <dfn class="macro" id="_M/SIG_BLOCK" data-ref="_M/SIG_BLOCK">SIG_BLOCK</dfn>       1       /* block specified signal set */</u></td></tr>
+<tr><th id="320">320</th><td><u>#define <dfn class="macro" id="_M/SIG_UNBLOCK" data-ref="_M/SIG_UNBLOCK">SIG_UNBLOCK</dfn>     2       /* unblock specified signal set */</u></td></tr>
+<tr><th id="321">321</th><td><u>#define <dfn class="macro" id="_M/SIG_SETMASK" data-ref="_M/SIG_SETMASK">SIG_SETMASK</dfn>     3       /* set specified signal set */</u></td></tr>
+<tr><th id="322">322</th><td></td></tr>
+<tr><th id="323">323</th><td><i>/* POSIX 1003.1b required values. */</i></td></tr>
+<tr><th id="324">324</th><td><u>#define <dfn class="macro" id="_M/SI_USER" data-ref="_M/SI_USER">SI_USER</dfn>         0x10001 /* [CX] signal from kill() */</u></td></tr>
+<tr><th id="325">325</th><td><u>#define <dfn class="macro" id="_M/SI_QUEUE" data-ref="_M/SI_QUEUE">SI_QUEUE</dfn>        0x10002 /* [CX] signal from sigqueue() */</u></td></tr>
+<tr><th id="326">326</th><td><u>#define <dfn class="macro" id="_M/SI_TIMER" data-ref="_M/SI_TIMER">SI_TIMER</dfn>        0x10003 /* [CX] timer expiration */</u></td></tr>
+<tr><th id="327">327</th><td><u>#define <dfn class="macro" id="_M/SI_ASYNCIO" data-ref="_M/SI_ASYNCIO">SI_ASYNCIO</dfn>      0x10004 /* [CX] aio request completion */</u></td></tr>
+<tr><th id="328">328</th><td><u>#define <dfn class="macro" id="_M/SI_MESGQ" data-ref="_M/SI_MESGQ">SI_MESGQ</dfn>        0x10005 /* [CX]	from message arrival on empty queue */</u></td></tr>
+<tr><th id="329">329</th><td></td></tr>
+<tr><th id="330">330</th><td><u>#<span data-ppcond="330">if</span> !defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>) || defined(<span class="macro" data-ref="_M/_DARWIN_C_SOURCE">_DARWIN_C_SOURCE</span>)</u></td></tr>
+<tr><th id="331">331</th><td><b>typedef</b> <em>void</em> (*<dfn class="typedef" id="sig_t" title='sig_t' data-type='void (*)(int)' data-ref="sig_t">sig_t</dfn>)(<em>int</em>);     <i>/* type of signal function */</i></td></tr>
+<tr><th id="332">332</th><td><u>#<span data-ppcond="330">endif</span></u></td></tr>
+<tr><th id="333">333</th><td></td></tr>
+<tr><th id="334">334</th><td><i>/*</i></td></tr>
+<tr><th id="335">335</th><td><i> * Structure used in sigaltstack call.</i></td></tr>
+<tr><th id="336">336</th><td><i> */</i></td></tr>
+<tr><th id="337">337</th><td></td></tr>
+<tr><th id="338">338</th><td><u>#define <dfn class="macro" id="_M/SS_ONSTACK" data-ref="_M/SS_ONSTACK">SS_ONSTACK</dfn>      0x0001  /* take signal on signal stack */</u></td></tr>
+<tr><th id="339">339</th><td><u>#define <dfn class="macro" id="_M/SS_DISABLE" data-ref="_M/SS_DISABLE">SS_DISABLE</dfn>      0x0004  /* disable taking signals on alternate stack */</u></td></tr>
+<tr><th id="340">340</th><td><u>#define <dfn class="macro" id="_M/MINSIGSTKSZ" data-ref="_M/MINSIGSTKSZ">MINSIGSTKSZ</dfn>     32768   /* (32K)minimum allowable stack */</u></td></tr>
+<tr><th id="341">341</th><td><u>#define <dfn class="macro" id="_M/SIGSTKSZ" data-ref="_M/SIGSTKSZ">SIGSTKSZ</dfn>        131072  /* (128K)recommended stack size */</u></td></tr>
+<tr><th id="342">342</th><td></td></tr>
+<tr><th id="343">343</th><td><u>#<span data-ppcond="343">if</span> !defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>) || defined(<span class="macro" data-ref="_M/_DARWIN_C_SOURCE">_DARWIN_C_SOURCE</span>)</u></td></tr>
+<tr><th id="344">344</th><td><i>/*</i></td></tr>
+<tr><th id="345">345</th><td><i> * 4.3 compatibility:</i></td></tr>
+<tr><th id="346">346</th><td><i> * Signal vector "template" used in sigvec call.</i></td></tr>
+<tr><th id="347">347</th><td><i> */</i></td></tr>
+<tr><th id="348">348</th><td><b>struct</b>  <dfn class="type def" id="sigvec" title='sigvec' data-ref="sigvec">sigvec</dfn> {</td></tr>
+<tr><th id="349">349</th><td>	<em>void</em>    (*<dfn class="decl" id="sigvec::sv_handler" title='sigvec::sv_handler' data-ref="sigvec::sv_handler">sv_handler</dfn>)(<em>int</em>);     <i>/* signal handler */</i></td></tr>
+<tr><th id="350">350</th><td>	<em>int</em>     <dfn class="decl" id="sigvec::sv_mask" title='sigvec::sv_mask' data-ref="sigvec::sv_mask">sv_mask</dfn>;                <i>/* signal mask to apply */</i></td></tr>
+<tr><th id="351">351</th><td>	<em>int</em>     <dfn class="decl" id="sigvec::sv_flags" title='sigvec::sv_flags' data-ref="sigvec::sv_flags">sv_flags</dfn>;               <i>/* see signal options below */</i></td></tr>
+<tr><th id="352">352</th><td>};</td></tr>
+<tr><th id="353">353</th><td></td></tr>
+<tr><th id="354">354</th><td><u>#define <dfn class="macro" id="_M/SV_ONSTACK" data-ref="_M/SV_ONSTACK">SV_ONSTACK</dfn>      SA_ONSTACK</u></td></tr>
+<tr><th id="355">355</th><td><u>#define <dfn class="macro" id="_M/SV_INTERRUPT" data-ref="_M/SV_INTERRUPT">SV_INTERRUPT</dfn>    SA_RESTART      /* same bit, opposite sense */</u></td></tr>
+<tr><th id="356">356</th><td><u>#define <dfn class="macro" id="_M/SV_RESETHAND" data-ref="_M/SV_RESETHAND">SV_RESETHAND</dfn>    SA_RESETHAND</u></td></tr>
+<tr><th id="357">357</th><td><u>#define <dfn class="macro" id="_M/SV_NODEFER" data-ref="_M/SV_NODEFER">SV_NODEFER</dfn>      SA_NODEFER</u></td></tr>
+<tr><th id="358">358</th><td><u>#define <dfn class="macro" id="_M/SV_NOCLDSTOP" data-ref="_M/SV_NOCLDSTOP">SV_NOCLDSTOP</dfn>    SA_NOCLDSTOP</u></td></tr>
+<tr><th id="359">359</th><td><u>#define <dfn class="macro" id="_M/SV_SIGINFO" data-ref="_M/SV_SIGINFO">SV_SIGINFO</dfn>      SA_SIGINFO</u></td></tr>
+<tr><th id="360">360</th><td></td></tr>
+<tr><th id="361">361</th><td><u>#define <dfn class="macro" id="_M/sv_onstack" data-ref="_M/sv_onstack">sv_onstack</dfn> sv_flags     /* isn't compatibility wonderful! */</u></td></tr>
+<tr><th id="362">362</th><td><u>#<span data-ppcond="343">endif</span> /* (!_POSIX_C_SOURCE || _DARWIN_C_SOURCE) */</u></td></tr>
+<tr><th id="363">363</th><td></td></tr>
+<tr><th id="364">364</th><td><i>/*</i></td></tr>
+<tr><th id="365">365</th><td><i> * Structure used in sigstack call.</i></td></tr>
+<tr><th id="366">366</th><td><i> */</i></td></tr>
+<tr><th id="367">367</th><td><b>struct</b>  <dfn class="type def" id="sigstack" title='sigstack' data-ref="sigstack">sigstack</dfn> {</td></tr>
+<tr><th id="368">368</th><td>	<em>char</em>    *<dfn class="decl" id="sigstack::ss_sp" title='sigstack::ss_sp' data-ref="sigstack::ss_sp">ss_sp</dfn>;                 <i>/* signal stack pointer */</i></td></tr>
+<tr><th id="369">369</th><td>	<em>int</em>     <dfn class="decl" id="sigstack::ss_onstack" title='sigstack::ss_onstack' data-ref="sigstack::ss_onstack">ss_onstack</dfn>;             <i>/* current status */</i></td></tr>
+<tr><th id="370">370</th><td>};</td></tr>
+<tr><th id="371">371</th><td></td></tr>
+<tr><th id="372">372</th><td><u>#<span data-ppcond="372">if</span> !defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>) || defined(<span class="macro" data-ref="_M/_DARWIN_C_SOURCE">_DARWIN_C_SOURCE</span>)</u></td></tr>
+<tr><th id="373">373</th><td><i>/*</i></td></tr>
+<tr><th id="374">374</th><td><i> * Macro for converting signal number to a mask suitable for</i></td></tr>
+<tr><th id="375">375</th><td><i> * sigblock().</i></td></tr>
+<tr><th id="376">376</th><td><i> */</i></td></tr>
+<tr><th id="377">377</th><td><u>#define <dfn class="macro" id="_M/sigmask" data-ref="_M/sigmask">sigmask</dfn>(m)      (1 &lt;&lt; ((m)-1))</u></td></tr>
+<tr><th id="378">378</th><td></td></tr>
+<tr><th id="379">379</th><td></td></tr>
+<tr><th id="380">380</th><td><u>#define <dfn class="macro" id="_M/BADSIG" data-ref="_M/BADSIG">BADSIG</dfn>          SIG_ERR</u></td></tr>
+<tr><th id="381">381</th><td></td></tr>
+<tr><th id="382">382</th><td><u>#<span data-ppcond="372">endif</span>  /* (!_POSIX_C_SOURCE || _DARWIN_C_SOURCE) */</u></td></tr>
+<tr><th id="383">383</th><td><u>#<span data-ppcond="143">endif</span>  /* !_ANSI_SOURCE */</u></td></tr>
+<tr><th id="384">384</th><td></td></tr>
+<tr><th id="385">385</th><td><i>/*</i></td></tr>
+<tr><th id="386">386</th><td><i> * For historical reasons; programs expect signal's return value to be</i></td></tr>
+<tr><th id="387">387</th><td><i> * defined by &lt;sys/signal.h&gt;.</i></td></tr>
+<tr><th id="388">388</th><td><i> */</i></td></tr>
+<tr><th id="389">389</th><td><a class="macro" href="cdefs.h.html#74" title="" data-ref="_M/__BEGIN_DECLS">__BEGIN_DECLS</a></td></tr>
+<tr><th id="390">390</th><td>    <em>void</em>(*<dfn class="decl" id="signal" title='signal' data-ref="signal">signal</dfn>(<em>int</em>, <em>void</em> (*)(<em>int</em>)))(<em>int</em>);</td></tr>
+<tr><th id="391">391</th><td><a class="macro" href="cdefs.h.html#75" title="" data-ref="_M/__END_DECLS">__END_DECLS</a></td></tr>
+<tr><th id="392">392</th><td><u>#<span data-ppcond="69">endif</span>  /* !_SYS_SIGNAL_H_ */</u></td></tr>
+<tr><th id="393">393</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../xv6/mkfs.c.html'>xv6/mkfs.c</a><br/>Generated on <em>2019-Jul-19</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 2.1
+<br/>Generator usage only permitted with license.</p>
+</div></body></html>

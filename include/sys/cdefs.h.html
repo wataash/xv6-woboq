@@ -1,0 +1,809 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>cdefs.h source code [include/sys/cdefs.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="https://code.woboq.org/data/qtcreator.css" title="QtCreator"/>
+<link rel="alternate stylesheet" href="https://code.woboq.org/data/kdevelop.css" title="KDevelop"/>
+<script type="text/javascript" src="https://code.woboq.org/data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="https://code.woboq.org/data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/sys/cdefs.h'; var root_path = '../..'; var data_path = 'https://code.woboq.org/data';</script>
+<script src='https://code.woboq.org/data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Browse the source code of </span><a href='..'>include</a>/<a href='./'>sys</a>/<a href='cdefs.h.html'>cdefs.h</a></h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (c) 2000-2018 Apple Inc. All rights reserved.</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * @APPLE_OSREFERENCE_LICENSE_HEADER_START@</i></td></tr>
+<tr><th id="5">5</th><td><i> *</i></td></tr>
+<tr><th id="6">6</th><td><i> * This file contains Original Code and/or Modifications of Original Code</i></td></tr>
+<tr><th id="7">7</th><td><i> * as defined in and that are subject to the Apple Public Source License</i></td></tr>
+<tr><th id="8">8</th><td><i> * Version 2.0 (the 'License'). You may not use this file except in</i></td></tr>
+<tr><th id="9">9</th><td><i> * compliance with the License. The rights granted to you under the License</i></td></tr>
+<tr><th id="10">10</th><td><i> * may not be used to create, or enable the creation or redistribution of,</i></td></tr>
+<tr><th id="11">11</th><td><i> * unlawful or unlicensed copies of an Apple operating system, or to</i></td></tr>
+<tr><th id="12">12</th><td><i> * circumvent, violate, or enable the circumvention or violation of, any</i></td></tr>
+<tr><th id="13">13</th><td><i> * terms of an Apple operating system software license agreement.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * Please obtain a copy of the License at</i></td></tr>
+<tr><th id="16">16</th><td><i> * <a href="http://www.opensource.apple.com/apsl/">http://www.opensource.apple.com/apsl/</a> and read it before using this file.</i></td></tr>
+<tr><th id="17">17</th><td><i> *</i></td></tr>
+<tr><th id="18">18</th><td><i> * The Original Code and all software distributed under the License are</i></td></tr>
+<tr><th id="19">19</th><td><i> * distributed on an 'AS IS' basis, WITHOUT WARRANTY OF ANY KIND, EITHER</i></td></tr>
+<tr><th id="20">20</th><td><i> * EXPRESS OR IMPLIED, AND APPLE HEREBY DISCLAIMS ALL SUCH WARRANTIES,</i></td></tr>
+<tr><th id="21">21</th><td><i> * INCLUDING WITHOUT LIMITATION, ANY WARRANTIES OF MERCHANTABILITY,</i></td></tr>
+<tr><th id="22">22</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE, QUIET ENJOYMENT OR NON-INFRINGEMENT.</i></td></tr>
+<tr><th id="23">23</th><td><i> * Please see the License for the specific language governing rights and</i></td></tr>
+<tr><th id="24">24</th><td><i> * limitations under the License.</i></td></tr>
+<tr><th id="25">25</th><td><i> *</i></td></tr>
+<tr><th id="26">26</th><td><i> * @APPLE_OSREFERENCE_LICENSE_HEADER_END@</i></td></tr>
+<tr><th id="27">27</th><td><i> */</i></td></tr>
+<tr><th id="28">28</th><td><i>/* Copyright 1995 NeXT Computer, Inc. All rights reserved. */</i></td></tr>
+<tr><th id="29">29</th><td><i>/*</i></td></tr>
+<tr><th id="30">30</th><td><i> * Copyright (c) 1991, 1993</i></td></tr>
+<tr><th id="31">31</th><td><i> *	The Regents of the University of California.  All rights reserved.</i></td></tr>
+<tr><th id="32">32</th><td><i> *</i></td></tr>
+<tr><th id="33">33</th><td><i> * This code is derived from software contributed to Berkeley by</i></td></tr>
+<tr><th id="34">34</th><td><i> * Berkeley Software Design, Inc.</i></td></tr>
+<tr><th id="35">35</th><td><i> *</i></td></tr>
+<tr><th id="36">36</th><td><i> * Redistribution and use in source and binary forms, with or without</i></td></tr>
+<tr><th id="37">37</th><td><i> * modification, are permitted provided that the following conditions</i></td></tr>
+<tr><th id="38">38</th><td><i> * are met:</i></td></tr>
+<tr><th id="39">39</th><td><i> * 1. Redistributions of source code must retain the above copyright</i></td></tr>
+<tr><th id="40">40</th><td><i> *    notice, this list of conditions and the following disclaimer.</i></td></tr>
+<tr><th id="41">41</th><td><i> * 2. Redistributions in binary form must reproduce the above copyright</i></td></tr>
+<tr><th id="42">42</th><td><i> *    notice, this list of conditions and the following disclaimer in the</i></td></tr>
+<tr><th id="43">43</th><td><i> *    documentation and/or other materials provided with the distribution.</i></td></tr>
+<tr><th id="44">44</th><td><i> * 3. All advertising materials mentioning features or use of this software</i></td></tr>
+<tr><th id="45">45</th><td><i> *    must display the following acknowledgement:</i></td></tr>
+<tr><th id="46">46</th><td><i> *	This product includes software developed by the University of</i></td></tr>
+<tr><th id="47">47</th><td><i> *	California, Berkeley and its contributors.</i></td></tr>
+<tr><th id="48">48</th><td><i> * 4. Neither the name of the University nor the names of its contributors</i></td></tr>
+<tr><th id="49">49</th><td><i> *    may be used to endorse or promote products derived from this software</i></td></tr>
+<tr><th id="50">50</th><td><i> *    without specific prior written permission.</i></td></tr>
+<tr><th id="51">51</th><td><i> *</i></td></tr>
+<tr><th id="52">52</th><td><i> * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND</i></td></tr>
+<tr><th id="53">53</th><td><i> * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE</i></td></tr>
+<tr><th id="54">54</th><td><i> * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE</i></td></tr>
+<tr><th id="55">55</th><td><i> * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE</i></td></tr>
+<tr><th id="56">56</th><td><i> * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL</i></td></tr>
+<tr><th id="57">57</th><td><i> * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS</i></td></tr>
+<tr><th id="58">58</th><td><i> * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)</i></td></tr>
+<tr><th id="59">59</th><td><i> * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT</i></td></tr>
+<tr><th id="60">60</th><td><i> * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY</i></td></tr>
+<tr><th id="61">61</th><td><i> * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF</i></td></tr>
+<tr><th id="62">62</th><td><i> * SUCH DAMAGE.</i></td></tr>
+<tr><th id="63">63</th><td><i> *</i></td></tr>
+<tr><th id="64">64</th><td><i> *	@(#)cdefs.h	8.8 (Berkeley) 1/9/95</i></td></tr>
+<tr><th id="65">65</th><td><i> */</i></td></tr>
+<tr><th id="66">66</th><td></td></tr>
+<tr><th id="67">67</th><td><u>#<span data-ppcond="67">ifndef</span> <span class="macro" data-ref="_M/_CDEFS_H_">_CDEFS_H_</span></u></td></tr>
+<tr><th id="68">68</th><td><u>#define <dfn class="macro" id="_M/_CDEFS_H_" data-ref="_M/_CDEFS_H_">_CDEFS_H_</dfn></u></td></tr>
+<tr><th id="69">69</th><td></td></tr>
+<tr><th id="70">70</th><td><u>#<span data-ppcond="70">if</span> defined(<span class="macro" data-ref="_M/__cplusplus">__cplusplus</span>)</u></td></tr>
+<tr><th id="71">71</th><td><u>#define __BEGIN_DECLS   extern "C" {</u></td></tr>
+<tr><th id="72">72</th><td><u>#define __END_DECLS     }</u></td></tr>
+<tr><th id="73">73</th><td><u>#<span data-ppcond="70">else</span></u></td></tr>
+<tr><th id="74">74</th><td><u>#define <dfn class="macro" id="_M/__BEGIN_DECLS" data-ref="_M/__BEGIN_DECLS">__BEGIN_DECLS</dfn></u></td></tr>
+<tr><th id="75">75</th><td><u>#define <dfn class="macro" id="_M/__END_DECLS" data-ref="_M/__END_DECLS">__END_DECLS</dfn></u></td></tr>
+<tr><th id="76">76</th><td><u>#<span data-ppcond="70">endif</span></u></td></tr>
+<tr><th id="77">77</th><td></td></tr>
+<tr><th id="78">78</th><td><i>/* This SDK is designed to work with clang and specific versions of</i></td></tr>
+<tr><th id="79">79</th><td><i> * gcc &gt;= 4.0 with Apple's patch sets */</i></td></tr>
+<tr><th id="80">80</th><td><u>#<span data-ppcond="80">if</span> !defined(<span class="macro" data-ref="_M/__GNUC__">__GNUC__</span>) || <span class="macro" title="4" data-ref="_M/__GNUC__">__GNUC__</span> &lt; 4</u></td></tr>
+<tr><th id="81">81</th><td><u>#warning "Unsupported compiler detected"</u></td></tr>
+<tr><th id="82">82</th><td><u>#<span data-ppcond="80">endif</span></u></td></tr>
+<tr><th id="83">83</th><td></td></tr>
+<tr><th id="84">84</th><td><i>/*</i></td></tr>
+<tr><th id="85">85</th><td><i> * Compatibility with compilers and environments that don't support compiler</i></td></tr>
+<tr><th id="86">86</th><td><i> * feature checking function-like macros.</i></td></tr>
+<tr><th id="87">87</th><td><i> */</i></td></tr>
+<tr><th id="88">88</th><td><u>#<span data-ppcond="88">ifndef</span> <span class="macro" data-ref="_M/__has_builtin">__has_builtin</span></u></td></tr>
+<tr><th id="89">89</th><td><u>#define __has_builtin(x) 0</u></td></tr>
+<tr><th id="90">90</th><td><u>#<span data-ppcond="88">endif</span></u></td></tr>
+<tr><th id="91">91</th><td><u>#<span data-ppcond="91">ifndef</span> <span class="macro" data-ref="_M/__has_include">__has_include</span></u></td></tr>
+<tr><th id="92">92</th><td><u>#define __has_include(x) 0</u></td></tr>
+<tr><th id="93">93</th><td><u>#<span data-ppcond="91">endif</span></u></td></tr>
+<tr><th id="94">94</th><td><u>#<span data-ppcond="94">ifndef</span> <span class="macro" data-ref="_M/__has_feature">__has_feature</span></u></td></tr>
+<tr><th id="95">95</th><td><u>#define __has_feature(x) 0</u></td></tr>
+<tr><th id="96">96</th><td><u>#<span data-ppcond="94">endif</span></u></td></tr>
+<tr><th id="97">97</th><td><u>#<span data-ppcond="97">ifndef</span> <span class="macro" data-ref="_M/__has_attribute">__has_attribute</span></u></td></tr>
+<tr><th id="98">98</th><td><u>#define __has_attribute(x) 0</u></td></tr>
+<tr><th id="99">99</th><td><u>#<span data-ppcond="97">endif</span></u></td></tr>
+<tr><th id="100">100</th><td><u>#<span data-ppcond="100">ifndef</span> <span class="macro" data-ref="_M/__has_extension">__has_extension</span></u></td></tr>
+<tr><th id="101">101</th><td><u>#define __has_extension(x) 0</u></td></tr>
+<tr><th id="102">102</th><td><u>#<span data-ppcond="100">endif</span></u></td></tr>
+<tr><th id="103">103</th><td></td></tr>
+<tr><th id="104">104</th><td><i>/*</i></td></tr>
+<tr><th id="105">105</th><td><i> * The __CONCAT macro is used to concatenate parts of symbol names, e.g.</i></td></tr>
+<tr><th id="106">106</th><td><i> * with "#define OLD(foo) __CONCAT(old,foo)", OLD(foo) produces oldfoo.</i></td></tr>
+<tr><th id="107">107</th><td><i> * The __CONCAT macro is a bit tricky -- make sure you don't put spaces</i></td></tr>
+<tr><th id="108">108</th><td><i> * in between its arguments.  __CONCAT can also concatenate double-quoted</i></td></tr>
+<tr><th id="109">109</th><td><i> * strings produced by the __STRING macro, but this only works with ANSI C.</i></td></tr>
+<tr><th id="110">110</th><td><i> */</i></td></tr>
+<tr><th id="111">111</th><td><u>#<span data-ppcond="111">if</span> defined(<span class="macro" data-ref="_M/__STDC__">__STDC__</span>) || defined(<span class="macro" data-ref="_M/__cplusplus">__cplusplus</span>)</u></td></tr>
+<tr><th id="112">112</th><td><u>#define <dfn class="macro" id="_M/__P" data-ref="_M/__P">__P</dfn>(protos)     protos          /* full-blown ANSI C */</u></td></tr>
+<tr><th id="113">113</th><td><u>#define <dfn class="macro" id="_M/__CONCAT" data-ref="_M/__CONCAT">__CONCAT</dfn>(x, y)   x ## y</u></td></tr>
+<tr><th id="114">114</th><td><u>#define <dfn class="macro" id="_M/__STRING" data-ref="_M/__STRING">__STRING</dfn>(x)     #x</u></td></tr>
+<tr><th id="115">115</th><td></td></tr>
+<tr><th id="116">116</th><td><u>#define <dfn class="macro" id="_M/__const" data-ref="_M/__const">__const</dfn>         const           /* define reserved names to standard */</u></td></tr>
+<tr><th id="117">117</th><td><u>#define <dfn class="macro" id="_M/__signed" data-ref="_M/__signed">__signed</dfn>        signed</u></td></tr>
+<tr><th id="118">118</th><td><u>#define <dfn class="macro" id="_M/__volatile" data-ref="_M/__volatile">__volatile</dfn>      volatile</u></td></tr>
+<tr><th id="119">119</th><td><u>#<span data-ppcond="119">if</span> defined(<span class="macro" data-ref="_M/__cplusplus">__cplusplus</span>)</u></td></tr>
+<tr><th id="120">120</th><td><u>#define __inline        inline          /* convert to C++ keyword */</u></td></tr>
+<tr><th id="121">121</th><td><u>#<span data-ppcond="119">else</span></u></td></tr>
+<tr><th id="122">122</th><td><u>#<span data-ppcond="122">ifndef</span> <span class="macro" data-ref="_M/__GNUC__">__GNUC__</span></u></td></tr>
+<tr><th id="123">123</th><td><u>#define __inline                        /* delete GCC keyword */</u></td></tr>
+<tr><th id="124">124</th><td><u>#<span data-ppcond="122">endif</span> /* !__GNUC__ */</u></td></tr>
+<tr><th id="125">125</th><td><u>#<span data-ppcond="119">endif</span> /* !__cplusplus */</u></td></tr>
+<tr><th id="126">126</th><td></td></tr>
+<tr><th id="127">127</th><td><u>#<span data-ppcond="111">else</span>   /* !(__STDC__ || __cplusplus) */</u></td></tr>
+<tr><th id="128">128</th><td><u>#define __P(protos)     ()              /* traditional C preprocessor */</u></td></tr>
+<tr><th id="129">129</th><td><u>#define __CONCAT(x, y)   x /**/ y</u></td></tr>
+<tr><th id="130">130</th><td><u>#define __STRING(x)     "x"</u></td></tr>
+<tr><th id="131">131</th><td></td></tr>
+<tr><th id="132">132</th><td><u>#ifndef __GNUC__</u></td></tr>
+<tr><th id="133">133</th><td><u>#define __const                         /* delete pseudo-ANSI C keywords */</u></td></tr>
+<tr><th id="134">134</th><td><u>#define __inline</u></td></tr>
+<tr><th id="135">135</th><td><u>#define __signed</u></td></tr>
+<tr><th id="136">136</th><td><u>#define __volatile</u></td></tr>
+<tr><th id="137">137</th><td><u>#endif  /* !__GNUC__ */</u></td></tr>
+<tr><th id="138">138</th><td></td></tr>
+<tr><th id="139">139</th><td><i>/*</i></td></tr>
+<tr><th id="140">140</th><td><i> * In non-ANSI C environments, new programs will want ANSI-only C keywords</i></td></tr>
+<tr><th id="141">141</th><td><i> * deleted from the program and old programs will want them left alone.</i></td></tr>
+<tr><th id="142">142</th><td><i> * When using a compiler other than gcc, programs using the ANSI C keywords</i></td></tr>
+<tr><th id="143">143</th><td><i> * const, inline etc. as normal identifiers should define -DNO_ANSI_KEYWORDS.</i></td></tr>
+<tr><th id="144">144</th><td><i> * When using "gcc -traditional", we assume that this is the intent; if</i></td></tr>
+<tr><th id="145">145</th><td><i> * __GNUC__ is defined but __STDC__ is not, we leave the new keywords alone.</i></td></tr>
+<tr><th id="146">146</th><td><i> */</i></td></tr>
+<tr><th id="147">147</th><td><u>#ifndef NO_ANSI_KEYWORDS</u></td></tr>
+<tr><th id="148">148</th><td><u>#define const           __const                 /* convert ANSI C keywords */</u></td></tr>
+<tr><th id="149">149</th><td><u>#define inline          __inline</u></td></tr>
+<tr><th id="150">150</th><td><u>#define signed          __signed</u></td></tr>
+<tr><th id="151">151</th><td><u>#define volatile        __volatile</u></td></tr>
+<tr><th id="152">152</th><td><u>#endif /* !NO_ANSI_KEYWORDS */</u></td></tr>
+<tr><th id="153">153</th><td><u>#<span data-ppcond="111">endif</span> /* !(__STDC__ || __cplusplus) */</u></td></tr>
+<tr><th id="154">154</th><td></td></tr>
+<tr><th id="155">155</th><td><u>#define <dfn class="macro" id="_M/__dead2" data-ref="_M/__dead2">__dead2</dfn>         __attribute__((noreturn))</u></td></tr>
+<tr><th id="156">156</th><td><u>#define <dfn class="macro" id="_M/__pure2" data-ref="_M/__pure2">__pure2</dfn>         __attribute__((const))</u></td></tr>
+<tr><th id="157">157</th><td></td></tr>
+<tr><th id="158">158</th><td><i>/* __unused denotes variables and functions that may not be used, preventing</i></td></tr>
+<tr><th id="159">159</th><td><i> * the compiler from warning about it if not used.</i></td></tr>
+<tr><th id="160">160</th><td><i> */</i></td></tr>
+<tr><th id="161">161</th><td><u>#define <dfn class="macro" id="_M/__unused" data-ref="_M/__unused">__unused</dfn>        __attribute__((unused))</u></td></tr>
+<tr><th id="162">162</th><td></td></tr>
+<tr><th id="163">163</th><td><i>/* __used forces variables and functions to be included even if it appears</i></td></tr>
+<tr><th id="164">164</th><td><i> * to the compiler that they are not used (and would thust be discarded).</i></td></tr>
+<tr><th id="165">165</th><td><i> */</i></td></tr>
+<tr><th id="166">166</th><td><u>#define <dfn class="macro" id="_M/__used" data-ref="_M/__used">__used</dfn>          __attribute__((used))</u></td></tr>
+<tr><th id="167">167</th><td></td></tr>
+<tr><th id="168">168</th><td><i>/* __deprecated causes the compiler to produce a warning when encountering</i></td></tr>
+<tr><th id="169">169</th><td><i> * code using the deprecated functionality.</i></td></tr>
+<tr><th id="170">170</th><td><i> * __deprecated_msg() does the same, and compilers that support it will print</i></td></tr>
+<tr><th id="171">171</th><td><i> * a message along with the deprecation warning.</i></td></tr>
+<tr><th id="172">172</th><td><i> * This may require turning on such warning with the -Wdeprecated flag.</i></td></tr>
+<tr><th id="173">173</th><td><i> * __deprecated_enum_msg() should be used on enums, and compilers that support</i></td></tr>
+<tr><th id="174">174</th><td><i> * it will print the deprecation warning.</i></td></tr>
+<tr><th id="175">175</th><td><i> */</i></td></tr>
+<tr><th id="176">176</th><td><u>#define <dfn class="macro" id="_M/__deprecated" data-ref="_M/__deprecated">__deprecated</dfn>    __attribute__((deprecated))</u></td></tr>
+<tr><th id="177">177</th><td></td></tr>
+<tr><th id="178">178</th><td><u>#<span data-ppcond="178">if</span> <span class="macro" title="" data-ref="_M/__has_extension">__has_extension</span>(attribute_deprecated_with_message) || \</u></td></tr>
+<tr><th id="179">179</th><td><u>        (defined(<span class="macro" data-ref="_M/__GNUC__">__GNUC__</span>) &amp;&amp; ((<span class="macro" title="4" data-ref="_M/__GNUC__">__GNUC__</span> &gt;= 5) || ((<span class="macro" title="4" data-ref="_M/__GNUC__">__GNUC__</span> == 4) &amp;&amp; (<span class="macro" title="2" data-ref="_M/__GNUC_MINOR__">__GNUC_MINOR__</span> &gt;= 5))))</u></td></tr>
+<tr><th id="180">180</th><td>	<u>#define <dfn class="macro" id="_M/__deprecated_msg" data-ref="_M/__deprecated_msg">__deprecated_msg</dfn>(_msg) __attribute__((deprecated(_msg)))</u></td></tr>
+<tr><th id="181">181</th><td><u>#<span data-ppcond="178">else</span></u></td></tr>
+<tr><th id="182">182</th><td>	<u>#define __deprecated_msg(_msg) __attribute__((deprecated))</u></td></tr>
+<tr><th id="183">183</th><td><u>#<span data-ppcond="178">endif</span></u></td></tr>
+<tr><th id="184">184</th><td></td></tr>
+<tr><th id="185">185</th><td><u>#<span data-ppcond="185">if</span> <span class="macro" title="" data-ref="_M/__has_extension">__has_extension</span>(enumerator_attributes)</u></td></tr>
+<tr><th id="186">186</th><td>	<u>#define <dfn class="macro" id="_M/__deprecated_enum_msg" data-ref="_M/__deprecated_enum_msg">__deprecated_enum_msg</dfn>(_msg) __deprecated_msg(_msg)</u></td></tr>
+<tr><th id="187">187</th><td><u>#<span data-ppcond="185">else</span></u></td></tr>
+<tr><th id="188">188</th><td>	<u>#define __deprecated_enum_msg(_msg)</u></td></tr>
+<tr><th id="189">189</th><td><u>#<span data-ppcond="185">endif</span></u></td></tr>
+<tr><th id="190">190</th><td></td></tr>
+<tr><th id="191">191</th><td><i>/* __unavailable causes the compiler to error out when encountering</i></td></tr>
+<tr><th id="192">192</th><td><i> * code using the tagged function of variable.</i></td></tr>
+<tr><th id="193">193</th><td><i> */</i></td></tr>
+<tr><th id="194">194</th><td><u>#define <dfn class="macro" id="_M/__unavailable" data-ref="_M/__unavailable">__unavailable</dfn>   __attribute__((unavailable))</u></td></tr>
+<tr><th id="195">195</th><td></td></tr>
+<tr><th id="196">196</th><td><i>/* Delete pseudo-keywords wherever they are not available or needed. */</i></td></tr>
+<tr><th id="197">197</th><td><u>#<span data-ppcond="197">ifndef</span> <span class="macro" data-ref="_M/__dead">__dead</span></u></td></tr>
+<tr><th id="198">198</th><td><u>#define <dfn class="macro" id="_M/__dead" data-ref="_M/__dead">__dead</dfn></u></td></tr>
+<tr><th id="199">199</th><td><u>#define <dfn class="macro" id="_M/__pure" data-ref="_M/__pure">__pure</dfn></u></td></tr>
+<tr><th id="200">200</th><td><u>#<span data-ppcond="197">endif</span></u></td></tr>
+<tr><th id="201">201</th><td></td></tr>
+<tr><th id="202">202</th><td><i>/*</i></td></tr>
+<tr><th id="203">203</th><td><i> * We use `__restrict' as a way to define the `restrict' type qualifier</i></td></tr>
+<tr><th id="204">204</th><td><i> * without disturbing older software that is unaware of C99 keywords.</i></td></tr>
+<tr><th id="205">205</th><td><i> */</i></td></tr>
+<tr><th id="206">206</th><td><u>#<span data-ppcond="206">if</span> <span class="macro" title="201112L" data-ref="_M/__STDC_VERSION__">__STDC_VERSION__</span> &lt; 199901</u></td></tr>
+<tr><th id="207">207</th><td><u>#define __restrict</u></td></tr>
+<tr><th id="208">208</th><td><u>#<span data-ppcond="206">else</span></u></td></tr>
+<tr><th id="209">209</th><td><u>#define <dfn class="macro" id="_M/__restrict" data-ref="_M/__restrict">__restrict</dfn>      restrict</u></td></tr>
+<tr><th id="210">210</th><td><u>#<span data-ppcond="206">endif</span></u></td></tr>
+<tr><th id="211">211</th><td></td></tr>
+<tr><th id="212">212</th><td><i>/* Compatibility with compilers and environments that don't support the</i></td></tr>
+<tr><th id="213">213</th><td><i> * nullability feature.</i></td></tr>
+<tr><th id="214">214</th><td><i> */</i></td></tr>
+<tr><th id="215">215</th><td></td></tr>
+<tr><th id="216">216</th><td><u>#<span data-ppcond="216">if</span> !<span class="macro" title="" data-ref="_M/__has_feature">__has_feature</span>(nullability)</u></td></tr>
+<tr><th id="217">217</th><td><u>#ifndef __nullable</u></td></tr>
+<tr><th id="218">218</th><td><u>#define __nullable</u></td></tr>
+<tr><th id="219">219</th><td><u>#endif</u></td></tr>
+<tr><th id="220">220</th><td><u>#ifndef __nonnull</u></td></tr>
+<tr><th id="221">221</th><td><u>#define __nonnull</u></td></tr>
+<tr><th id="222">222</th><td><u>#endif</u></td></tr>
+<tr><th id="223">223</th><td><u>#ifndef __null_unspecified</u></td></tr>
+<tr><th id="224">224</th><td><u>#define __null_unspecified</u></td></tr>
+<tr><th id="225">225</th><td><u>#endif</u></td></tr>
+<tr><th id="226">226</th><td><u>#ifndef _Nullable</u></td></tr>
+<tr><th id="227">227</th><td><u>#define _Nullable</u></td></tr>
+<tr><th id="228">228</th><td><u>#endif</u></td></tr>
+<tr><th id="229">229</th><td><u>#ifndef _Nonnull</u></td></tr>
+<tr><th id="230">230</th><td><u>#define _Nonnull</u></td></tr>
+<tr><th id="231">231</th><td><u>#endif</u></td></tr>
+<tr><th id="232">232</th><td><u>#ifndef _Null_unspecified</u></td></tr>
+<tr><th id="233">233</th><td><u>#define _Null_unspecified</u></td></tr>
+<tr><th id="234">234</th><td><u>#endif</u></td></tr>
+<tr><th id="235">235</th><td><u>#<span data-ppcond="216">endif</span></u></td></tr>
+<tr><th id="236">236</th><td></td></tr>
+<tr><th id="237">237</th><td><i>/*</i></td></tr>
+<tr><th id="238">238</th><td><i> * __disable_tail_calls causes the compiler to not perform tail call</i></td></tr>
+<tr><th id="239">239</th><td><i> * optimization inside the marked function.</i></td></tr>
+<tr><th id="240">240</th><td><i> */</i></td></tr>
+<tr><th id="241">241</th><td><u>#<span data-ppcond="241">if</span> <span class="macro" title="" data-ref="_M/__has_attribute">__has_attribute</span>(disable_tail_calls)</u></td></tr>
+<tr><th id="242">242</th><td><u>#define <dfn class="macro" id="_M/__disable_tail_calls" data-ref="_M/__disable_tail_calls">__disable_tail_calls</dfn>    __attribute__((__disable_tail_calls__))</u></td></tr>
+<tr><th id="243">243</th><td><u>#<span data-ppcond="241">else</span></u></td></tr>
+<tr><th id="244">244</th><td><u>#define __disable_tail_calls</u></td></tr>
+<tr><th id="245">245</th><td><u>#<span data-ppcond="241">endif</span></u></td></tr>
+<tr><th id="246">246</th><td></td></tr>
+<tr><th id="247">247</th><td><i>/*</i></td></tr>
+<tr><th id="248">248</th><td><i> * __not_tail_called causes the compiler to prevent tail call optimization</i></td></tr>
+<tr><th id="249">249</th><td><i> * on statically bound calls to the function.  It has no effect on indirect</i></td></tr>
+<tr><th id="250">250</th><td><i> * calls.  Virtual functions, objective-c methods, and functions marked as</i></td></tr>
+<tr><th id="251">251</th><td><i> * "always_inline" cannot be marked as __not_tail_called.</i></td></tr>
+<tr><th id="252">252</th><td><i> */</i></td></tr>
+<tr><th id="253">253</th><td><u>#<span data-ppcond="253">if</span> <span class="macro" title="" data-ref="_M/__has_attribute">__has_attribute</span>(not_tail_called)</u></td></tr>
+<tr><th id="254">254</th><td><u>#define <dfn class="macro" id="_M/__not_tail_called" data-ref="_M/__not_tail_called">__not_tail_called</dfn>       __attribute__((__not_tail_called__))</u></td></tr>
+<tr><th id="255">255</th><td><u>#<span data-ppcond="253">else</span></u></td></tr>
+<tr><th id="256">256</th><td><u>#define __not_tail_called</u></td></tr>
+<tr><th id="257">257</th><td><u>#<span data-ppcond="253">endif</span></u></td></tr>
+<tr><th id="258">258</th><td></td></tr>
+<tr><th id="259">259</th><td><i>/*</i></td></tr>
+<tr><th id="260">260</th><td><i> * __result_use_check warns callers of a function that not using the function</i></td></tr>
+<tr><th id="261">261</th><td><i> * return value is a bug, i.e. dismissing malloc() return value results in a</i></td></tr>
+<tr><th id="262">262</th><td><i> * memory leak.</i></td></tr>
+<tr><th id="263">263</th><td><i> */</i></td></tr>
+<tr><th id="264">264</th><td><u>#<span data-ppcond="264">if</span> <span class="macro" title="" data-ref="_M/__has_attribute">__has_attribute</span>(warn_unused_result)</u></td></tr>
+<tr><th id="265">265</th><td><u>#define <dfn class="macro" id="_M/__result_use_check" data-ref="_M/__result_use_check">__result_use_check</dfn> __attribute__((__warn_unused_result__))</u></td></tr>
+<tr><th id="266">266</th><td><u>#<span data-ppcond="264">else</span></u></td></tr>
+<tr><th id="267">267</th><td><u>#define __result_use_check</u></td></tr>
+<tr><th id="268">268</th><td><u>#<span data-ppcond="264">endif</span></u></td></tr>
+<tr><th id="269">269</th><td></td></tr>
+<tr><th id="270">270</th><td><i>/*</i></td></tr>
+<tr><th id="271">271</th><td><i> * __swift_unavailable causes the compiler to mark a symbol as specifically</i></td></tr>
+<tr><th id="272">272</th><td><i> * unavailable in Swift, regardless of any other availability in C.</i></td></tr>
+<tr><th id="273">273</th><td><i> */</i></td></tr>
+<tr><th id="274">274</th><td><u>#<span data-ppcond="274">if</span> <span class="macro" title="" data-ref="_M/__has_feature">__has_feature</span>(attribute_availability_swift)</u></td></tr>
+<tr><th id="275">275</th><td><u>#define __swift_unavailable(_msg)       __attribute__((__availability__(swift, unavailable, message=_msg)))</u></td></tr>
+<tr><th id="276">276</th><td><u>#<span data-ppcond="274">else</span></u></td></tr>
+<tr><th id="277">277</th><td><u>#define <dfn class="macro" id="_M/__swift_unavailable" data-ref="_M/__swift_unavailable">__swift_unavailable</dfn>(_msg)</u></td></tr>
+<tr><th id="278">278</th><td><u>#<span data-ppcond="274">endif</span></u></td></tr>
+<tr><th id="279">279</th><td></td></tr>
+<tr><th id="280">280</th><td><i>/* Declaring inline functions within headers is error-prone due to differences</i></td></tr>
+<tr><th id="281">281</th><td><i> * across various versions of the C language and extensions.  __header_inline</i></td></tr>
+<tr><th id="282">282</th><td><i> * can be used to declare inline functions within system headers.  In cases</i></td></tr>
+<tr><th id="283">283</th><td><i> * where you want to force inlining instead of letting the compiler make</i></td></tr>
+<tr><th id="284">284</th><td><i> * the decision, you can use __header_always_inline.</i></td></tr>
+<tr><th id="285">285</th><td><i> *</i></td></tr>
+<tr><th id="286">286</th><td><i> * Be aware that using inline for functions which compilers may also provide</i></td></tr>
+<tr><th id="287">287</th><td><i> * builtins can behave differently under various compilers.  If you intend to</i></td></tr>
+<tr><th id="288">288</th><td><i> * provide an inline version of such a function, you may want to use a macro</i></td></tr>
+<tr><th id="289">289</th><td><i> * instead.</i></td></tr>
+<tr><th id="290">290</th><td><i> *</i></td></tr>
+<tr><th id="291">291</th><td><i> * The check for !__GNUC__ || __clang__ is because gcc doesn't correctly</i></td></tr>
+<tr><th id="292">292</th><td><i> * support c99 inline in some cases:</i></td></tr>
+<tr><th id="293">293</th><td><i> * <a href="http://gcc.gnu.org/bugzilla/show_bug.cgi?id=55965">http://gcc.gnu.org/bugzilla/show_bug.cgi?id=55965</a></i></td></tr>
+<tr><th id="294">294</th><td><i> */</i></td></tr>
+<tr><th id="295">295</th><td></td></tr>
+<tr><th id="296">296</th><td><u>#<span data-ppcond="296">if</span> defined(<span class="macro" data-ref="_M/__cplusplus">__cplusplus</span>) || \</u></td></tr>
+<tr><th id="297">297</th><td><u>        (<span class="macro" title="201112L" data-ref="_M/__STDC_VERSION__">__STDC_VERSION__</span> &gt;= 199901L &amp;&amp; \</u></td></tr>
+<tr><th id="298">298</th><td><u>        !defined(<span class="macro" data-ref="_M/__GNUC_GNU_INLINE__">__GNUC_GNU_INLINE__</span>) &amp;&amp; \</u></td></tr>
+<tr><th id="299">299</th><td><u>        (!defined(<span class="macro" data-ref="_M/__GNUC__">__GNUC__</span>) || defined(<span class="macro" data-ref="_M/__clang__">__clang__</span>)))</u></td></tr>
+<tr><th id="300">300</th><td><u># define <dfn class="macro" id="_M/__header_inline" data-ref="_M/__header_inline">__header_inline</dfn>           inline</u></td></tr>
+<tr><th id="301">301</th><td><u>#<span data-ppcond="296">elif</span> defined(__GNUC__) &amp;&amp; defined(__GNUC_STDC_INLINE__)</u></td></tr>
+<tr><th id="302">302</th><td><u># define __header_inline           extern __inline __attribute__((__gnu_inline__))</u></td></tr>
+<tr><th id="303">303</th><td><u>#elif defined(__GNUC__)</u></td></tr>
+<tr><th id="304">304</th><td><u># define __header_inline           extern __inline</u></td></tr>
+<tr><th id="305">305</th><td><u>#else</u></td></tr>
+<tr><th id="306">306</th><td><i>/* If we land here, we've encountered an unsupported compiler,</i></td></tr>
+<tr><th id="307">307</th><td><i> * so hopefully it understands static __inline as a fallback.</i></td></tr>
+<tr><th id="308">308</th><td><i> */</i></td></tr>
+<tr><th id="309">309</th><td><u># define __header_inline           static __inline</u></td></tr>
+<tr><th id="310">310</th><td><u>#<span data-ppcond="296">endif</span></u></td></tr>
+<tr><th id="311">311</th><td></td></tr>
+<tr><th id="312">312</th><td><u>#<span data-ppcond="312">ifdef</span> <span class="macro" data-ref="_M/__GNUC__">__GNUC__</span></u></td></tr>
+<tr><th id="313">313</th><td><u># define <dfn class="macro" id="_M/__header_always_inline" data-ref="_M/__header_always_inline">__header_always_inline</dfn>    __header_inline __attribute__ ((__always_inline__))</u></td></tr>
+<tr><th id="314">314</th><td><u>#<span data-ppcond="312">else</span></u></td></tr>
+<tr><th id="315">315</th><td><i>/* Unfortunately, we're using a compiler that we don't know how to force to</i></td></tr>
+<tr><th id="316">316</th><td><i> * inline.  Oh well.</i></td></tr>
+<tr><th id="317">317</th><td><i> */</i></td></tr>
+<tr><th id="318">318</th><td><u># define __header_always_inline    __header_inline</u></td></tr>
+<tr><th id="319">319</th><td><u>#<span data-ppcond="312">endif</span></u></td></tr>
+<tr><th id="320">320</th><td></td></tr>
+<tr><th id="321">321</th><td><i>/*</i></td></tr>
+<tr><th id="322">322</th><td><i> * Compiler-dependent macros that bracket portions of code where the</i></td></tr>
+<tr><th id="323">323</th><td><i> * "-Wunreachable-code" warning should be ignored. Please use sparingly.</i></td></tr>
+<tr><th id="324">324</th><td><i> */</i></td></tr>
+<tr><th id="325">325</th><td><u>#<span data-ppcond="325">if</span> defined(<span class="macro" data-ref="_M/__clang__">__clang__</span>)</u></td></tr>
+<tr><th id="326">326</th><td><u># define <dfn class="macro" id="_M/__unreachable_ok_push" data-ref="_M/__unreachable_ok_push">__unreachable_ok_push</dfn> \</u></td></tr>
+<tr><th id="327">327</th><td><u>	 _Pragma("clang diagnostic push") \</u></td></tr>
+<tr><th id="328">328</th><td><u>	 _Pragma("clang diagnostic ignored \"-Wunreachable-code\"")</u></td></tr>
+<tr><th id="329">329</th><td><u># define <dfn class="macro" id="_M/__unreachable_ok_pop" data-ref="_M/__unreachable_ok_pop">__unreachable_ok_pop</dfn> \</u></td></tr>
+<tr><th id="330">330</th><td><u>	 _Pragma("clang diagnostic pop")</u></td></tr>
+<tr><th id="331">331</th><td><u>#<span data-ppcond="325">elif</span> defined(__GNUC__) &amp;&amp; ((__GNUC__ &gt; 4) || (__GNUC__ == 4 &amp;&amp; __GNUC_MINOR__ &gt;= 6))</u></td></tr>
+<tr><th id="332">332</th><td><u># define __unreachable_ok_push \</u></td></tr>
+<tr><th id="333">333</th><td><u>	 _Pragma("GCC diagnostic push") \</u></td></tr>
+<tr><th id="334">334</th><td><u>	 _Pragma("GCC diagnostic ignored \"-Wunreachable-code\"")</u></td></tr>
+<tr><th id="335">335</th><td><u># define __unreachable_ok_pop \</u></td></tr>
+<tr><th id="336">336</th><td><u>	 _Pragma("GCC diagnostic pop")</u></td></tr>
+<tr><th id="337">337</th><td><u>#else</u></td></tr>
+<tr><th id="338">338</th><td><u># define __unreachable_ok_push</u></td></tr>
+<tr><th id="339">339</th><td><u># define __unreachable_ok_pop</u></td></tr>
+<tr><th id="340">340</th><td><u>#<span data-ppcond="325">endif</span></u></td></tr>
+<tr><th id="341">341</th><td></td></tr>
+<tr><th id="342">342</th><td><i>/*</i></td></tr>
+<tr><th id="343">343</th><td><i> * Compiler-dependent macros to declare that functions take printf-like</i></td></tr>
+<tr><th id="344">344</th><td><i> * or scanf-like arguments.  They are null except for versions of gcc</i></td></tr>
+<tr><th id="345">345</th><td><i> * that are known to support the features properly.  Functions declared</i></td></tr>
+<tr><th id="346">346</th><td><i> * with these attributes will cause compilation warnings if there is a</i></td></tr>
+<tr><th id="347">347</th><td><i> * mismatch between the format string and subsequent function parameter</i></td></tr>
+<tr><th id="348">348</th><td><i> * types.</i></td></tr>
+<tr><th id="349">349</th><td><i> */</i></td></tr>
+<tr><th id="350">350</th><td><u>#define <dfn class="macro" id="_M/__printflike" data-ref="_M/__printflike">__printflike</dfn>(fmtarg, firstvararg) \</u></td></tr>
+<tr><th id="351">351</th><td><u>	        __attribute__((__format__ (__printf__, fmtarg, firstvararg)))</u></td></tr>
+<tr><th id="352">352</th><td><u>#define <dfn class="macro" id="_M/__printf0like" data-ref="_M/__printf0like">__printf0like</dfn>(fmtarg, firstvararg) \</u></td></tr>
+<tr><th id="353">353</th><td><u>	        __attribute__((__format__ (__printf0__, fmtarg, firstvararg)))</u></td></tr>
+<tr><th id="354">354</th><td><u>#define <dfn class="macro" id="_M/__scanflike" data-ref="_M/__scanflike">__scanflike</dfn>(fmtarg, firstvararg) \</u></td></tr>
+<tr><th id="355">355</th><td><u>	        __attribute__((__format__ (__scanf__, fmtarg, firstvararg)))</u></td></tr>
+<tr><th id="356">356</th><td></td></tr>
+<tr><th id="357">357</th><td><u>#define <dfn class="macro" id="_M/__IDSTRING" data-ref="_M/__IDSTRING">__IDSTRING</dfn>(name, string) static const char name[] __used = string</u></td></tr>
+<tr><th id="358">358</th><td></td></tr>
+<tr><th id="359">359</th><td><u>#<span data-ppcond="359">ifndef</span> <span class="macro" data-ref="_M/__COPYRIGHT">__COPYRIGHT</span></u></td></tr>
+<tr><th id="360">360</th><td><u>#define <dfn class="macro" id="_M/__COPYRIGHT" data-ref="_M/__COPYRIGHT">__COPYRIGHT</dfn>(s) __IDSTRING(copyright,s)</u></td></tr>
+<tr><th id="361">361</th><td><u>#<span data-ppcond="359">endif</span></u></td></tr>
+<tr><th id="362">362</th><td></td></tr>
+<tr><th id="363">363</th><td><u>#<span data-ppcond="363">ifndef</span> <span class="macro" data-ref="_M/__RCSID">__RCSID</span></u></td></tr>
+<tr><th id="364">364</th><td><u>#define <dfn class="macro" id="_M/__RCSID" data-ref="_M/__RCSID">__RCSID</dfn>(s) __IDSTRING(rcsid,s)</u></td></tr>
+<tr><th id="365">365</th><td><u>#<span data-ppcond="363">endif</span></u></td></tr>
+<tr><th id="366">366</th><td></td></tr>
+<tr><th id="367">367</th><td><u>#<span data-ppcond="367">ifndef</span> <span class="macro" data-ref="_M/__SCCSID">__SCCSID</span></u></td></tr>
+<tr><th id="368">368</th><td><u>#define <dfn class="macro" id="_M/__SCCSID" data-ref="_M/__SCCSID">__SCCSID</dfn>(s) __IDSTRING(sccsid,s)</u></td></tr>
+<tr><th id="369">369</th><td><u>#<span data-ppcond="367">endif</span></u></td></tr>
+<tr><th id="370">370</th><td></td></tr>
+<tr><th id="371">371</th><td><u>#<span data-ppcond="371">ifndef</span> <span class="macro" data-ref="_M/__PROJECT_VERSION">__PROJECT_VERSION</span></u></td></tr>
+<tr><th id="372">372</th><td><u>#define <dfn class="macro" id="_M/__PROJECT_VERSION" data-ref="_M/__PROJECT_VERSION">__PROJECT_VERSION</dfn>(s) __IDSTRING(project_version,s)</u></td></tr>
+<tr><th id="373">373</th><td><u>#<span data-ppcond="371">endif</span></u></td></tr>
+<tr><th id="374">374</th><td></td></tr>
+<tr><th id="375">375</th><td><i>/* Source compatibility only, ID string not emitted in object file */</i></td></tr>
+<tr><th id="376">376</th><td><u>#<span data-ppcond="376">ifndef</span> <span class="macro" data-ref="_M/__FBSDID">__FBSDID</span></u></td></tr>
+<tr><th id="377">377</th><td><u>#define <dfn class="macro" id="_M/__FBSDID" data-ref="_M/__FBSDID">__FBSDID</dfn>(s)</u></td></tr>
+<tr><th id="378">378</th><td><u>#<span data-ppcond="376">endif</span></u></td></tr>
+<tr><th id="379">379</th><td></td></tr>
+<tr><th id="380">380</th><td><u>#<span data-ppcond="380">ifndef</span> <span class="macro" data-ref="_M/__DECONST">__DECONST</span></u></td></tr>
+<tr><th id="381">381</th><td><u>#define <dfn class="macro" id="_M/__DECONST" data-ref="_M/__DECONST">__DECONST</dfn>(type, var)    __CAST_AWAY_QUALIFIER(var, const, type)</u></td></tr>
+<tr><th id="382">382</th><td><u>#<span data-ppcond="380">endif</span></u></td></tr>
+<tr><th id="383">383</th><td></td></tr>
+<tr><th id="384">384</th><td><u>#<span data-ppcond="384">ifndef</span> <span class="macro" data-ref="_M/__DEVOLATILE">__DEVOLATILE</span></u></td></tr>
+<tr><th id="385">385</th><td><u>#define <dfn class="macro" id="_M/__DEVOLATILE" data-ref="_M/__DEVOLATILE">__DEVOLATILE</dfn>(type, var) __CAST_AWAY_QUALIFIER(var, volatile, type)</u></td></tr>
+<tr><th id="386">386</th><td><u>#<span data-ppcond="384">endif</span></u></td></tr>
+<tr><th id="387">387</th><td></td></tr>
+<tr><th id="388">388</th><td><u>#<span data-ppcond="388">ifndef</span> <span class="macro" data-ref="_M/__DEQUALIFY">__DEQUALIFY</span></u></td></tr>
+<tr><th id="389">389</th><td><u>#define <dfn class="macro" id="_M/__DEQUALIFY" data-ref="_M/__DEQUALIFY">__DEQUALIFY</dfn>(type, var)  __CAST_AWAY_QUALIFIER(var, const volatile, type)</u></td></tr>
+<tr><th id="390">390</th><td><u>#<span data-ppcond="388">endif</span></u></td></tr>
+<tr><th id="391">391</th><td></td></tr>
+<tr><th id="392">392</th><td><i>/*</i></td></tr>
+<tr><th id="393">393</th><td><i> * __alloc_size can be used to label function arguments that represent the</i></td></tr>
+<tr><th id="394">394</th><td><i> * size of memory that the function allocates and returns. The one-argument</i></td></tr>
+<tr><th id="395">395</th><td><i> * form labels a single argument that gives the allocation size (where the</i></td></tr>
+<tr><th id="396">396</th><td><i> * arguments are numbered from 1):</i></td></tr>
+<tr><th id="397">397</th><td><i> *</i></td></tr>
+<tr><th id="398">398</th><td><i> * void	*malloc(size_t __size) __alloc_size(1);</i></td></tr>
+<tr><th id="399">399</th><td><i> *</i></td></tr>
+<tr><th id="400">400</th><td><i> * The two-argument form handles the case where the size is calculated as the</i></td></tr>
+<tr><th id="401">401</th><td><i> * product of two arguments:</i></td></tr>
+<tr><th id="402">402</th><td><i> *</i></td></tr>
+<tr><th id="403">403</th><td><i> * void	*calloc(size_t __count, size_t __size) __alloc_size(1,2);</i></td></tr>
+<tr><th id="404">404</th><td><i> */</i></td></tr>
+<tr><th id="405">405</th><td><u>#<span data-ppcond="405">ifndef</span> <span class="macro" data-ref="_M/__alloc_size">__alloc_size</span></u></td></tr>
+<tr><th id="406">406</th><td><u>#<span data-ppcond="406">if</span> <span class="macro" title="" data-ref="_M/__has_attribute">__has_attribute</span>(alloc_size)</u></td></tr>
+<tr><th id="407">407</th><td><u>#define <dfn class="macro" id="_M/__alloc_size" data-ref="_M/__alloc_size">__alloc_size</dfn>(...) __attribute__((alloc_size(__VA_ARGS__)))</u></td></tr>
+<tr><th id="408">408</th><td><u>#<span data-ppcond="406">else</span></u></td></tr>
+<tr><th id="409">409</th><td><u>#define __alloc_size(...)</u></td></tr>
+<tr><th id="410">410</th><td><u>#<span data-ppcond="406">endif</span></u></td></tr>
+<tr><th id="411">411</th><td><u>#<span data-ppcond="405">endif</span> // __alloc_size</u></td></tr>
+<tr><th id="412">412</th><td></td></tr>
+<tr><th id="413">413</th><td><i>/*</i></td></tr>
+<tr><th id="414">414</th><td><i> * COMPILATION ENVIRONMENTS -- see compat(5) for additional detail</i></td></tr>
+<tr><th id="415">415</th><td><i> *</i></td></tr>
+<tr><th id="416">416</th><td><i> * DEFAULT	By default newly complied code will get POSIX APIs plus</i></td></tr>
+<tr><th id="417">417</th><td><i> *		Apple API extensions in scope.</i></td></tr>
+<tr><th id="418">418</th><td><i> *</i></td></tr>
+<tr><th id="419">419</th><td><i> *		Most users will use this compilation environment to avoid</i></td></tr>
+<tr><th id="420">420</th><td><i> *		behavioral differences between 32 and 64 bit code.</i></td></tr>
+<tr><th id="421">421</th><td><i> *</i></td></tr>
+<tr><th id="422">422</th><td><i> * LEGACY	Defining _NONSTD_SOURCE will get pre-POSIX APIs plus Apple</i></td></tr>
+<tr><th id="423">423</th><td><i> *		API extensions in scope.</i></td></tr>
+<tr><th id="424">424</th><td><i> *</i></td></tr>
+<tr><th id="425">425</th><td><i> *		This is generally equivalent to the Tiger release compilation</i></td></tr>
+<tr><th id="426">426</th><td><i> *		environment, except that it cannot be applied to 64 bit code;</i></td></tr>
+<tr><th id="427">427</th><td><i> *		its use is discouraged.</i></td></tr>
+<tr><th id="428">428</th><td><i> *</i></td></tr>
+<tr><th id="429">429</th><td><i> *		We expect this environment to be deprecated in the future.</i></td></tr>
+<tr><th id="430">430</th><td><i> *</i></td></tr>
+<tr><th id="431">431</th><td><i> * STRICT	Defining _POSIX_C_SOURCE or _XOPEN_SOURCE restricts the</i></td></tr>
+<tr><th id="432">432</th><td><i> *		available APIs to exactly the set of APIs defined by the</i></td></tr>
+<tr><th id="433">433</th><td><i> *		corresponding standard, based on the value defined.</i></td></tr>
+<tr><th id="434">434</th><td><i> *</i></td></tr>
+<tr><th id="435">435</th><td><i> *		A correct, portable definition for _POSIX_C_SOURCE is 200112L.</i></td></tr>
+<tr><th id="436">436</th><td><i> *		A correct, portable definition for _XOPEN_SOURCE is 600L.</i></td></tr>
+<tr><th id="437">437</th><td><i> *</i></td></tr>
+<tr><th id="438">438</th><td><i> *		Apple API extensions are not visible in this environment,</i></td></tr>
+<tr><th id="439">439</th><td><i> *		which can cause Apple specific code to fail to compile,</i></td></tr>
+<tr><th id="440">440</th><td><i> *		or behave incorrectly if prototypes are not in scope or</i></td></tr>
+<tr><th id="441">441</th><td><i> *		warnings about missing prototypes are not enabled or ignored.</i></td></tr>
+<tr><th id="442">442</th><td><i> *</i></td></tr>
+<tr><th id="443">443</th><td><i> * In any compilation environment, for correct symbol resolution to occur,</i></td></tr>
+<tr><th id="444">444</th><td><i> * function prototypes must be in scope.  It is recommended that all Apple</i></td></tr>
+<tr><th id="445">445</th><td><i> * tools users add either the "-Wall" or "-Wimplicit-function-declaration"</i></td></tr>
+<tr><th id="446">446</th><td><i> * compiler flags to their projects to be warned when a function is being</i></td></tr>
+<tr><th id="447">447</th><td><i> * used without a prototype in scope.</i></td></tr>
+<tr><th id="448">448</th><td><i> */</i></td></tr>
+<tr><th id="449">449</th><td></td></tr>
+<tr><th id="450">450</th><td><i>/* These settings are particular to each product. */</i></td></tr>
+<tr><th id="451">451</th><td><i>/* Platform: MacOSX */</i></td></tr>
+<tr><th id="452">452</th><td><u>#define <dfn class="macro" id="_M/__DARWIN_ONLY_64_BIT_INO_T" data-ref="_M/__DARWIN_ONLY_64_BIT_INO_T">__DARWIN_ONLY_64_BIT_INO_T</dfn>      0</u></td></tr>
+<tr><th id="453">453</th><td><i>/* #undef __DARWIN_ONLY_UNIX_CONFORMANCE (automatically set for 64-bit) */</i></td></tr>
+<tr><th id="454">454</th><td><u>#define <dfn class="macro" id="_M/__DARWIN_ONLY_VERS_1050" data-ref="_M/__DARWIN_ONLY_VERS_1050">__DARWIN_ONLY_VERS_1050</dfn>         0</u></td></tr>
+<tr><th id="455">455</th><td></td></tr>
+<tr><th id="456">456</th><td><i>/*</i></td></tr>
+<tr><th id="457">457</th><td><i> * The __DARWIN_ALIAS macros are used to do symbol renaming; they allow</i></td></tr>
+<tr><th id="458">458</th><td><i> * legacy code to use the old symbol, thus maintaining binary compatibility</i></td></tr>
+<tr><th id="459">459</th><td><i> * while new code can use a standards compliant version of the same function.</i></td></tr>
+<tr><th id="460">460</th><td><i> *</i></td></tr>
+<tr><th id="461">461</th><td><i> * __DARWIN_ALIAS is used by itself if the function signature has not</i></td></tr>
+<tr><th id="462">462</th><td><i> * changed, it is used along with a #ifdef check for __DARWIN_UNIX03</i></td></tr>
+<tr><th id="463">463</th><td><i> * if the signature has changed.  Because the __LP64__ environment</i></td></tr>
+<tr><th id="464">464</th><td><i> * only supports UNIX03 semantics it causes __DARWIN_UNIX03 to be</i></td></tr>
+<tr><th id="465">465</th><td><i> * defined, but causes __DARWIN_ALIAS to do no symbol mangling.</i></td></tr>
+<tr><th id="466">466</th><td><i> *</i></td></tr>
+<tr><th id="467">467</th><td><i> * As a special case, when XCode is used to target a specific version of the</i></td></tr>
+<tr><th id="468">468</th><td><i> * OS, the manifest constant __ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__</i></td></tr>
+<tr><th id="469">469</th><td><i> * will be defined by the compiler, with the digits representing major version</i></td></tr>
+<tr><th id="470">470</th><td><i> * time 100 + minor version times 10 (e.g. 10.5 := 1050).  If we are targeting</i></td></tr>
+<tr><th id="471">471</th><td><i> * pre-10.5, and it is the default compilation environment, revert the</i></td></tr>
+<tr><th id="472">472</th><td><i> * compilation environment to pre-__DARWIN_UNIX03.</i></td></tr>
+<tr><th id="473">473</th><td><i> */</i></td></tr>
+<tr><th id="474">474</th><td><u>#<span data-ppcond="474">if</span> !defined(<span class="macro" data-ref="_M/__DARWIN_ONLY_UNIX_CONFORMANCE">__DARWIN_ONLY_UNIX_CONFORMANCE</span>)</u></td></tr>
+<tr><th id="475">475</th><td><u>#  <span data-ppcond="475">if</span> defined(<span class="macro" data-ref="_M/__LP64__">__LP64__</span>)</u></td></tr>
+<tr><th id="476">476</th><td><u>#    define <dfn class="macro" id="_M/__DARWIN_ONLY_UNIX_CONFORMANCE" data-ref="_M/__DARWIN_ONLY_UNIX_CONFORMANCE">__DARWIN_ONLY_UNIX_CONFORMANCE</dfn> 1</u></td></tr>
+<tr><th id="477">477</th><td><u>#  <span data-ppcond="475">else</span> /* !__LP64__ */</u></td></tr>
+<tr><th id="478">478</th><td><u>#    define __DARWIN_ONLY_UNIX_CONFORMANCE 0</u></td></tr>
+<tr><th id="479">479</th><td><u>#  <span data-ppcond="475">endif</span> /* __LP64__ */</u></td></tr>
+<tr><th id="480">480</th><td><u>#<span data-ppcond="474">endif</span> /* !__DARWIN_ONLY_UNIX_CONFORMANCE */</u></td></tr>
+<tr><th id="481">481</th><td></td></tr>
+<tr><th id="482">482</th><td><u>#<span data-ppcond="482">if</span> !defined(<span class="macro" data-ref="_M/__DARWIN_UNIX03">__DARWIN_UNIX03</span>)</u></td></tr>
+<tr><th id="483">483</th><td><u>#  <span data-ppcond="483">if</span>   <a class="macro" href="#476" title="1" data-ref="_M/__DARWIN_ONLY_UNIX_CONFORMANCE">__DARWIN_ONLY_UNIX_CONFORMANCE</a></u></td></tr>
+<tr><th id="484">484</th><td><u>#    <span data-ppcond="484">if</span> defined(<span class="macro" data-ref="_M/_NONSTD_SOURCE">_NONSTD_SOURCE</span>)</u></td></tr>
+<tr><th id="485">485</th><td><u>#      error "Can't define _NONSTD_SOURCE when only UNIX conformance is available."</u></td></tr>
+<tr><th id="486">486</th><td><u>#    <span data-ppcond="484">endif</span> /* _NONSTD_SOURCE */</u></td></tr>
+<tr><th id="487">487</th><td><u>#    define <dfn class="macro" id="_M/__DARWIN_UNIX03" data-ref="_M/__DARWIN_UNIX03">__DARWIN_UNIX03</dfn>     1</u></td></tr>
+<tr><th id="488">488</th><td><u>#  <span data-ppcond="483">elif</span> defined(__ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__) &amp;&amp; ((__ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__ - 0) &lt; 1040)</u></td></tr>
+<tr><th id="489">489</th><td><u>#    define __DARWIN_UNIX03     0</u></td></tr>
+<tr><th id="490">490</th><td><u>#  elif defined(_DARWIN_C_SOURCE) || defined(_XOPEN_SOURCE) || defined(_POSIX_C_SOURCE)</u></td></tr>
+<tr><th id="491">491</th><td><u>#    if defined(_NONSTD_SOURCE)</u></td></tr>
+<tr><th id="492">492</th><td><u>#      error "Can't define both _NONSTD_SOURCE and any of _DARWIN_C_SOURCE, _XOPEN_SOURCE or _POSIX_C_SOURCE."</u></td></tr>
+<tr><th id="493">493</th><td><u>#    endif /* _NONSTD_SOURCE */</u></td></tr>
+<tr><th id="494">494</th><td><u>#    define __DARWIN_UNIX03     1</u></td></tr>
+<tr><th id="495">495</th><td><u>#  elif defined(_NONSTD_SOURCE)</u></td></tr>
+<tr><th id="496">496</th><td><u>#    define __DARWIN_UNIX03     0</u></td></tr>
+<tr><th id="497">497</th><td><u>#  else /* default */</u></td></tr>
+<tr><th id="498">498</th><td><u>#    if defined(__ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__) &amp;&amp; ((__ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__ - 0) &lt; 1050)</u></td></tr>
+<tr><th id="499">499</th><td><u>#      define __DARWIN_UNIX03   0</u></td></tr>
+<tr><th id="500">500</th><td><u>#    else /* __ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__ &gt;= 1050 */</u></td></tr>
+<tr><th id="501">501</th><td><u>#      define __DARWIN_UNIX03   1</u></td></tr>
+<tr><th id="502">502</th><td><u>#    endif /* __ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__ &gt;= 1050 */</u></td></tr>
+<tr><th id="503">503</th><td><u>#  <span data-ppcond="483">endif</span> /* _DARWIN_C_SOURCE || _XOPEN_SOURCE || _POSIX_C_SOURCE || __LP64__ */</u></td></tr>
+<tr><th id="504">504</th><td><u>#<span data-ppcond="482">endif</span> /* !__DARWIN_UNIX03 */</u></td></tr>
+<tr><th id="505">505</th><td></td></tr>
+<tr><th id="506">506</th><td><u>#<span data-ppcond="506">if</span> !defined(<span class="macro" data-ref="_M/__DARWIN_64_BIT_INO_T">__DARWIN_64_BIT_INO_T</span>)</u></td></tr>
+<tr><th id="507">507</th><td><u>#  <span data-ppcond="507">if</span>   defined(<span class="macro" data-ref="_M/_DARWIN_USE_64_BIT_INODE">_DARWIN_USE_64_BIT_INODE</span>)</u></td></tr>
+<tr><th id="508">508</th><td><u>#    if defined(_DARWIN_NO_64_BIT_INODE)</u></td></tr>
+<tr><th id="509">509</th><td><u>#      error "Can't define both _DARWIN_USE_64_BIT_INODE and _DARWIN_NO_64_BIT_INODE."</u></td></tr>
+<tr><th id="510">510</th><td><u>#    endif /* _DARWIN_NO_64_BIT_INODE */</u></td></tr>
+<tr><th id="511">511</th><td><u>#    define __DARWIN_64_BIT_INO_T 1</u></td></tr>
+<tr><th id="512">512</th><td><u>#  <span data-ppcond="507">elif</span> defined(<span class="macro" data-ref="_M/_DARWIN_NO_64_BIT_INODE">_DARWIN_NO_64_BIT_INODE</span>)</u></td></tr>
+<tr><th id="513">513</th><td><u>#    if __DARWIN_ONLY_64_BIT_INO_T</u></td></tr>
+<tr><th id="514">514</th><td><u>#      error "Can't define _DARWIN_NO_64_BIT_INODE when only 64-bit inodes are available."</u></td></tr>
+<tr><th id="515">515</th><td><u>#    endif /* __DARWIN_ONLY_64_BIT_INO_T */</u></td></tr>
+<tr><th id="516">516</th><td><u>#    define __DARWIN_64_BIT_INO_T 0</u></td></tr>
+<tr><th id="517">517</th><td><u>#  <span data-ppcond="507">else</span> /* default */</u></td></tr>
+<tr><th id="518">518</th><td><u>#    <span data-ppcond="518">if</span> <a class="macro" href="#452" title="0" data-ref="_M/__DARWIN_ONLY_64_BIT_INO_T">__DARWIN_ONLY_64_BIT_INO_T</a></u></td></tr>
+<tr><th id="519">519</th><td><u>#      define __DARWIN_64_BIT_INO_T 1</u></td></tr>
+<tr><th id="520">520</th><td><u>#    <span data-ppcond="518">elif</span> defined(<span class="macro" data-ref="_M/__ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__">__ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__</span>) &amp;&amp; ((<span class="macro" title="101400" data-ref="_M/__ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__">__ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__</span> - 0) &lt; 1060) || <a class="macro" href="#487" title="1" data-ref="_M/__DARWIN_UNIX03">__DARWIN_UNIX03</a> == 0</u></td></tr>
+<tr><th id="521">521</th><td><u>#      define __DARWIN_64_BIT_INO_T 0</u></td></tr>
+<tr><th id="522">522</th><td><u>#    <span data-ppcond="518">else</span> /* default */</u></td></tr>
+<tr><th id="523">523</th><td><u>#      define <dfn class="macro" id="_M/__DARWIN_64_BIT_INO_T" data-ref="_M/__DARWIN_64_BIT_INO_T">__DARWIN_64_BIT_INO_T</dfn> 1</u></td></tr>
+<tr><th id="524">524</th><td><u>#    <span data-ppcond="518">endif</span> /* __DARWIN_ONLY_64_BIT_INO_T */</u></td></tr>
+<tr><th id="525">525</th><td><u>#  <span data-ppcond="507">endif</span></u></td></tr>
+<tr><th id="526">526</th><td><u>#<span data-ppcond="506">endif</span> /* !__DARWIN_64_BIT_INO_T */</u></td></tr>
+<tr><th id="527">527</th><td></td></tr>
+<tr><th id="528">528</th><td><u>#<span data-ppcond="528">if</span> !defined(<span class="macro" data-ref="_M/__DARWIN_VERS_1050">__DARWIN_VERS_1050</span>)</u></td></tr>
+<tr><th id="529">529</th><td><u>#  <span data-ppcond="529">if</span>   <a class="macro" href="#454" title="0" data-ref="_M/__DARWIN_ONLY_VERS_1050">__DARWIN_ONLY_VERS_1050</a></u></td></tr>
+<tr><th id="530">530</th><td><u>#    define __DARWIN_VERS_1050 1</u></td></tr>
+<tr><th id="531">531</th><td><u>#  <span data-ppcond="529">elif</span> defined(<span class="macro" data-ref="_M/__ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__">__ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__</span>) &amp;&amp; ((<span class="macro" title="101400" data-ref="_M/__ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__">__ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__</span> - 0) &lt; 1050) || <a class="macro" href="#487" title="1" data-ref="_M/__DARWIN_UNIX03">__DARWIN_UNIX03</a> == 0</u></td></tr>
+<tr><th id="532">532</th><td><u>#    define __DARWIN_VERS_1050 0</u></td></tr>
+<tr><th id="533">533</th><td><u>#  <span data-ppcond="529">else</span> /* default */</u></td></tr>
+<tr><th id="534">534</th><td><u>#    define <dfn class="macro" id="_M/__DARWIN_VERS_1050" data-ref="_M/__DARWIN_VERS_1050">__DARWIN_VERS_1050</dfn> 1</u></td></tr>
+<tr><th id="535">535</th><td><u>#  <span data-ppcond="529">endif</span></u></td></tr>
+<tr><th id="536">536</th><td><u>#<span data-ppcond="528">endif</span> /* !__DARWIN_VERS_1050 */</u></td></tr>
+<tr><th id="537">537</th><td></td></tr>
+<tr><th id="538">538</th><td><u>#<span data-ppcond="538">if</span> !defined(<span class="macro" data-ref="_M/__DARWIN_NON_CANCELABLE">__DARWIN_NON_CANCELABLE</span>)</u></td></tr>
+<tr><th id="539">539</th><td><u>#    define <dfn class="macro" id="_M/__DARWIN_NON_CANCELABLE" data-ref="_M/__DARWIN_NON_CANCELABLE">__DARWIN_NON_CANCELABLE</dfn> 0</u></td></tr>
+<tr><th id="540">540</th><td><u>#<span data-ppcond="538">endif</span> /* !__DARWIN_NON_CANCELABLE */</u></td></tr>
+<tr><th id="541">541</th><td></td></tr>
+<tr><th id="542">542</th><td><i>/*</i></td></tr>
+<tr><th id="543">543</th><td><i> * symbol suffixes used for symbol versioning</i></td></tr>
+<tr><th id="544">544</th><td><i> */</i></td></tr>
+<tr><th id="545">545</th><td><u>#<span data-ppcond="545">if</span> <a class="macro" href="#487" title="1" data-ref="_M/__DARWIN_UNIX03">__DARWIN_UNIX03</a></u></td></tr>
+<tr><th id="546">546</th><td><u>#  <span data-ppcond="546">if</span> <a class="macro" href="#476" title="1" data-ref="_M/__DARWIN_ONLY_UNIX_CONFORMANCE">__DARWIN_ONLY_UNIX_CONFORMANCE</a></u></td></tr>
+<tr><th id="547">547</th><td><u>#    define <dfn class="macro" id="_M/__DARWIN_SUF_UNIX03" data-ref="_M/__DARWIN_SUF_UNIX03">__DARWIN_SUF_UNIX03</dfn>         /* nothing */</u></td></tr>
+<tr><th id="548">548</th><td><u>#  <span data-ppcond="546">else</span> /* !__DARWIN_ONLY_UNIX_CONFORMANCE */</u></td></tr>
+<tr><th id="549">549</th><td><u>#    define __DARWIN_SUF_UNIX03         "$UNIX2003"</u></td></tr>
+<tr><th id="550">550</th><td><u>#  <span data-ppcond="546">endif</span> /* __DARWIN_ONLY_UNIX_CONFORMANCE */</u></td></tr>
+<tr><th id="551">551</th><td></td></tr>
+<tr><th id="552">552</th><td><u>#  <span data-ppcond="552">if</span> <a class="macro" href="#523" title="1" data-ref="_M/__DARWIN_64_BIT_INO_T">__DARWIN_64_BIT_INO_T</a></u></td></tr>
+<tr><th id="553">553</th><td><u>#    <span data-ppcond="553">if</span> <a class="macro" href="#452" title="0" data-ref="_M/__DARWIN_ONLY_64_BIT_INO_T">__DARWIN_ONLY_64_BIT_INO_T</a></u></td></tr>
+<tr><th id="554">554</th><td><u>#      define __DARWIN_SUF_64_BIT_INO_T /* nothing */</u></td></tr>
+<tr><th id="555">555</th><td><u>#    <span data-ppcond="553">else</span> /* !__DARWIN_ONLY_64_BIT_INO_T */</u></td></tr>
+<tr><th id="556">556</th><td><u>#      define <dfn class="macro" id="_M/__DARWIN_SUF_64_BIT_INO_T" data-ref="_M/__DARWIN_SUF_64_BIT_INO_T">__DARWIN_SUF_64_BIT_INO_T</dfn> "$INODE64"</u></td></tr>
+<tr><th id="557">557</th><td><u>#    <span data-ppcond="553">endif</span> /* __DARWIN_ONLY_64_BIT_INO_T */</u></td></tr>
+<tr><th id="558">558</th><td><u>#  <span data-ppcond="552">else</span> /* !__DARWIN_64_BIT_INO_T */</u></td></tr>
+<tr><th id="559">559</th><td><u>#    define __DARWIN_SUF_64_BIT_INO_T   /* nothing */</u></td></tr>
+<tr><th id="560">560</th><td><u>#  <span data-ppcond="552">endif</span> /* __DARWIN_64_BIT_INO_T */</u></td></tr>
+<tr><th id="561">561</th><td></td></tr>
+<tr><th id="562">562</th><td><u>#  <span data-ppcond="562">if</span> <a class="macro" href="#534" title="1" data-ref="_M/__DARWIN_VERS_1050">__DARWIN_VERS_1050</a></u></td></tr>
+<tr><th id="563">563</th><td><u>#    <span data-ppcond="563">if</span> <a class="macro" href="#454" title="0" data-ref="_M/__DARWIN_ONLY_VERS_1050">__DARWIN_ONLY_VERS_1050</a></u></td></tr>
+<tr><th id="564">564</th><td><u>#      define __DARWIN_SUF_1050         /* nothing */</u></td></tr>
+<tr><th id="565">565</th><td><u>#    <span data-ppcond="563">else</span> /* !__DARWIN_ONLY_VERS_1050 */</u></td></tr>
+<tr><th id="566">566</th><td><u>#      define <dfn class="macro" id="_M/__DARWIN_SUF_1050" data-ref="_M/__DARWIN_SUF_1050">__DARWIN_SUF_1050</dfn>         "$1050"</u></td></tr>
+<tr><th id="567">567</th><td><u>#    <span data-ppcond="563">endif</span> /* __DARWIN_ONLY_VERS_1050 */</u></td></tr>
+<tr><th id="568">568</th><td><u>#  <span data-ppcond="562">else</span> /* !__DARWIN_VERS_1050 */</u></td></tr>
+<tr><th id="569">569</th><td><u>#    define __DARWIN_SUF_1050           /* nothing */</u></td></tr>
+<tr><th id="570">570</th><td><u>#  <span data-ppcond="562">endif</span> /* __DARWIN_VERS_1050 */</u></td></tr>
+<tr><th id="571">571</th><td></td></tr>
+<tr><th id="572">572</th><td><u>#  <span data-ppcond="572">if</span> <a class="macro" href="#539" title="0" data-ref="_M/__DARWIN_NON_CANCELABLE">__DARWIN_NON_CANCELABLE</a></u></td></tr>
+<tr><th id="573">573</th><td><u>#    define __DARWIN_SUF_NON_CANCELABLE "$NOCANCEL"</u></td></tr>
+<tr><th id="574">574</th><td><u>#  <span data-ppcond="572">else</span> /* !__DARWIN_NON_CANCELABLE */</u></td></tr>
+<tr><th id="575">575</th><td><u>#    define <dfn class="macro" id="_M/__DARWIN_SUF_NON_CANCELABLE" data-ref="_M/__DARWIN_SUF_NON_CANCELABLE">__DARWIN_SUF_NON_CANCELABLE</dfn> /* nothing */</u></td></tr>
+<tr><th id="576">576</th><td><u>#  <span data-ppcond="572">endif</span> /* __DARWIN_NON_CANCELABLE */</u></td></tr>
+<tr><th id="577">577</th><td></td></tr>
+<tr><th id="578">578</th><td><u>#<span data-ppcond="545">else</span> /* !__DARWIN_UNIX03 */</u></td></tr>
+<tr><th id="579">579</th><td><u>#  define __DARWIN_SUF_UNIX03           /* nothing */</u></td></tr>
+<tr><th id="580">580</th><td><u>#  define __DARWIN_SUF_64_BIT_INO_T     /* nothing */</u></td></tr>
+<tr><th id="581">581</th><td><u>#  define __DARWIN_SUF_NON_CANCELABLE   /* nothing */</u></td></tr>
+<tr><th id="582">582</th><td><u>#  define __DARWIN_SUF_1050             /* nothing */</u></td></tr>
+<tr><th id="583">583</th><td><u>#<span data-ppcond="545">endif</span> /* __DARWIN_UNIX03 */</u></td></tr>
+<tr><th id="584">584</th><td></td></tr>
+<tr><th id="585">585</th><td><u>#define <dfn class="macro" id="_M/__DARWIN_SUF_EXTSN" data-ref="_M/__DARWIN_SUF_EXTSN">__DARWIN_SUF_EXTSN</dfn>              "$DARWIN_EXTSN"</u></td></tr>
+<tr><th id="586">586</th><td></td></tr>
+<tr><th id="587">587</th><td><i>/*</i></td></tr>
+<tr><th id="588">588</th><td><i> * symbol versioning macros</i></td></tr>
+<tr><th id="589">589</th><td><i> */</i></td></tr>
+<tr><th id="590">590</th><td><u>#define <dfn class="macro" id="_M/__DARWIN_ALIAS" data-ref="_M/__DARWIN_ALIAS">__DARWIN_ALIAS</dfn>(sym)             __asm("_" __STRING(sym) __DARWIN_SUF_UNIX03)</u></td></tr>
+<tr><th id="591">591</th><td><u>#define <dfn class="macro" id="_M/__DARWIN_ALIAS_C" data-ref="_M/__DARWIN_ALIAS_C">__DARWIN_ALIAS_C</dfn>(sym)           __asm("_" __STRING(sym) __DARWIN_SUF_NON_CANCELABLE __DARWIN_SUF_UNIX03)</u></td></tr>
+<tr><th id="592">592</th><td><u>#define <dfn class="macro" id="_M/__DARWIN_ALIAS_I" data-ref="_M/__DARWIN_ALIAS_I">__DARWIN_ALIAS_I</dfn>(sym)           __asm("_" __STRING(sym) __DARWIN_SUF_64_BIT_INO_T __DARWIN_SUF_UNIX03)</u></td></tr>
+<tr><th id="593">593</th><td><u>#define <dfn class="macro" id="_M/__DARWIN_NOCANCEL" data-ref="_M/__DARWIN_NOCANCEL">__DARWIN_NOCANCEL</dfn>(sym)          __asm("_" __STRING(sym) __DARWIN_SUF_NON_CANCELABLE)</u></td></tr>
+<tr><th id="594">594</th><td><u>#define <dfn class="macro" id="_M/__DARWIN_INODE64" data-ref="_M/__DARWIN_INODE64">__DARWIN_INODE64</dfn>(sym)           __asm("_" __STRING(sym) __DARWIN_SUF_64_BIT_INO_T)</u></td></tr>
+<tr><th id="595">595</th><td></td></tr>
+<tr><th id="596">596</th><td><u>#define <dfn class="macro" id="_M/__DARWIN_1050" data-ref="_M/__DARWIN_1050">__DARWIN_1050</dfn>(sym)              __asm("_" __STRING(sym) __DARWIN_SUF_1050)</u></td></tr>
+<tr><th id="597">597</th><td><u>#define <dfn class="macro" id="_M/__DARWIN_1050ALIAS" data-ref="_M/__DARWIN_1050ALIAS">__DARWIN_1050ALIAS</dfn>(sym)         __asm("_" __STRING(sym) __DARWIN_SUF_1050 __DARWIN_SUF_UNIX03)</u></td></tr>
+<tr><th id="598">598</th><td><u>#define <dfn class="macro" id="_M/__DARWIN_1050ALIAS_C" data-ref="_M/__DARWIN_1050ALIAS_C">__DARWIN_1050ALIAS_C</dfn>(sym)       __asm("_" __STRING(sym) __DARWIN_SUF_1050 __DARWIN_SUF_NON_CANCELABLE __DARWIN_SUF_UNIX03)</u></td></tr>
+<tr><th id="599">599</th><td><u>#define <dfn class="macro" id="_M/__DARWIN_1050ALIAS_I" data-ref="_M/__DARWIN_1050ALIAS_I">__DARWIN_1050ALIAS_I</dfn>(sym)       __asm("_" __STRING(sym) __DARWIN_SUF_1050 __DARWIN_SUF_64_BIT_INO_T __DARWIN_SUF_UNIX03)</u></td></tr>
+<tr><th id="600">600</th><td><u>#define <dfn class="macro" id="_M/__DARWIN_1050INODE64" data-ref="_M/__DARWIN_1050INODE64">__DARWIN_1050INODE64</dfn>(sym)       __asm("_" __STRING(sym) __DARWIN_SUF_1050 __DARWIN_SUF_64_BIT_INO_T)</u></td></tr>
+<tr><th id="601">601</th><td></td></tr>
+<tr><th id="602">602</th><td><u>#define <dfn class="macro" id="_M/__DARWIN_EXTSN" data-ref="_M/__DARWIN_EXTSN">__DARWIN_EXTSN</dfn>(sym)             __asm("_" __STRING(sym) __DARWIN_SUF_EXTSN)</u></td></tr>
+<tr><th id="603">603</th><td><u>#define <dfn class="macro" id="_M/__DARWIN_EXTSN_C" data-ref="_M/__DARWIN_EXTSN_C">__DARWIN_EXTSN_C</dfn>(sym)           __asm("_" __STRING(sym) __DARWIN_SUF_EXTSN __DARWIN_SUF_NON_CANCELABLE)</u></td></tr>
+<tr><th id="604">604</th><td></td></tr>
+<tr><th id="605">605</th><td><i>/*</i></td></tr>
+<tr><th id="606">606</th><td><i> * symbol release macros</i></td></tr>
+<tr><th id="607">607</th><td><i> */</i></td></tr>
+<tr><th id="608">608</th><td><u>#include <a href="_symbol_aliasing.h.html">&lt;sys/_symbol_aliasing.h&gt;</a></u></td></tr>
+<tr><th id="609">609</th><td></td></tr>
+<tr><th id="610">610</th><td><u>#<span data-ppcond="610">if</span> defined(<span class="macro" data-ref="_M/__ENVIRONMENT_IPHONE_OS_VERSION_MIN_REQUIRED__">__ENVIRONMENT_IPHONE_OS_VERSION_MIN_REQUIRED__</span>)</u></td></tr>
+<tr><th id="611">611</th><td><u>#define __DARWIN_ALIAS_STARTING(_mac, _iphone, x)   __DARWIN_ALIAS_STARTING_IPHONE_##_iphone(x)</u></td></tr>
+<tr><th id="612">612</th><td><u>#<span data-ppcond="610">elif</span> defined(<span class="macro" data-ref="_M/__ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__">__ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__</span>)</u></td></tr>
+<tr><th id="613">613</th><td><u>#define <dfn class="macro" id="_M/__DARWIN_ALIAS_STARTING" data-ref="_M/__DARWIN_ALIAS_STARTING">__DARWIN_ALIAS_STARTING</dfn>(_mac, _iphone, x)   __DARWIN_ALIAS_STARTING_MAC_##_mac(x)</u></td></tr>
+<tr><th id="614">614</th><td><u>#<span data-ppcond="610">else</span></u></td></tr>
+<tr><th id="615">615</th><td><u>#define __DARWIN_ALIAS_STARTING(_mac, _iphone, x)   x</u></td></tr>
+<tr><th id="616">616</th><td><u>#<span data-ppcond="610">endif</span></u></td></tr>
+<tr><th id="617">617</th><td></td></tr>
+<tr><th id="618">618</th><td></td></tr>
+<tr><th id="619">619</th><td><i>/*</i></td></tr>
+<tr><th id="620">620</th><td><i> * POSIX.1 requires that the macros we test be defined before any standard</i></td></tr>
+<tr><th id="621">621</th><td><i> * header file is included.  This permits us to convert values for feature</i></td></tr>
+<tr><th id="622">622</th><td><i> * testing, as necessary, using only _POSIX_C_SOURCE.</i></td></tr>
+<tr><th id="623">623</th><td><i> *</i></td></tr>
+<tr><th id="624">624</th><td><i> * Here's a quick run-down of the versions:</i></td></tr>
+<tr><th id="625">625</th><td><i> *  defined(_POSIX_SOURCE)		1003.1-1988</i></td></tr>
+<tr><th id="626">626</th><td><i> *  _POSIX_C_SOURCE == 1L		1003.1-1990</i></td></tr>
+<tr><th id="627">627</th><td><i> *  _POSIX_C_SOURCE == 2L		1003.2-1992 C Language Binding Option</i></td></tr>
+<tr><th id="628">628</th><td><i> *  _POSIX_C_SOURCE == 199309L		1003.1b-1993</i></td></tr>
+<tr><th id="629">629</th><td><i> *  _POSIX_C_SOURCE == 199506L		1003.1c-1995, 1003.1i-1995,</i></td></tr>
+<tr><th id="630">630</th><td><i> *					and the omnibus ISO/IEC 9945-1: 1996</i></td></tr>
+<tr><th id="631">631</th><td><i> *  _POSIX_C_SOURCE == 200112L		1003.1-2001</i></td></tr>
+<tr><th id="632">632</th><td><i> *  _POSIX_C_SOURCE == 200809L		1003.1-2008</i></td></tr>
+<tr><th id="633">633</th><td><i> *</i></td></tr>
+<tr><th id="634">634</th><td><i> * In addition, the X/Open Portability Guide, which is now the Single UNIX</i></td></tr>
+<tr><th id="635">635</th><td><i> * Specification, defines a feature-test macro which indicates the version of</i></td></tr>
+<tr><th id="636">636</th><td><i> * that specification, and which subsumes _POSIX_C_SOURCE.</i></td></tr>
+<tr><th id="637">637</th><td><i> */</i></td></tr>
+<tr><th id="638">638</th><td></td></tr>
+<tr><th id="639">639</th><td><i>/* Deal with IEEE Std. 1003.1-1990, in which _POSIX_C_SOURCE == 1L. */</i></td></tr>
+<tr><th id="640">640</th><td><u>#<span data-ppcond="640">if</span> defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>) &amp;&amp; _POSIX_C_SOURCE == 1L</u></td></tr>
+<tr><th id="641">641</th><td><u>#undef _POSIX_C_SOURCE</u></td></tr>
+<tr><th id="642">642</th><td><u>#define _POSIX_C_SOURCE         199009L</u></td></tr>
+<tr><th id="643">643</th><td><u>#<span data-ppcond="640">endif</span></u></td></tr>
+<tr><th id="644">644</th><td></td></tr>
+<tr><th id="645">645</th><td><i>/* Deal with IEEE Std. 1003.2-1992, in which _POSIX_C_SOURCE == 2L. */</i></td></tr>
+<tr><th id="646">646</th><td><u>#<span data-ppcond="646">if</span> defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>) &amp;&amp; _POSIX_C_SOURCE == 2L</u></td></tr>
+<tr><th id="647">647</th><td><u>#undef _POSIX_C_SOURCE</u></td></tr>
+<tr><th id="648">648</th><td><u>#define _POSIX_C_SOURCE         199209L</u></td></tr>
+<tr><th id="649">649</th><td><u>#<span data-ppcond="646">endif</span></u></td></tr>
+<tr><th id="650">650</th><td></td></tr>
+<tr><th id="651">651</th><td><i>/* Deal with various X/Open Portability Guides and Single UNIX Spec. */</i></td></tr>
+<tr><th id="652">652</th><td><u>#<span data-ppcond="652">ifdef</span> <span class="macro" data-ref="_M/_XOPEN_SOURCE">_XOPEN_SOURCE</span></u></td></tr>
+<tr><th id="653">653</th><td><u>#if _XOPEN_SOURCE - 0L &gt;= 700L &amp;&amp; (!defined(_POSIX_C_SOURCE) || _POSIX_C_SOURCE - 0L &lt; 200809L)</u></td></tr>
+<tr><th id="654">654</th><td><u>#undef _POSIX_C_SOURCE</u></td></tr>
+<tr><th id="655">655</th><td><u>#define _POSIX_C_SOURCE         200809L</u></td></tr>
+<tr><th id="656">656</th><td><u>#elif _XOPEN_SOURCE - 0L &gt;= 600L &amp;&amp; (!defined(_POSIX_C_SOURCE) || _POSIX_C_SOURCE - 0L &lt; 200112L)</u></td></tr>
+<tr><th id="657">657</th><td><u>#undef _POSIX_C_SOURCE</u></td></tr>
+<tr><th id="658">658</th><td><u>#define _POSIX_C_SOURCE         200112L</u></td></tr>
+<tr><th id="659">659</th><td><u>#elif _XOPEN_SOURCE - 0L &gt;= 500L &amp;&amp; (!defined(_POSIX_C_SOURCE) || _POSIX_C_SOURCE - 0L &lt; 199506L)</u></td></tr>
+<tr><th id="660">660</th><td><u>#undef _POSIX_C_SOURCE</u></td></tr>
+<tr><th id="661">661</th><td><u>#define _POSIX_C_SOURCE         199506L</u></td></tr>
+<tr><th id="662">662</th><td><u>#endif</u></td></tr>
+<tr><th id="663">663</th><td><u>#<span data-ppcond="652">endif</span></u></td></tr>
+<tr><th id="664">664</th><td></td></tr>
+<tr><th id="665">665</th><td><i>/*</i></td></tr>
+<tr><th id="666">666</th><td><i> * Deal with all versions of POSIX.  The ordering relative to the tests above is</i></td></tr>
+<tr><th id="667">667</th><td><i> * important.</i></td></tr>
+<tr><th id="668">668</th><td><i> */</i></td></tr>
+<tr><th id="669">669</th><td><u>#<span data-ppcond="669">if</span> defined(<span class="macro" data-ref="_M/_POSIX_SOURCE">_POSIX_SOURCE</span>) &amp;&amp; !defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>)</u></td></tr>
+<tr><th id="670">670</th><td><u>#define _POSIX_C_SOURCE         198808L</u></td></tr>
+<tr><th id="671">671</th><td><u>#<span data-ppcond="669">endif</span></u></td></tr>
+<tr><th id="672">672</th><td></td></tr>
+<tr><th id="673">673</th><td><i>/* POSIX C deprecation macros */</i></td></tr>
+<tr><th id="674">674</th><td><u>#include <a href="_posix_availability.h.html">&lt;sys/_posix_availability.h&gt;</a></u></td></tr>
+<tr><th id="675">675</th><td></td></tr>
+<tr><th id="676">676</th><td><u>#define <dfn class="macro" id="_M/__POSIX_C_DEPRECATED" data-ref="_M/__POSIX_C_DEPRECATED">__POSIX_C_DEPRECATED</dfn>(ver) ___POSIX_C_DEPRECATED_STARTING_##ver</u></td></tr>
+<tr><th id="677">677</th><td></td></tr>
+<tr><th id="678">678</th><td><i>/*</i></td></tr>
+<tr><th id="679">679</th><td><i> * Set a single macro which will always be defined and can be used to determine</i></td></tr>
+<tr><th id="680">680</th><td><i> * the appropriate namespace.  For POSIX, these values will correspond to</i></td></tr>
+<tr><th id="681">681</th><td><i> * _POSIX_C_SOURCE value.  Currently there are two additional levels corresponding</i></td></tr>
+<tr><th id="682">682</th><td><i> * to ANSI (_ANSI_SOURCE) and Darwin extensions (_DARWIN_C_SOURCE)</i></td></tr>
+<tr><th id="683">683</th><td><i> */</i></td></tr>
+<tr><th id="684">684</th><td><u>#define <dfn class="macro" id="_M/__DARWIN_C_ANSI" data-ref="_M/__DARWIN_C_ANSI">__DARWIN_C_ANSI</dfn>         010000L</u></td></tr>
+<tr><th id="685">685</th><td><u>#define <dfn class="macro" id="_M/__DARWIN_C_FULL" data-ref="_M/__DARWIN_C_FULL">__DARWIN_C_FULL</dfn>         900000L</u></td></tr>
+<tr><th id="686">686</th><td></td></tr>
+<tr><th id="687">687</th><td><u>#<span data-ppcond="687">if</span>   defined(<span class="macro" data-ref="_M/_ANSI_SOURCE">_ANSI_SOURCE</span>)</u></td></tr>
+<tr><th id="688">688</th><td><u>#define __DARWIN_C_LEVEL        __DARWIN_C_ANSI</u></td></tr>
+<tr><th id="689">689</th><td><u>#<span data-ppcond="687">elif</span> defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>) &amp;&amp; !defined(<span class="macro" data-ref="_M/_DARWIN_C_SOURCE">_DARWIN_C_SOURCE</span>) &amp;&amp; !defined(<span class="macro" data-ref="_M/_NONSTD_SOURCE">_NONSTD_SOURCE</span>)</u></td></tr>
+<tr><th id="690">690</th><td><u>#define __DARWIN_C_LEVEL        _POSIX_C_SOURCE</u></td></tr>
+<tr><th id="691">691</th><td><u>#<span data-ppcond="687">else</span></u></td></tr>
+<tr><th id="692">692</th><td><u>#define <dfn class="macro" id="_M/__DARWIN_C_LEVEL" data-ref="_M/__DARWIN_C_LEVEL">__DARWIN_C_LEVEL</dfn>        __DARWIN_C_FULL</u></td></tr>
+<tr><th id="693">693</th><td><u>#<span data-ppcond="687">endif</span></u></td></tr>
+<tr><th id="694">694</th><td></td></tr>
+<tr><th id="695">695</th><td><i>/* If the developer has neither requested a strict language mode nor a version</i></td></tr>
+<tr><th id="696">696</th><td><i> * of POSIX, turn on functionality provided by __STDC_WANT_LIB_EXT1__ as part</i></td></tr>
+<tr><th id="697">697</th><td><i> * of __DARWIN_C_FULL.</i></td></tr>
+<tr><th id="698">698</th><td><i> */</i></td></tr>
+<tr><th id="699">699</th><td><u>#<span data-ppcond="699">if</span> !defined(<span class="macro" data-ref="_M/__STDC_WANT_LIB_EXT1__">__STDC_WANT_LIB_EXT1__</span>) &amp;&amp; !defined(<span class="macro" data-ref="_M/__STRICT_ANSI__">__STRICT_ANSI__</span>) &amp;&amp; <a class="macro" href="#692" title="900000L" data-ref="_M/__DARWIN_C_LEVEL">__DARWIN_C_LEVEL</a> &gt;= <a class="macro" href="#685" title="900000L" data-ref="_M/__DARWIN_C_FULL">__DARWIN_C_FULL</a></u></td></tr>
+<tr><th id="700">700</th><td><u>#define <dfn class="macro" id="_M/__STDC_WANT_LIB_EXT1__" data-ref="_M/__STDC_WANT_LIB_EXT1__">__STDC_WANT_LIB_EXT1__</dfn> 1</u></td></tr>
+<tr><th id="701">701</th><td><u>#<span data-ppcond="699">endif</span></u></td></tr>
+<tr><th id="702">702</th><td></td></tr>
+<tr><th id="703">703</th><td><i>/*</i></td></tr>
+<tr><th id="704">704</th><td><i> * long long is not supported in c89 (__STRICT_ANSI__), but g++ -ansi and</i></td></tr>
+<tr><th id="705">705</th><td><i> * c99 still want long longs.  While not perfect, we allow long longs for</i></td></tr>
+<tr><th id="706">706</th><td><i> * g++.</i></td></tr>
+<tr><th id="707">707</th><td><i> */</i></td></tr>
+<tr><th id="708">708</th><td><u>#<span data-ppcond="708">if</span> (defined(<span class="macro" data-ref="_M/__STRICT_ANSI__">__STRICT_ANSI__</span>) &amp;&amp; (<span class="macro" title="201112L" data-ref="_M/__STDC_VERSION__">__STDC_VERSION__</span> - 0 &lt; 199901L) &amp;&amp; !defined(<span class="macro" data-ref="_M/__GNUG__">__GNUG__</span>))</u></td></tr>
+<tr><th id="709">709</th><td><u>#define __DARWIN_NO_LONG_LONG 1</u></td></tr>
+<tr><th id="710">710</th><td><u>#<span data-ppcond="708">else</span></u></td></tr>
+<tr><th id="711">711</th><td><u>#define <dfn class="macro" id="_M/__DARWIN_NO_LONG_LONG" data-ref="_M/__DARWIN_NO_LONG_LONG">__DARWIN_NO_LONG_LONG</dfn> 0</u></td></tr>
+<tr><th id="712">712</th><td><u>#<span data-ppcond="708">endif</span></u></td></tr>
+<tr><th id="713">713</th><td></td></tr>
+<tr><th id="714">714</th><td><i>/*****************************************</i></td></tr>
+<tr><th id="715">715</th><td><i>*  Public darwin-specific feature macros</i></td></tr>
+<tr><th id="716">716</th><td><i>*****************************************/</i></td></tr>
+<tr><th id="717">717</th><td></td></tr>
+<tr><th id="718">718</th><td><i>/*</i></td></tr>
+<tr><th id="719">719</th><td><i> * _DARWIN_FEATURE_64_BIT_INODE indicates that the ino_t type is 64-bit, and</i></td></tr>
+<tr><th id="720">720</th><td><i> * structures modified for 64-bit inodes (like struct stat) will be used.</i></td></tr>
+<tr><th id="721">721</th><td><i> */</i></td></tr>
+<tr><th id="722">722</th><td><u>#<span data-ppcond="722">if</span> <a class="macro" href="#523" title="1" data-ref="_M/__DARWIN_64_BIT_INO_T">__DARWIN_64_BIT_INO_T</a></u></td></tr>
+<tr><th id="723">723</th><td><u>#define <dfn class="macro" id="_M/_DARWIN_FEATURE_64_BIT_INODE" data-ref="_M/_DARWIN_FEATURE_64_BIT_INODE">_DARWIN_FEATURE_64_BIT_INODE</dfn>            1</u></td></tr>
+<tr><th id="724">724</th><td><u>#<span data-ppcond="722">endif</span></u></td></tr>
+<tr><th id="725">725</th><td></td></tr>
+<tr><th id="726">726</th><td><i>/*</i></td></tr>
+<tr><th id="727">727</th><td><i> * _DARWIN_FEATURE_64_ONLY_BIT_INODE indicates that the ino_t type may only</i></td></tr>
+<tr><th id="728">728</th><td><i> * be 64-bit; there is no support for 32-bit ino_t when this macro is defined</i></td></tr>
+<tr><th id="729">729</th><td><i> * (and non-zero).  There is no struct stat64 either, as the regular</i></td></tr>
+<tr><th id="730">730</th><td><i> * struct stat will already be the 64-bit version.</i></td></tr>
+<tr><th id="731">731</th><td><i> */</i></td></tr>
+<tr><th id="732">732</th><td><u>#<span data-ppcond="732">if</span> <a class="macro" href="#452" title="0" data-ref="_M/__DARWIN_ONLY_64_BIT_INO_T">__DARWIN_ONLY_64_BIT_INO_T</a></u></td></tr>
+<tr><th id="733">733</th><td><u>#define _DARWIN_FEATURE_ONLY_64_BIT_INODE       1</u></td></tr>
+<tr><th id="734">734</th><td><u>#<span data-ppcond="732">endif</span></u></td></tr>
+<tr><th id="735">735</th><td></td></tr>
+<tr><th id="736">736</th><td><i>/*</i></td></tr>
+<tr><th id="737">737</th><td><i> * _DARWIN_FEATURE_ONLY_VERS_1050 indicates that only those APIs updated</i></td></tr>
+<tr><th id="738">738</th><td><i> * in 10.5 exists; no pre-10.5 variants are available.</i></td></tr>
+<tr><th id="739">739</th><td><i> */</i></td></tr>
+<tr><th id="740">740</th><td><u>#<span data-ppcond="740">if</span> <a class="macro" href="#454" title="0" data-ref="_M/__DARWIN_ONLY_VERS_1050">__DARWIN_ONLY_VERS_1050</a></u></td></tr>
+<tr><th id="741">741</th><td><u>#define _DARWIN_FEATURE_ONLY_VERS_1050          1</u></td></tr>
+<tr><th id="742">742</th><td><u>#<span data-ppcond="740">endif</span></u></td></tr>
+<tr><th id="743">743</th><td></td></tr>
+<tr><th id="744">744</th><td><i>/*</i></td></tr>
+<tr><th id="745">745</th><td><i> * _DARWIN_FEATURE_ONLY_UNIX_CONFORMANCE indicates only UNIX conforming API</i></td></tr>
+<tr><th id="746">746</th><td><i> * are available (the legacy BSD APIs are not available)</i></td></tr>
+<tr><th id="747">747</th><td><i> */</i></td></tr>
+<tr><th id="748">748</th><td><u>#<span data-ppcond="748">if</span> <a class="macro" href="#476" title="1" data-ref="_M/__DARWIN_ONLY_UNIX_CONFORMANCE">__DARWIN_ONLY_UNIX_CONFORMANCE</a></u></td></tr>
+<tr><th id="749">749</th><td><u>#define <dfn class="macro" id="_M/_DARWIN_FEATURE_ONLY_UNIX_CONFORMANCE" data-ref="_M/_DARWIN_FEATURE_ONLY_UNIX_CONFORMANCE">_DARWIN_FEATURE_ONLY_UNIX_CONFORMANCE</dfn>   1</u></td></tr>
+<tr><th id="750">750</th><td><u>#<span data-ppcond="748">endif</span></u></td></tr>
+<tr><th id="751">751</th><td></td></tr>
+<tr><th id="752">752</th><td><i>/*</i></td></tr>
+<tr><th id="753">753</th><td><i> * _DARWIN_FEATURE_UNIX_CONFORMANCE indicates whether UNIX conformance is on,</i></td></tr>
+<tr><th id="754">754</th><td><i> * and specifies the conformance level (3 is SUSv3)</i></td></tr>
+<tr><th id="755">755</th><td><i> */</i></td></tr>
+<tr><th id="756">756</th><td><u>#<span data-ppcond="756">if</span> <a class="macro" href="#487" title="1" data-ref="_M/__DARWIN_UNIX03">__DARWIN_UNIX03</a></u></td></tr>
+<tr><th id="757">757</th><td><u>#define <dfn class="macro" id="_M/_DARWIN_FEATURE_UNIX_CONFORMANCE" data-ref="_M/_DARWIN_FEATURE_UNIX_CONFORMANCE">_DARWIN_FEATURE_UNIX_CONFORMANCE</dfn>        3</u></td></tr>
+<tr><th id="758">758</th><td><u>#<span data-ppcond="756">endif</span></u></td></tr>
+<tr><th id="759">759</th><td></td></tr>
+<tr><th id="760">760</th><td><i>/*</i></td></tr>
+<tr><th id="761">761</th><td><i> * This macro casts away the qualifier from the variable</i></td></tr>
+<tr><th id="762">762</th><td><i> *</i></td></tr>
+<tr><th id="763">763</th><td><i> * Note: use at your own risk, removing qualifiers can result in</i></td></tr>
+<tr><th id="764">764</th><td><i> * catastrophic run-time failures.</i></td></tr>
+<tr><th id="765">765</th><td><i> */</i></td></tr>
+<tr><th id="766">766</th><td><u>#<span data-ppcond="766">ifndef</span> <span class="macro" data-ref="_M/__CAST_AWAY_QUALIFIER">__CAST_AWAY_QUALIFIER</span></u></td></tr>
+<tr><th id="767">767</th><td><u>#define <dfn class="macro" id="_M/__CAST_AWAY_QUALIFIER" data-ref="_M/__CAST_AWAY_QUALIFIER">__CAST_AWAY_QUALIFIER</dfn>(variable, qualifier, type)  (type) (long)(variable)</u></td></tr>
+<tr><th id="768">768</th><td><u>#<span data-ppcond="766">endif</span></u></td></tr>
+<tr><th id="769">769</th><td></td></tr>
+<tr><th id="770">770</th><td><i>/*</i></td></tr>
+<tr><th id="771">771</th><td><i> * __XNU_PRIVATE_EXTERN is a linkage decoration indicating that a symbol can be</i></td></tr>
+<tr><th id="772">772</th><td><i> * used from other compilation units, but not other libraries or executables.</i></td></tr>
+<tr><th id="773">773</th><td><i> */</i></td></tr>
+<tr><th id="774">774</th><td><u>#<span data-ppcond="774">ifndef</span> <span class="macro" data-ref="_M/__XNU_PRIVATE_EXTERN">__XNU_PRIVATE_EXTERN</span></u></td></tr>
+<tr><th id="775">775</th><td><u>#define <dfn class="macro" id="_M/__XNU_PRIVATE_EXTERN" data-ref="_M/__XNU_PRIVATE_EXTERN">__XNU_PRIVATE_EXTERN</dfn> __attribute__((visibility("hidden")))</u></td></tr>
+<tr><th id="776">776</th><td><u>#<span data-ppcond="774">endif</span></u></td></tr>
+<tr><th id="777">777</th><td></td></tr>
+<tr><th id="778">778</th><td><i>/*</i></td></tr>
+<tr><th id="779">779</th><td><i> * Architecture validation for current SDK</i></td></tr>
+<tr><th id="780">780</th><td><i> */</i></td></tr>
+<tr><th id="781">781</th><td><u>#<span data-ppcond="781">if</span> !defined(<span class="macro" data-ref="_M/__sys_cdefs_arch_unknown__">__sys_cdefs_arch_unknown__</span>) &amp;&amp; defined(<span class="macro" data-ref="_M/__i386__">__i386__</span>)</u></td></tr>
+<tr><th id="782">782</th><td><u>#<span data-ppcond="781">elif</span> !defined(<span class="macro" data-ref="_M/__sys_cdefs_arch_unknown__">__sys_cdefs_arch_unknown__</span>) &amp;&amp; defined(<span class="macro" data-ref="_M/__x86_64__">__x86_64__</span>)</u></td></tr>
+<tr><th id="783">783</th><td><u>#<span data-ppcond="781">else</span></u></td></tr>
+<tr><th id="784">784</th><td><u>#error Unsupported architecture</u></td></tr>
+<tr><th id="785">785</th><td><u>#<span data-ppcond="781">endif</span></u></td></tr>
+<tr><th id="786">786</th><td></td></tr>
+<tr><th id="787">787</th><td></td></tr>
+<tr><th id="788">788</th><td></td></tr>
+<tr><th id="789">789</th><td><u>#define <dfn class="macro" id="_M/__compiler_barrier" data-ref="_M/__compiler_barrier">__compiler_barrier</dfn>() __asm__ __volatile__("" ::: "memory")</u></td></tr>
+<tr><th id="790">790</th><td></td></tr>
+<tr><th id="791">791</th><td><u>#<span data-ppcond="67">endif</span> /* !_CDEFS_H_ */</u></td></tr>
+<tr><th id="792">792</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../xv6/mkfs.c.html'>xv6/mkfs.c</a><br/>Generated on <em>2019-Jul-19</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 2.1
+<br/>Generator usage only permitted with license.</p>
+</div></body></html>

@@ -1,0 +1,560 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>fcntl.h source code [include/sys/fcntl.h] - Woboq Code Browser</title>
+<meta name="woboq:interestingDefinitions" content="fbootstraptransfer,fchecklv,fcodeblobs,flock,flocktimeout,fpunchhole,fsignatures,fstore,ftrimactivefile,log2phys,radvisory "/>
+<link rel="stylesheet" href="https://code.woboq.org/data/qtcreator.css" title="QtCreator"/>
+<link rel="alternate stylesheet" href="https://code.woboq.org/data/kdevelop.css" title="KDevelop"/>
+<script type="text/javascript" src="https://code.woboq.org/data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="https://code.woboq.org/data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/sys/fcntl.h'; var root_path = '../..'; var data_path = 'https://code.woboq.org/data';</script>
+<script src='https://code.woboq.org/data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Browse the source code of </span><a href='..'>include</a>/<a href='./'>sys</a>/<a href='fcntl.h.html'>fcntl.h</a></h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (c) 2000-2013 Apple Inc. All rights reserved.</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * @APPLE_OSREFERENCE_LICENSE_HEADER_START@</i></td></tr>
+<tr><th id="5">5</th><td><i> *</i></td></tr>
+<tr><th id="6">6</th><td><i> * This file contains Original Code and/or Modifications of Original Code</i></td></tr>
+<tr><th id="7">7</th><td><i> * as defined in and that are subject to the Apple Public Source License</i></td></tr>
+<tr><th id="8">8</th><td><i> * Version 2.0 (the 'License'). You may not use this file except in</i></td></tr>
+<tr><th id="9">9</th><td><i> * compliance with the License. The rights granted to you under the License</i></td></tr>
+<tr><th id="10">10</th><td><i> * may not be used to create, or enable the creation or redistribution of,</i></td></tr>
+<tr><th id="11">11</th><td><i> * unlawful or unlicensed copies of an Apple operating system, or to</i></td></tr>
+<tr><th id="12">12</th><td><i> * circumvent, violate, or enable the circumvention or violation of, any</i></td></tr>
+<tr><th id="13">13</th><td><i> * terms of an Apple operating system software license agreement.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * Please obtain a copy of the License at</i></td></tr>
+<tr><th id="16">16</th><td><i> * <a href="http://www.opensource.apple.com/apsl/">http://www.opensource.apple.com/apsl/</a> and read it before using this file.</i></td></tr>
+<tr><th id="17">17</th><td><i> *</i></td></tr>
+<tr><th id="18">18</th><td><i> * The Original Code and all software distributed under the License are</i></td></tr>
+<tr><th id="19">19</th><td><i> * distributed on an 'AS IS' basis, WITHOUT WARRANTY OF ANY KIND, EITHER</i></td></tr>
+<tr><th id="20">20</th><td><i> * EXPRESS OR IMPLIED, AND APPLE HEREBY DISCLAIMS ALL SUCH WARRANTIES,</i></td></tr>
+<tr><th id="21">21</th><td><i> * INCLUDING WITHOUT LIMITATION, ANY WARRANTIES OF MERCHANTABILITY,</i></td></tr>
+<tr><th id="22">22</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE, QUIET ENJOYMENT OR NON-INFRINGEMENT.</i></td></tr>
+<tr><th id="23">23</th><td><i> * Please see the License for the specific language governing rights and</i></td></tr>
+<tr><th id="24">24</th><td><i> * limitations under the License.</i></td></tr>
+<tr><th id="25">25</th><td><i> *</i></td></tr>
+<tr><th id="26">26</th><td><i> * @APPLE_OSREFERENCE_LICENSE_HEADER_END@</i></td></tr>
+<tr><th id="27">27</th><td><i> */</i></td></tr>
+<tr><th id="28">28</th><td><i>/* Copyright (c) 1995 NeXT Computer, Inc. All Rights Reserved */</i></td></tr>
+<tr><th id="29">29</th><td><i>/*-</i></td></tr>
+<tr><th id="30">30</th><td><i> * Copyright (c) 1983, 1990, 1993</i></td></tr>
+<tr><th id="31">31</th><td><i> *	The Regents of the University of California.  All rights reserved.</i></td></tr>
+<tr><th id="32">32</th><td><i> * (c) UNIX System Laboratories, Inc.</i></td></tr>
+<tr><th id="33">33</th><td><i> * All or some portions of this file are derived from material licensed</i></td></tr>
+<tr><th id="34">34</th><td><i> * to the University of California by American Telephone and Telegraph</i></td></tr>
+<tr><th id="35">35</th><td><i> * Co. or Unix System Laboratories, Inc. and are reproduced herein with</i></td></tr>
+<tr><th id="36">36</th><td><i> * the permission of UNIX System Laboratories, Inc.</i></td></tr>
+<tr><th id="37">37</th><td><i> *</i></td></tr>
+<tr><th id="38">38</th><td><i> * Redistribution and use in source and binary forms, with or without</i></td></tr>
+<tr><th id="39">39</th><td><i> * modification, are permitted provided that the following conditions</i></td></tr>
+<tr><th id="40">40</th><td><i> * are met:</i></td></tr>
+<tr><th id="41">41</th><td><i> * 1. Redistributions of source code must retain the above copyright</i></td></tr>
+<tr><th id="42">42</th><td><i> *    notice, this list of conditions and the following disclaimer.</i></td></tr>
+<tr><th id="43">43</th><td><i> * 2. Redistributions in binary form must reproduce the above copyright</i></td></tr>
+<tr><th id="44">44</th><td><i> *    notice, this list of conditions and the following disclaimer in the</i></td></tr>
+<tr><th id="45">45</th><td><i> *    documentation and/or other materials provided with the distribution.</i></td></tr>
+<tr><th id="46">46</th><td><i> * 3. All advertising materials mentioning features or use of this software</i></td></tr>
+<tr><th id="47">47</th><td><i> *    must display the following acknowledgement:</i></td></tr>
+<tr><th id="48">48</th><td><i> *	This product includes software developed by the University of</i></td></tr>
+<tr><th id="49">49</th><td><i> *	California, Berkeley and its contributors.</i></td></tr>
+<tr><th id="50">50</th><td><i> * 4. Neither the name of the University nor the names of its contributors</i></td></tr>
+<tr><th id="51">51</th><td><i> *    may be used to endorse or promote products derived from this software</i></td></tr>
+<tr><th id="52">52</th><td><i> *    without specific prior written permission.</i></td></tr>
+<tr><th id="53">53</th><td><i> *</i></td></tr>
+<tr><th id="54">54</th><td><i> * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND</i></td></tr>
+<tr><th id="55">55</th><td><i> * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE</i></td></tr>
+<tr><th id="56">56</th><td><i> * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE</i></td></tr>
+<tr><th id="57">57</th><td><i> * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE</i></td></tr>
+<tr><th id="58">58</th><td><i> * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL</i></td></tr>
+<tr><th id="59">59</th><td><i> * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS</i></td></tr>
+<tr><th id="60">60</th><td><i> * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)</i></td></tr>
+<tr><th id="61">61</th><td><i> * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT</i></td></tr>
+<tr><th id="62">62</th><td><i> * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY</i></td></tr>
+<tr><th id="63">63</th><td><i> * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF</i></td></tr>
+<tr><th id="64">64</th><td><i> * SUCH DAMAGE.</i></td></tr>
+<tr><th id="65">65</th><td><i> *</i></td></tr>
+<tr><th id="66">66</th><td><i> *	@(#)fcntl.h	8.3 (Berkeley) 1/21/94</i></td></tr>
+<tr><th id="67">67</th><td><i> */</i></td></tr>
+<tr><th id="68">68</th><td></td></tr>
+<tr><th id="69">69</th><td></td></tr>
+<tr><th id="70">70</th><td><u>#<span data-ppcond="70">ifndef</span> <span class="macro" data-ref="_M/_SYS_FCNTL_H_">_SYS_FCNTL_H_</span></u></td></tr>
+<tr><th id="71">71</th><td><u>#define <dfn class="macro" id="_M/_SYS_FCNTL_H_" data-ref="_M/_SYS_FCNTL_H_">_SYS_FCNTL_H_</dfn></u></td></tr>
+<tr><th id="72">72</th><td></td></tr>
+<tr><th id="73">73</th><td><i>/*</i></td></tr>
+<tr><th id="74">74</th><td><i> * This file includes the definitions for open and fcntl</i></td></tr>
+<tr><th id="75">75</th><td><i> * described by POSIX for &lt;fcntl.h&gt;; it also includes</i></td></tr>
+<tr><th id="76">76</th><td><i> * related kernel definitions.</i></td></tr>
+<tr><th id="77">77</th><td><i> */</i></td></tr>
+<tr><th id="78">78</th><td><u>#include <a href="_types.h.html">&lt;sys/_types.h&gt;</a></u></td></tr>
+<tr><th id="79">79</th><td><u>#include <a href="cdefs.h.html">&lt;sys/cdefs.h&gt;</a></u></td></tr>
+<tr><th id="80">80</th><td><u>#include <a href="../Availability.h.html">&lt;Availability.h&gt;</a></u></td></tr>
+<tr><th id="81">81</th><td></td></tr>
+<tr><th id="82">82</th><td><i>/* We should not be exporting size_t here.  Temporary for gcc bootstrapping. */</i></td></tr>
+<tr><th id="83">83</th><td><u>#include <a href="_types/_size_t.h.html">&lt;sys/_types/_size_t.h&gt;</a></u></td></tr>
+<tr><th id="84">84</th><td><u>#include <a href="_types/_mode_t.h.html">&lt;sys/_types/_mode_t.h&gt;</a></u></td></tr>
+<tr><th id="85">85</th><td><u>#include <a href="_types/_off_t.h.html">&lt;sys/_types/_off_t.h&gt;</a></u></td></tr>
+<tr><th id="86">86</th><td><u>#include <a href="_types/_pid_t.h.html">&lt;sys/_types/_pid_t.h&gt;</a></u></td></tr>
+<tr><th id="87">87</th><td></td></tr>
+<tr><th id="88">88</th><td><i>/*</i></td></tr>
+<tr><th id="89">89</th><td><i> * File status flags: these are used by open(2), fcntl(2).</i></td></tr>
+<tr><th id="90">90</th><td><i> * They are also used (indirectly) in the kernel file structure f_flags,</i></td></tr>
+<tr><th id="91">91</th><td><i> * which is a superset of the open/fcntl flags.  Open flags and f_flags</i></td></tr>
+<tr><th id="92">92</th><td><i> * are inter-convertible using OFLAGS(fflags) and FFLAGS(oflags).</i></td></tr>
+<tr><th id="93">93</th><td><i> * Open/fcntl flags begin with O_; kernel-internal flags begin with F.</i></td></tr>
+<tr><th id="94">94</th><td><i> */</i></td></tr>
+<tr><th id="95">95</th><td><i>/* open-only flags */</i></td></tr>
+<tr><th id="96">96</th><td><u>#define <dfn class="macro" id="_M/O_RDONLY" data-ref="_M/O_RDONLY">O_RDONLY</dfn>        0x0000          /* open for reading only */</u></td></tr>
+<tr><th id="97">97</th><td><u>#define <dfn class="macro" id="_M/O_WRONLY" data-ref="_M/O_WRONLY">O_WRONLY</dfn>        0x0001          /* open for writing only */</u></td></tr>
+<tr><th id="98">98</th><td><u>#define <dfn class="macro" id="_M/O_RDWR" data-ref="_M/O_RDWR">O_RDWR</dfn>          0x0002          /* open for reading and writing */</u></td></tr>
+<tr><th id="99">99</th><td><u>#define <dfn class="macro" id="_M/O_ACCMODE" data-ref="_M/O_ACCMODE">O_ACCMODE</dfn>       0x0003          /* mask for above modes */</u></td></tr>
+<tr><th id="100">100</th><td></td></tr>
+<tr><th id="101">101</th><td><i>/*</i></td></tr>
+<tr><th id="102">102</th><td><i> * Kernel encoding of open mode; separate read and write bits that are</i></td></tr>
+<tr><th id="103">103</th><td><i> * independently testable: 1 greater than the above.</i></td></tr>
+<tr><th id="104">104</th><td><i> *</i></td></tr>
+<tr><th id="105">105</th><td><i> * XXX</i></td></tr>
+<tr><th id="106">106</th><td><i> * FREAD and FWRITE are excluded from the #ifdef KERNEL so that TIOCFLUSH,</i></td></tr>
+<tr><th id="107">107</th><td><i> * which was documented to use FREAD/FWRITE, continues to work.</i></td></tr>
+<tr><th id="108">108</th><td><i> */</i></td></tr>
+<tr><th id="109">109</th><td><u>#<span data-ppcond="109">if</span> !defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>) || defined(<span class="macro" data-ref="_M/_DARWIN_C_SOURCE">_DARWIN_C_SOURCE</span>)</u></td></tr>
+<tr><th id="110">110</th><td><u>#define <dfn class="macro" id="_M/FREAD" data-ref="_M/FREAD">FREAD</dfn>           0x0001</u></td></tr>
+<tr><th id="111">111</th><td><u>#define <dfn class="macro" id="_M/FWRITE" data-ref="_M/FWRITE">FWRITE</dfn>          0x0002</u></td></tr>
+<tr><th id="112">112</th><td><u>#<span data-ppcond="109">endif</span></u></td></tr>
+<tr><th id="113">113</th><td><u>#define <dfn class="macro" id="_M/O_NONBLOCK" data-ref="_M/O_NONBLOCK">O_NONBLOCK</dfn>      0x0004          /* no delay */</u></td></tr>
+<tr><th id="114">114</th><td><u>#define <dfn class="macro" id="_M/O_APPEND" data-ref="_M/O_APPEND">O_APPEND</dfn>        0x0008          /* set append mode */</u></td></tr>
+<tr><th id="115">115</th><td></td></tr>
+<tr><th id="116">116</th><td><u>#include <a href="_types/_o_sync.h.html">&lt;sys/_types/_o_sync.h&gt;</a></u></td></tr>
+<tr><th id="117">117</th><td></td></tr>
+<tr><th id="118">118</th><td><u>#<span data-ppcond="118">if</span> !defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>) || defined(<span class="macro" data-ref="_M/_DARWIN_C_SOURCE">_DARWIN_C_SOURCE</span>)</u></td></tr>
+<tr><th id="119">119</th><td><u>#define <dfn class="macro" id="_M/O_SHLOCK" data-ref="_M/O_SHLOCK">O_SHLOCK</dfn>        0x0010          /* open with shared file lock */</u></td></tr>
+<tr><th id="120">120</th><td><u>#define <dfn class="macro" id="_M/O_EXLOCK" data-ref="_M/O_EXLOCK">O_EXLOCK</dfn>        0x0020          /* open with exclusive file lock */</u></td></tr>
+<tr><th id="121">121</th><td><u>#define <dfn class="macro" id="_M/O_ASYNC" data-ref="_M/O_ASYNC">O_ASYNC</dfn>         0x0040          /* signal pgrp when data ready */</u></td></tr>
+<tr><th id="122">122</th><td><u>#define <dfn class="macro" id="_M/O_FSYNC" data-ref="_M/O_FSYNC">O_FSYNC</dfn>         O_SYNC          /* source compatibility: do not use */</u></td></tr>
+<tr><th id="123">123</th><td><u>#define <dfn class="macro" id="_M/O_NOFOLLOW" data-ref="_M/O_NOFOLLOW">O_NOFOLLOW</dfn>  0x0100      /* don't follow symlinks */</u></td></tr>
+<tr><th id="124">124</th><td><u>#<span data-ppcond="118">endif</span> /* (_POSIX_C_SOURCE &amp;&amp; !_DARWIN_C_SOURCE) */</u></td></tr>
+<tr><th id="125">125</th><td><u>#define <dfn class="macro" id="_M/O_CREAT" data-ref="_M/O_CREAT">O_CREAT</dfn>         0x0200          /* create if nonexistant */</u></td></tr>
+<tr><th id="126">126</th><td><u>#define <dfn class="macro" id="_M/O_TRUNC" data-ref="_M/O_TRUNC">O_TRUNC</dfn>         0x0400          /* truncate to zero length */</u></td></tr>
+<tr><th id="127">127</th><td><u>#define <dfn class="macro" id="_M/O_EXCL" data-ref="_M/O_EXCL">O_EXCL</dfn>          0x0800          /* error if already exists */</u></td></tr>
+<tr><th id="128">128</th><td></td></tr>
+<tr><th id="129">129</th><td><u>#<span data-ppcond="129">if</span> <a class="macro" href="cdefs.h.html#692" title="900000L" data-ref="_M/__DARWIN_C_LEVEL">__DARWIN_C_LEVEL</a> &gt;= 200809L</u></td></tr>
+<tr><th id="130">130</th><td><i>/*</i></td></tr>
+<tr><th id="131">131</th><td><i> * Descriptor value for the current working directory</i></td></tr>
+<tr><th id="132">132</th><td><i> */</i></td></tr>
+<tr><th id="133">133</th><td><u>#define <dfn class="macro" id="_M/AT_FDCWD" data-ref="_M/AT_FDCWD">AT_FDCWD</dfn>        -2</u></td></tr>
+<tr><th id="134">134</th><td></td></tr>
+<tr><th id="135">135</th><td><i>/*</i></td></tr>
+<tr><th id="136">136</th><td><i> * Flags for the at functions</i></td></tr>
+<tr><th id="137">137</th><td><i> */</i></td></tr>
+<tr><th id="138">138</th><td><u>#define <dfn class="macro" id="_M/AT_EACCESS" data-ref="_M/AT_EACCESS">AT_EACCESS</dfn>              0x0010  /* Use effective ids in access check */</u></td></tr>
+<tr><th id="139">139</th><td><u>#define <dfn class="macro" id="_M/AT_SYMLINK_NOFOLLOW" data-ref="_M/AT_SYMLINK_NOFOLLOW">AT_SYMLINK_NOFOLLOW</dfn>     0x0020  /* Act on the symlink itself not the target */</u></td></tr>
+<tr><th id="140">140</th><td><u>#define <dfn class="macro" id="_M/AT_SYMLINK_FOLLOW" data-ref="_M/AT_SYMLINK_FOLLOW">AT_SYMLINK_FOLLOW</dfn>       0x0040  /* Act on target of symlink */</u></td></tr>
+<tr><th id="141">141</th><td><u>#define <dfn class="macro" id="_M/AT_REMOVEDIR" data-ref="_M/AT_REMOVEDIR">AT_REMOVEDIR</dfn>            0x0080  /* Path refers to directory */</u></td></tr>
+<tr><th id="142">142</th><td><u>#<span data-ppcond="129">endif</span></u></td></tr>
+<tr><th id="143">143</th><td></td></tr>
+<tr><th id="144">144</th><td><u>#<span data-ppcond="144">if</span> !defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>) || defined(<span class="macro" data-ref="_M/_DARWIN_C_SOURCE">_DARWIN_C_SOURCE</span>)</u></td></tr>
+<tr><th id="145">145</th><td><u>#define <dfn class="macro" id="_M/O_EVTONLY" data-ref="_M/O_EVTONLY">O_EVTONLY</dfn>       0x8000          /* descriptor requested for event notifications only */</u></td></tr>
+<tr><th id="146">146</th><td><u>#<span data-ppcond="144">endif</span></u></td></tr>
+<tr><th id="147">147</th><td></td></tr>
+<tr><th id="148">148</th><td></td></tr>
+<tr><th id="149">149</th><td><u>#define <dfn class="macro" id="_M/O_NOCTTY" data-ref="_M/O_NOCTTY">O_NOCTTY</dfn>        0x20000         /* don't assign controlling terminal */</u></td></tr>
+<tr><th id="150">150</th><td></td></tr>
+<tr><th id="151">151</th><td></td></tr>
+<tr><th id="152">152</th><td><u>#<span data-ppcond="152">if</span> !defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>) || defined(<span class="macro" data-ref="_M/_DARWIN_C_SOURCE">_DARWIN_C_SOURCE</span>)</u></td></tr>
+<tr><th id="153">153</th><td><u>#define <dfn class="macro" id="_M/O_DIRECTORY" data-ref="_M/O_DIRECTORY">O_DIRECTORY</dfn>     0x100000</u></td></tr>
+<tr><th id="154">154</th><td><u>#define <dfn class="macro" id="_M/O_SYMLINK" data-ref="_M/O_SYMLINK">O_SYMLINK</dfn>       0x200000        /* allow open of a symlink */</u></td></tr>
+<tr><th id="155">155</th><td><u>#<span data-ppcond="152">endif</span></u></td></tr>
+<tr><th id="156">156</th><td></td></tr>
+<tr><th id="157">157</th><td><u>#include <a href="_types/_o_dsync.h.html">&lt;sys/_types/_o_dsync.h&gt;</a></u></td></tr>
+<tr><th id="158">158</th><td></td></tr>
+<tr><th id="159">159</th><td></td></tr>
+<tr><th id="160">160</th><td><u>#<span data-ppcond="160">if</span> <a class="macro" href="cdefs.h.html#692" title="900000L" data-ref="_M/__DARWIN_C_LEVEL">__DARWIN_C_LEVEL</a> &gt;= 200809L</u></td></tr>
+<tr><th id="161">161</th><td><u>#define <dfn class="macro" id="_M/O_CLOEXEC" data-ref="_M/O_CLOEXEC">O_CLOEXEC</dfn>       0x1000000       /* implicitly set FD_CLOEXEC */</u></td></tr>
+<tr><th id="162">162</th><td><u>#<span data-ppcond="160">endif</span></u></td></tr>
+<tr><th id="163">163</th><td></td></tr>
+<tr><th id="164">164</th><td></td></tr>
+<tr><th id="165">165</th><td></td></tr>
+<tr><th id="166">166</th><td></td></tr>
+<tr><th id="167">167</th><td></td></tr>
+<tr><th id="168">168</th><td><i>/* Data Protection Flags */</i></td></tr>
+<tr><th id="169">169</th><td><u>#<span data-ppcond="169">if</span> !defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>) || defined(<span class="macro" data-ref="_M/_DARWIN_C_SOURCE">_DARWIN_C_SOURCE</span>)</u></td></tr>
+<tr><th id="170">170</th><td><u>#define <dfn class="macro" id="_M/O_DP_GETRAWENCRYPTED" data-ref="_M/O_DP_GETRAWENCRYPTED">O_DP_GETRAWENCRYPTED</dfn>    0x0001</u></td></tr>
+<tr><th id="171">171</th><td><u>#define <dfn class="macro" id="_M/O_DP_GETRAWUNENCRYPTED" data-ref="_M/O_DP_GETRAWUNENCRYPTED">O_DP_GETRAWUNENCRYPTED</dfn>  0x0002</u></td></tr>
+<tr><th id="172">172</th><td><u>#<span data-ppcond="169">endif</span></u></td></tr>
+<tr><th id="173">173</th><td></td></tr>
+<tr><th id="174">174</th><td></td></tr>
+<tr><th id="175">175</th><td></td></tr>
+<tr><th id="176">176</th><td><i>/*</i></td></tr>
+<tr><th id="177">177</th><td><i> * The O_* flags used to have only F* names, which were used in the kernel</i></td></tr>
+<tr><th id="178">178</th><td><i> * and by fcntl.  We retain the F* names for the kernel f_flags field</i></td></tr>
+<tr><th id="179">179</th><td><i> * and for backward compatibility for fcntl.</i></td></tr>
+<tr><th id="180">180</th><td><i> */</i></td></tr>
+<tr><th id="181">181</th><td><u>#<span data-ppcond="181">if</span> !defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>) || defined(<span class="macro" data-ref="_M/_DARWIN_C_SOURCE">_DARWIN_C_SOURCE</span>)</u></td></tr>
+<tr><th id="182">182</th><td><u>#define <dfn class="macro" id="_M/FAPPEND" data-ref="_M/FAPPEND">FAPPEND</dfn>         O_APPEND        /* kernel/compat */</u></td></tr>
+<tr><th id="183">183</th><td><u>#define <dfn class="macro" id="_M/FASYNC" data-ref="_M/FASYNC">FASYNC</dfn>          O_ASYNC         /* kernel/compat */</u></td></tr>
+<tr><th id="184">184</th><td><u>#define <dfn class="macro" id="_M/FFSYNC" data-ref="_M/FFSYNC">FFSYNC</dfn>          O_FSYNC         /* kernel */</u></td></tr>
+<tr><th id="185">185</th><td><u>#define <dfn class="macro" id="_M/FFDSYNC" data-ref="_M/FFDSYNC">FFDSYNC</dfn>         O_DSYNC         /* kernel */</u></td></tr>
+<tr><th id="186">186</th><td><u>#define <dfn class="macro" id="_M/FNONBLOCK" data-ref="_M/FNONBLOCK">FNONBLOCK</dfn>       O_NONBLOCK      /* kernel */</u></td></tr>
+<tr><th id="187">187</th><td><u>#define <dfn class="macro" id="_M/FNDELAY" data-ref="_M/FNDELAY">FNDELAY</dfn>         O_NONBLOCK      /* compat */</u></td></tr>
+<tr><th id="188">188</th><td><u>#define <dfn class="macro" id="_M/O_NDELAY" data-ref="_M/O_NDELAY">O_NDELAY</dfn>        O_NONBLOCK      /* compat */</u></td></tr>
+<tr><th id="189">189</th><td><u>#<span data-ppcond="181">endif</span></u></td></tr>
+<tr><th id="190">190</th><td></td></tr>
+<tr><th id="191">191</th><td><i>/*</i></td></tr>
+<tr><th id="192">192</th><td><i> * Flags used for copyfile(2)</i></td></tr>
+<tr><th id="193">193</th><td><i> */</i></td></tr>
+<tr><th id="194">194</th><td></td></tr>
+<tr><th id="195">195</th><td><u>#<span data-ppcond="195">if</span> !defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>) || defined(<span class="macro" data-ref="_M/_DARWIN_C_SOURCE">_DARWIN_C_SOURCE</span>)</u></td></tr>
+<tr><th id="196">196</th><td><u>#define <dfn class="macro" id="_M/CPF_OVERWRITE" data-ref="_M/CPF_OVERWRITE">CPF_OVERWRITE</dfn>    0x0001</u></td></tr>
+<tr><th id="197">197</th><td><u>#define <dfn class="macro" id="_M/CPF_IGNORE_MODE" data-ref="_M/CPF_IGNORE_MODE">CPF_IGNORE_MODE</dfn>  0x0002</u></td></tr>
+<tr><th id="198">198</th><td><u>#define <dfn class="macro" id="_M/CPF_MASK" data-ref="_M/CPF_MASK">CPF_MASK</dfn> (CPF_OVERWRITE|CPF_IGNORE_MODE)</u></td></tr>
+<tr><th id="199">199</th><td><u>#<span data-ppcond="195">endif</span></u></td></tr>
+<tr><th id="200">200</th><td></td></tr>
+<tr><th id="201">201</th><td><i>/*</i></td></tr>
+<tr><th id="202">202</th><td><i> * Constants used for fcntl(2)</i></td></tr>
+<tr><th id="203">203</th><td><i> */</i></td></tr>
+<tr><th id="204">204</th><td></td></tr>
+<tr><th id="205">205</th><td><i>/* command values */</i></td></tr>
+<tr><th id="206">206</th><td><u>#define <dfn class="macro" id="_M/F_DUPFD" data-ref="_M/F_DUPFD">F_DUPFD</dfn>         0               /* duplicate file descriptor */</u></td></tr>
+<tr><th id="207">207</th><td><u>#define <dfn class="macro" id="_M/F_GETFD" data-ref="_M/F_GETFD">F_GETFD</dfn>         1               /* get file descriptor flags */</u></td></tr>
+<tr><th id="208">208</th><td><u>#define <dfn class="macro" id="_M/F_SETFD" data-ref="_M/F_SETFD">F_SETFD</dfn>         2               /* set file descriptor flags */</u></td></tr>
+<tr><th id="209">209</th><td><u>#define <dfn class="macro" id="_M/F_GETFL" data-ref="_M/F_GETFL">F_GETFL</dfn>         3               /* get file status flags */</u></td></tr>
+<tr><th id="210">210</th><td><u>#define <dfn class="macro" id="_M/F_SETFL" data-ref="_M/F_SETFL">F_SETFL</dfn>         4               /* set file status flags */</u></td></tr>
+<tr><th id="211">211</th><td><u>#define <dfn class="macro" id="_M/F_GETOWN" data-ref="_M/F_GETOWN">F_GETOWN</dfn>        5               /* get SIGIO/SIGURG proc/pgrp */</u></td></tr>
+<tr><th id="212">212</th><td><u>#define <dfn class="macro" id="_M/F_SETOWN" data-ref="_M/F_SETOWN">F_SETOWN</dfn>        6               /* set SIGIO/SIGURG proc/pgrp */</u></td></tr>
+<tr><th id="213">213</th><td><u>#define <dfn class="macro" id="_M/F_GETLK" data-ref="_M/F_GETLK">F_GETLK</dfn>         7               /* get record locking information */</u></td></tr>
+<tr><th id="214">214</th><td><u>#define <dfn class="macro" id="_M/F_SETLK" data-ref="_M/F_SETLK">F_SETLK</dfn>         8               /* set record locking information */</u></td></tr>
+<tr><th id="215">215</th><td><u>#define <dfn class="macro" id="_M/F_SETLKW" data-ref="_M/F_SETLKW">F_SETLKW</dfn>        9               /* F_SETLK; wait if blocked */</u></td></tr>
+<tr><th id="216">216</th><td><u>#<span data-ppcond="216">if</span> <a class="macro" href="cdefs.h.html#692" title="900000L" data-ref="_M/__DARWIN_C_LEVEL">__DARWIN_C_LEVEL</a> &gt;= <a class="macro" href="cdefs.h.html#685" title="900000L" data-ref="_M/__DARWIN_C_FULL">__DARWIN_C_FULL</a></u></td></tr>
+<tr><th id="217">217</th><td><u>#define <dfn class="macro" id="_M/F_SETLKWTIMEOUT" data-ref="_M/F_SETLKWTIMEOUT">F_SETLKWTIMEOUT</dfn> 10              /* F_SETLK; wait if blocked, return on timeout */</u></td></tr>
+<tr><th id="218">218</th><td><u>#<span data-ppcond="216">endif</span> /* __DARWIN_C_LEVEL &gt;= __DARWIN_C_FULL */</u></td></tr>
+<tr><th id="219">219</th><td><u>#<span data-ppcond="219">if</span> !defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>) || defined(<span class="macro" data-ref="_M/_DARWIN_C_SOURCE">_DARWIN_C_SOURCE</span>)</u></td></tr>
+<tr><th id="220">220</th><td><u>#define <dfn class="macro" id="_M/F_FLUSH_DATA" data-ref="_M/F_FLUSH_DATA">F_FLUSH_DATA</dfn>    40</u></td></tr>
+<tr><th id="221">221</th><td><u>#define <dfn class="macro" id="_M/F_CHKCLEAN" data-ref="_M/F_CHKCLEAN">F_CHKCLEAN</dfn>      41              /* Used for regression test */</u></td></tr>
+<tr><th id="222">222</th><td><u>#define <dfn class="macro" id="_M/F_PREALLOCATE" data-ref="_M/F_PREALLOCATE">F_PREALLOCATE</dfn>   42              /* Preallocate storage */</u></td></tr>
+<tr><th id="223">223</th><td><u>#define <dfn class="macro" id="_M/F_SETSIZE" data-ref="_M/F_SETSIZE">F_SETSIZE</dfn>       43              /* Truncate a file without zeroing space */</u></td></tr>
+<tr><th id="224">224</th><td><u>#define <dfn class="macro" id="_M/F_RDADVISE" data-ref="_M/F_RDADVISE">F_RDADVISE</dfn>      44              /* Issue an advisory read async with no copy to user */</u></td></tr>
+<tr><th id="225">225</th><td><u>#define <dfn class="macro" id="_M/F_RDAHEAD" data-ref="_M/F_RDAHEAD">F_RDAHEAD</dfn>       45              /* turn read ahead off/on for this fd */</u></td></tr>
+<tr><th id="226">226</th><td><i>/*</i></td></tr>
+<tr><th id="227">227</th><td><i> * 46,47 used to be F_READBOOTSTRAP and F_WRITEBOOTSTRAP</i></td></tr>
+<tr><th id="228">228</th><td><i> */</i></td></tr>
+<tr><th id="229">229</th><td><u>#define <dfn class="macro" id="_M/F_NOCACHE" data-ref="_M/F_NOCACHE">F_NOCACHE</dfn>       48              /* turn data caching off/on for this fd */</u></td></tr>
+<tr><th id="230">230</th><td><u>#define <dfn class="macro" id="_M/F_LOG2PHYS" data-ref="_M/F_LOG2PHYS">F_LOG2PHYS</dfn>      49              /* file offset to device offset */</u></td></tr>
+<tr><th id="231">231</th><td><u>#define <dfn class="macro" id="_M/F_GETPATH" data-ref="_M/F_GETPATH">F_GETPATH</dfn>       50              /* return the full path of the fd */</u></td></tr>
+<tr><th id="232">232</th><td><u>#define <dfn class="macro" id="_M/F_FULLFSYNC" data-ref="_M/F_FULLFSYNC">F_FULLFSYNC</dfn>     51              /* fsync + ask the drive to flush to the media */</u></td></tr>
+<tr><th id="233">233</th><td><u>#define <dfn class="macro" id="_M/F_PATHPKG_CHECK" data-ref="_M/F_PATHPKG_CHECK">F_PATHPKG_CHECK</dfn> 52              /* find which component (if any) is a package */</u></td></tr>
+<tr><th id="234">234</th><td><u>#define <dfn class="macro" id="_M/F_FREEZE_FS" data-ref="_M/F_FREEZE_FS">F_FREEZE_FS</dfn>     53              /* "freeze" all fs operations */</u></td></tr>
+<tr><th id="235">235</th><td><u>#define <dfn class="macro" id="_M/F_THAW_FS" data-ref="_M/F_THAW_FS">F_THAW_FS</dfn>       54              /* "thaw" all fs operations */</u></td></tr>
+<tr><th id="236">236</th><td><u>#define <dfn class="macro" id="_M/F_GLOBAL_NOCACHE" data-ref="_M/F_GLOBAL_NOCACHE">F_GLOBAL_NOCACHE</dfn> 55             /* turn data caching off/on (globally) for this file */</u></td></tr>
+<tr><th id="237">237</th><td></td></tr>
+<tr><th id="238">238</th><td></td></tr>
+<tr><th id="239">239</th><td><u>#define <dfn class="macro" id="_M/F_ADDSIGS" data-ref="_M/F_ADDSIGS">F_ADDSIGS</dfn>       59              /* add detached signatures */</u></td></tr>
+<tr><th id="240">240</th><td></td></tr>
+<tr><th id="241">241</th><td></td></tr>
+<tr><th id="242">242</th><td><u>#define <dfn class="macro" id="_M/F_ADDFILESIGS" data-ref="_M/F_ADDFILESIGS">F_ADDFILESIGS</dfn>   61              /* add signature from same file (used by dyld for shared libs) */</u></td></tr>
+<tr><th id="243">243</th><td></td></tr>
+<tr><th id="244">244</th><td><u>#define <dfn class="macro" id="_M/F_NODIRECT" data-ref="_M/F_NODIRECT">F_NODIRECT</dfn>      62              /* used in conjunction with F_NOCACHE to indicate that DIRECT, synchonous writes */</u></td></tr>
+<tr><th id="245">245</th><td>                                        <i>/* should not be used (i.e. its ok to temporaily create cached pages) */</i></td></tr>
+<tr><th id="246">246</th><td></td></tr>
+<tr><th id="247">247</th><td><u>#define <dfn class="macro" id="_M/F_GETPROTECTIONCLASS" data-ref="_M/F_GETPROTECTIONCLASS">F_GETPROTECTIONCLASS</dfn>    63              /* Get the protection class of a file from the EA, returns int */</u></td></tr>
+<tr><th id="248">248</th><td><u>#define <dfn class="macro" id="_M/F_SETPROTECTIONCLASS" data-ref="_M/F_SETPROTECTIONCLASS">F_SETPROTECTIONCLASS</dfn>    64              /* Set the protection class of a file for the EA, requires int */</u></td></tr>
+<tr><th id="249">249</th><td></td></tr>
+<tr><th id="250">250</th><td><u>#define <dfn class="macro" id="_M/F_LOG2PHYS_EXT" data-ref="_M/F_LOG2PHYS_EXT">F_LOG2PHYS_EXT</dfn>  65              /* file offset to device offset, extended */</u></td></tr>
+<tr><th id="251">251</th><td></td></tr>
+<tr><th id="252">252</th><td><u>#define <dfn class="macro" id="_M/F_GETLKPID" data-ref="_M/F_GETLKPID">F_GETLKPID</dfn>              66              /* get record locking information, per-process */</u></td></tr>
+<tr><th id="253">253</th><td></td></tr>
+<tr><th id="254">254</th><td><i>/* See F_DUPFD_CLOEXEC below for 67 */</i></td></tr>
+<tr><th id="255">255</th><td></td></tr>
+<tr><th id="256">256</th><td></td></tr>
+<tr><th id="257">257</th><td><u>#define <dfn class="macro" id="_M/F_SETBACKINGSTORE" data-ref="_M/F_SETBACKINGSTORE">F_SETBACKINGSTORE</dfn>       70      /* Mark the file as being the backing store for another filesystem */</u></td></tr>
+<tr><th id="258">258</th><td><u>#define <dfn class="macro" id="_M/F_GETPATH_MTMINFO" data-ref="_M/F_GETPATH_MTMINFO">F_GETPATH_MTMINFO</dfn>       71      /* return the full path of the FD, but error in specific mtmd circumstances */</u></td></tr>
+<tr><th id="259">259</th><td></td></tr>
+<tr><th id="260">260</th><td><u>#define <dfn class="macro" id="_M/F_GETCODEDIR" data-ref="_M/F_GETCODEDIR">F_GETCODEDIR</dfn>            72      /* Returns the code directory, with associated hashes, to the caller */</u></td></tr>
+<tr><th id="261">261</th><td></td></tr>
+<tr><th id="262">262</th><td><u>#define <dfn class="macro" id="_M/F_SETNOSIGPIPE" data-ref="_M/F_SETNOSIGPIPE">F_SETNOSIGPIPE</dfn>          73      /* No SIGPIPE generated on EPIPE */</u></td></tr>
+<tr><th id="263">263</th><td><u>#define <dfn class="macro" id="_M/F_GETNOSIGPIPE" data-ref="_M/F_GETNOSIGPIPE">F_GETNOSIGPIPE</dfn>          74      /* Status of SIGPIPE for this fd */</u></td></tr>
+<tr><th id="264">264</th><td></td></tr>
+<tr><th id="265">265</th><td><u>#define <dfn class="macro" id="_M/F_TRANSCODEKEY" data-ref="_M/F_TRANSCODEKEY">F_TRANSCODEKEY</dfn>          75      /* For some cases, we need to rewrap the key for AKS/MKB */</u></td></tr>
+<tr><th id="266">266</th><td></td></tr>
+<tr><th id="267">267</th><td><u>#define <dfn class="macro" id="_M/F_SINGLE_WRITER" data-ref="_M/F_SINGLE_WRITER">F_SINGLE_WRITER</dfn>         76      /* file being written to a by single writer... if throttling enabled, writes */</u></td></tr>
+<tr><th id="268">268</th><td>                                        <i>/* may be broken into smaller chunks with throttling in between */</i></td></tr>
+<tr><th id="269">269</th><td></td></tr>
+<tr><th id="270">270</th><td><u>#define <dfn class="macro" id="_M/F_GETPROTECTIONLEVEL" data-ref="_M/F_GETPROTECTIONLEVEL">F_GETPROTECTIONLEVEL</dfn>    77      /* Get the protection version number for this filesystem */</u></td></tr>
+<tr><th id="271">271</th><td></td></tr>
+<tr><th id="272">272</th><td><u>#define <dfn class="macro" id="_M/F_FINDSIGS" data-ref="_M/F_FINDSIGS">F_FINDSIGS</dfn>              78      /* Add detached code signatures (used by dyld for shared libs) */</u></td></tr>
+<tr><th id="273">273</th><td></td></tr>
+<tr><th id="274">274</th><td></td></tr>
+<tr><th id="275">275</th><td><u>#define <dfn class="macro" id="_M/F_ADDFILESIGS_FOR_DYLD_SIM" data-ref="_M/F_ADDFILESIGS_FOR_DYLD_SIM">F_ADDFILESIGS_FOR_DYLD_SIM</dfn> 83   /* Add signature from same file, only if it is signed by Apple (used by dyld for simulator) */</u></td></tr>
+<tr><th id="276">276</th><td></td></tr>
+<tr><th id="277">277</th><td></td></tr>
+<tr><th id="278">278</th><td><u>#define <dfn class="macro" id="_M/F_BARRIERFSYNC" data-ref="_M/F_BARRIERFSYNC">F_BARRIERFSYNC</dfn>          85      /* fsync + issue barrier to drive */</u></td></tr>
+<tr><th id="279">279</th><td></td></tr>
+<tr><th id="280">280</th><td></td></tr>
+<tr><th id="281">281</th><td><u>#define <dfn class="macro" id="_M/F_ADDFILESIGS_RETURN" data-ref="_M/F_ADDFILESIGS_RETURN">F_ADDFILESIGS_RETURN</dfn>    97      /* Add signature from same file, return end offset in structure on success */</u></td></tr>
+<tr><th id="282">282</th><td><u>#define <dfn class="macro" id="_M/F_CHECK_LV" data-ref="_M/F_CHECK_LV">F_CHECK_LV</dfn>              98      /* Check if Library Validation allows this Mach-O file to be mapped into the calling process */</u></td></tr>
+<tr><th id="283">283</th><td></td></tr>
+<tr><th id="284">284</th><td><u>#define <dfn class="macro" id="_M/F_PUNCHHOLE" data-ref="_M/F_PUNCHHOLE">F_PUNCHHOLE</dfn>     99              /* Deallocate a range of the file */</u></td></tr>
+<tr><th id="285">285</th><td></td></tr>
+<tr><th id="286">286</th><td><u>#define <dfn class="macro" id="_M/F_TRIM_ACTIVE_FILE" data-ref="_M/F_TRIM_ACTIVE_FILE">F_TRIM_ACTIVE_FILE</dfn>      100 /* Trim an active file */</u></td></tr>
+<tr><th id="287">287</th><td></td></tr>
+<tr><th id="288">288</th><td><i>// FS-specific fcntl()'s numbers begin at 0x00010000 and go up</i></td></tr>
+<tr><th id="289">289</th><td><u>#define <dfn class="macro" id="_M/FCNTL_FS_SPECIFIC_BASE" data-ref="_M/FCNTL_FS_SPECIFIC_BASE">FCNTL_FS_SPECIFIC_BASE</dfn>  0x00010000</u></td></tr>
+<tr><th id="290">290</th><td></td></tr>
+<tr><th id="291">291</th><td><u>#<span data-ppcond="219">endif</span> /* (_POSIX_C_SOURCE &amp;&amp; !_DARWIN_C_SOURCE) */</u></td></tr>
+<tr><th id="292">292</th><td></td></tr>
+<tr><th id="293">293</th><td><u>#<span data-ppcond="293">if</span> <a class="macro" href="cdefs.h.html#692" title="900000L" data-ref="_M/__DARWIN_C_LEVEL">__DARWIN_C_LEVEL</a> &gt;= 200809L</u></td></tr>
+<tr><th id="294">294</th><td><u>#define <dfn class="macro" id="_M/F_DUPFD_CLOEXEC" data-ref="_M/F_DUPFD_CLOEXEC">F_DUPFD_CLOEXEC</dfn>         67      /* mark the dup with FD_CLOEXEC */</u></td></tr>
+<tr><th id="295">295</th><td><u>#<span data-ppcond="293">endif</span></u></td></tr>
+<tr><th id="296">296</th><td></td></tr>
+<tr><th id="297">297</th><td><i>/* file descriptor flags (F_GETFD, F_SETFD) */</i></td></tr>
+<tr><th id="298">298</th><td><u>#define <dfn class="macro" id="_M/FD_CLOEXEC" data-ref="_M/FD_CLOEXEC">FD_CLOEXEC</dfn>      1               /* close-on-exec flag */</u></td></tr>
+<tr><th id="299">299</th><td></td></tr>
+<tr><th id="300">300</th><td><i>/* record locking flags (F_GETLK, F_SETLK, F_SETLKW) */</i></td></tr>
+<tr><th id="301">301</th><td><u>#define <dfn class="macro" id="_M/F_RDLCK" data-ref="_M/F_RDLCK">F_RDLCK</dfn>         1               /* shared or read lock */</u></td></tr>
+<tr><th id="302">302</th><td><u>#define <dfn class="macro" id="_M/F_UNLCK" data-ref="_M/F_UNLCK">F_UNLCK</dfn>         2               /* unlock */</u></td></tr>
+<tr><th id="303">303</th><td><u>#define <dfn class="macro" id="_M/F_WRLCK" data-ref="_M/F_WRLCK">F_WRLCK</dfn>         3               /* exclusive or write lock */</u></td></tr>
+<tr><th id="304">304</th><td></td></tr>
+<tr><th id="305">305</th><td></td></tr>
+<tr><th id="306">306</th><td><i>/*</i></td></tr>
+<tr><th id="307">307</th><td><i> * [XSI] The values used for l_whence shall be defined as described</i></td></tr>
+<tr><th id="308">308</th><td><i> * in &lt;unistd.h&gt;</i></td></tr>
+<tr><th id="309">309</th><td><i> */</i></td></tr>
+<tr><th id="310">310</th><td><u>#include <a href="_types/_seek_set.h.html">&lt;sys/_types/_seek_set.h&gt;</a></u></td></tr>
+<tr><th id="311">311</th><td></td></tr>
+<tr><th id="312">312</th><td><i>/*</i></td></tr>
+<tr><th id="313">313</th><td><i> * [XSI] The symbolic names for file modes for use as values of mode_t</i></td></tr>
+<tr><th id="314">314</th><td><i> * shall be defined as described in &lt;sys/stat.h&gt;</i></td></tr>
+<tr><th id="315">315</th><td><i> */</i></td></tr>
+<tr><th id="316">316</th><td><u>#include <a href="_types/_s_ifmt.h.html">&lt;sys/_types/_s_ifmt.h&gt;</a></u></td></tr>
+<tr><th id="317">317</th><td></td></tr>
+<tr><th id="318">318</th><td><u>#<span data-ppcond="318">if</span> !defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>) || defined(<span class="macro" data-ref="_M/_DARWIN_C_SOURCE">_DARWIN_C_SOURCE</span>)</u></td></tr>
+<tr><th id="319">319</th><td><i>/* allocate flags (F_PREALLOCATE) */</i></td></tr>
+<tr><th id="320">320</th><td></td></tr>
+<tr><th id="321">321</th><td><u>#define <dfn class="macro" id="_M/F_ALLOCATECONTIG" data-ref="_M/F_ALLOCATECONTIG">F_ALLOCATECONTIG</dfn>  0x00000002    /* allocate contigious space */</u></td></tr>
+<tr><th id="322">322</th><td><u>#define <dfn class="macro" id="_M/F_ALLOCATEALL" data-ref="_M/F_ALLOCATEALL">F_ALLOCATEALL</dfn>     0x00000004    /* allocate all requested space or no space at all */</u></td></tr>
+<tr><th id="323">323</th><td></td></tr>
+<tr><th id="324">324</th><td><i>/* Position Modes (fst_posmode) for F_PREALLOCATE */</i></td></tr>
+<tr><th id="325">325</th><td></td></tr>
+<tr><th id="326">326</th><td><u>#define <dfn class="macro" id="_M/F_PEOFPOSMODE" data-ref="_M/F_PEOFPOSMODE">F_PEOFPOSMODE</dfn> 3                 /* Make it past all of the SEEK pos modes so that */</u></td></tr>
+<tr><th id="327">327</th><td>                                        <i>/* we can keep them in sync should we desire */</i></td></tr>
+<tr><th id="328">328</th><td><u>#define <dfn class="macro" id="_M/F_VOLPOSMODE" data-ref="_M/F_VOLPOSMODE">F_VOLPOSMODE</dfn>    4               /* specify volume starting postion */</u></td></tr>
+<tr><th id="329">329</th><td><u>#<span data-ppcond="318">endif</span> /* (_POSIX_C_SOURCE &amp;&amp; !_DARWIN_C_SOURCE) */</u></td></tr>
+<tr><th id="330">330</th><td></td></tr>
+<tr><th id="331">331</th><td><i>/*</i></td></tr>
+<tr><th id="332">332</th><td><i> * Advisory file segment locking data type -</i></td></tr>
+<tr><th id="333">333</th><td><i> * information passed to system by user</i></td></tr>
+<tr><th id="334">334</th><td><i> */</i></td></tr>
+<tr><th id="335">335</th><td><b>struct</b> <dfn class="type def" id="flock" title='flock' data-ref="flock">flock</dfn> {</td></tr>
+<tr><th id="336">336</th><td>	<a class="typedef" href="_types/_off_t.h.html#off_t" title='off_t' data-type='__darwin_off_t' data-ref="off_t">off_t</a>   <dfn class="decl" id="flock::l_start" title='flock::l_start' data-ref="flock::l_start">l_start</dfn>;        <i>/* starting offset */</i></td></tr>
+<tr><th id="337">337</th><td>	<a class="typedef" href="_types/_off_t.h.html#off_t" title='off_t' data-type='__darwin_off_t' data-ref="off_t">off_t</a>   <dfn class="decl" id="flock::l_len" title='flock::l_len' data-ref="flock::l_len">l_len</dfn>;          <i>/* len = 0 means until end of file */</i></td></tr>
+<tr><th id="338">338</th><td>	<a class="typedef" href="_types/_pid_t.h.html#pid_t" title='pid_t' data-type='__darwin_pid_t' data-ref="pid_t">pid_t</a>   <dfn class="decl" id="flock::l_pid" title='flock::l_pid' data-ref="flock::l_pid">l_pid</dfn>;          <i>/* lock owner */</i></td></tr>
+<tr><th id="339">339</th><td>	<em>short</em>   <dfn class="decl" id="flock::l_type" title='flock::l_type' data-ref="flock::l_type">l_type</dfn>;         <i>/* lock type: read/write, etc. */</i></td></tr>
+<tr><th id="340">340</th><td>	<em>short</em>   <dfn class="decl" id="flock::l_whence" title='flock::l_whence' data-ref="flock::l_whence">l_whence</dfn>;       <i>/* type of l_start */</i></td></tr>
+<tr><th id="341">341</th><td>};</td></tr>
+<tr><th id="342">342</th><td></td></tr>
+<tr><th id="343">343</th><td><u>#include <a href="_types/_timespec.h.html">&lt;sys/_types/_timespec.h&gt;</a></u></td></tr>
+<tr><th id="344">344</th><td></td></tr>
+<tr><th id="345">345</th><td><u>#<span data-ppcond="345">if</span> <a class="macro" href="cdefs.h.html#692" title="900000L" data-ref="_M/__DARWIN_C_LEVEL">__DARWIN_C_LEVEL</a> &gt;= <a class="macro" href="cdefs.h.html#685" title="900000L" data-ref="_M/__DARWIN_C_FULL">__DARWIN_C_FULL</a></u></td></tr>
+<tr><th id="346">346</th><td><i>/*</i></td></tr>
+<tr><th id="347">347</th><td><i> * Advisory file segment locking with time out -</i></td></tr>
+<tr><th id="348">348</th><td><i> * Information passed to system by user for F_SETLKWTIMEOUT</i></td></tr>
+<tr><th id="349">349</th><td><i> */</i></td></tr>
+<tr><th id="350">350</th><td><b>struct</b> <dfn class="type def" id="flocktimeout" title='flocktimeout' data-ref="flocktimeout">flocktimeout</dfn> {</td></tr>
+<tr><th id="351">351</th><td>	<b>struct</b> <a class="type" href="#flock" title='flock' data-ref="flock">flock</a>    <dfn class="decl" id="flocktimeout::fl" title='flocktimeout::fl' data-ref="flocktimeout::fl">fl</dfn>;             <i>/* flock passed for file locking */</i></td></tr>
+<tr><th id="352">352</th><td>	<b>struct</b> <a class="type" href="_types/_timespec.h.html#33" title='timespec' data-ref="timespec">timespec</a> <dfn class="decl" id="flocktimeout::timeout" title='flocktimeout::timeout' data-ref="flocktimeout::timeout">timeout</dfn>;        <i>/* timespec struct for timeout */</i></td></tr>
+<tr><th id="353">353</th><td>};</td></tr>
+<tr><th id="354">354</th><td><u>#<span data-ppcond="345">endif</span> /* __DARWIN_C_LEVEL &gt;= __DARWIN_C_FULL */</u></td></tr>
+<tr><th id="355">355</th><td></td></tr>
+<tr><th id="356">356</th><td><u>#<span data-ppcond="356">if</span> !defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>) || defined(<span class="macro" data-ref="_M/_DARWIN_C_SOURCE">_DARWIN_C_SOURCE</span>)</u></td></tr>
+<tr><th id="357">357</th><td><i>/*</i></td></tr>
+<tr><th id="358">358</th><td><i> * advisory file read data type -</i></td></tr>
+<tr><th id="359">359</th><td><i> * information passed by user to system</i></td></tr>
+<tr><th id="360">360</th><td><i> */</i></td></tr>
+<tr><th id="361">361</th><td></td></tr>
+<tr><th id="362">362</th><td></td></tr>
+<tr><th id="363">363</th><td><b>struct</b> <dfn class="type def" id="radvisory" title='radvisory' data-ref="radvisory">radvisory</dfn> {</td></tr>
+<tr><th id="364">364</th><td>	<a class="typedef" href="_types/_off_t.h.html#off_t" title='off_t' data-type='__darwin_off_t' data-ref="off_t">off_t</a>   <dfn class="decl" id="radvisory::ra_offset" title='radvisory::ra_offset' data-ref="radvisory::ra_offset">ra_offset</dfn>;</td></tr>
+<tr><th id="365">365</th><td>	<em>int</em>     <dfn class="decl" id="radvisory::ra_count" title='radvisory::ra_count' data-ref="radvisory::ra_count">ra_count</dfn>;</td></tr>
+<tr><th id="366">366</th><td>};</td></tr>
+<tr><th id="367">367</th><td></td></tr>
+<tr><th id="368">368</th><td></td></tr>
+<tr><th id="369">369</th><td><i class="doc">/** Information the user passes in to get the codeblobs out of the kernel */</i></td></tr>
+<tr><th id="370">370</th><td><b>typedef</b> <b>struct</b> <dfn class="type def" id="fcodeblobs" title='fcodeblobs' data-ref="fcodeblobs"><a class="type" href="#fcodeblobs" title='fcodeblobs' data-ref="fcodeblobs">fcodeblobs</a></dfn> {</td></tr>
+<tr><th id="371">371</th><td>	<em>void</em>            *<dfn class="decl" id="fcodeblobs::f_cd_hash" title='fcodeblobs::f_cd_hash' data-ref="fcodeblobs::f_cd_hash">f_cd_hash</dfn>;</td></tr>
+<tr><th id="372">372</th><td>	<a class="typedef" href="_types/_size_t.h.html#size_t" title='size_t' data-type='__darwin_size_t' data-ref="size_t">size_t</a>          <dfn class="decl" id="fcodeblobs::f_hash_size" title='fcodeblobs::f_hash_size' data-ref="fcodeblobs::f_hash_size">f_hash_size</dfn>;</td></tr>
+<tr><th id="373">373</th><td>	<em>void</em>            *<dfn class="decl" id="fcodeblobs::f_cd_buffer" title='fcodeblobs::f_cd_buffer' data-ref="fcodeblobs::f_cd_buffer">f_cd_buffer</dfn>;</td></tr>
+<tr><th id="374">374</th><td>	<a class="typedef" href="_types/_size_t.h.html#size_t" title='size_t' data-type='__darwin_size_t' data-ref="size_t">size_t</a>          <dfn class="decl" id="fcodeblobs::f_cd_size" title='fcodeblobs::f_cd_size' data-ref="fcodeblobs::f_cd_size">f_cd_size</dfn>;</td></tr>
+<tr><th id="375">375</th><td>	<em>unsigned</em> <em>int</em>    *<dfn class="decl" id="fcodeblobs::f_out_size" title='fcodeblobs::f_out_size' data-ref="fcodeblobs::f_out_size">f_out_size</dfn>;</td></tr>
+<tr><th id="376">376</th><td>	<em>int</em>             <dfn class="decl" id="fcodeblobs::f_arch" title='fcodeblobs::f_arch' data-ref="fcodeblobs::f_arch">f_arch</dfn>;</td></tr>
+<tr><th id="377">377</th><td>	<em>int</em>             <dfn class="decl" id="fcodeblobs::__padding" title='fcodeblobs::__padding' data-ref="fcodeblobs::__padding">__padding</dfn>;</td></tr>
+<tr><th id="378">378</th><td>} <dfn class="typedef" id="fcodeblobs_t" title='fcodeblobs_t' data-type='struct fcodeblobs' data-ref="fcodeblobs_t">fcodeblobs_t</dfn>;</td></tr>
+<tr><th id="379">379</th><td></td></tr>
+<tr><th id="380">380</th><td></td></tr>
+<tr><th id="381">381</th><td><i>/*</i></td></tr>
+<tr><th id="382">382</th><td><i> * detached code signatures data type -</i></td></tr>
+<tr><th id="383">383</th><td><i> * information passed by user to system used by F_ADDSIGS and F_ADDFILESIGS.</i></td></tr>
+<tr><th id="384">384</th><td><i> * F_ADDFILESIGS is a shortcut for files that contain their own signature and</i></td></tr>
+<tr><th id="385">385</th><td><i> * doesn't require mapping of the file in order to load the signature.</i></td></tr>
+<tr><th id="386">386</th><td><i> */</i></td></tr>
+<tr><th id="387">387</th><td><b>typedef</b> <b>struct</b> <dfn class="type def" id="fsignatures" title='fsignatures' data-ref="fsignatures"><a class="type" href="#fsignatures" title='fsignatures' data-ref="fsignatures">fsignatures</a></dfn> {</td></tr>
+<tr><th id="388">388</th><td>	<a class="typedef" href="_types/_off_t.h.html#off_t" title='off_t' data-type='__darwin_off_t' data-ref="off_t">off_t</a>           <dfn class="decl" id="fsignatures::fs_file_start" title='fsignatures::fs_file_start' data-ref="fsignatures::fs_file_start">fs_file_start</dfn>;</td></tr>
+<tr><th id="389">389</th><td>	<em>void</em>            *<dfn class="decl" id="fsignatures::fs_blob_start" title='fsignatures::fs_blob_start' data-ref="fsignatures::fs_blob_start">fs_blob_start</dfn>;</td></tr>
+<tr><th id="390">390</th><td>	<a class="typedef" href="_types/_size_t.h.html#size_t" title='size_t' data-type='__darwin_size_t' data-ref="size_t">size_t</a>          <dfn class="decl" id="fsignatures::fs_blob_size" title='fsignatures::fs_blob_size' data-ref="fsignatures::fs_blob_size">fs_blob_size</dfn>;</td></tr>
+<tr><th id="391">391</th><td>} <dfn class="typedef" id="fsignatures_t" title='fsignatures_t' data-type='struct fsignatures' data-ref="fsignatures_t">fsignatures_t</dfn>;</td></tr>
+<tr><th id="392">392</th><td></td></tr>
+<tr><th id="393">393</th><td><i>/*</i></td></tr>
+<tr><th id="394">394</th><td><i> * DYLD needs to check if the object is allowed to be combined</i></td></tr>
+<tr><th id="395">395</th><td><i> * into the main binary. This is done between the code signature</i></td></tr>
+<tr><th id="396">396</th><td><i> * is loaded and dyld is doing all the work to process the LOAD commands.</i></td></tr>
+<tr><th id="397">397</th><td><i> *</i></td></tr>
+<tr><th id="398">398</th><td><i> * While this could be done in F_ADDFILESIGS.* family the hook into</i></td></tr>
+<tr><th id="399">399</th><td><i> * the MAC module doesn't say no when LV isn't enabled and then that</i></td></tr>
+<tr><th id="400">400</th><td><i> * is cached on the vnode, and the MAC module never gets change once</i></td></tr>
+<tr><th id="401">401</th><td><i> * a process that library validation enabled.</i></td></tr>
+<tr><th id="402">402</th><td><i> */</i></td></tr>
+<tr><th id="403">403</th><td><b>typedef</b> <b>struct</b> <dfn class="type def" id="fchecklv" title='fchecklv' data-ref="fchecklv"><a class="type" href="#fchecklv" title='fchecklv' data-ref="fchecklv">fchecklv</a></dfn> {</td></tr>
+<tr><th id="404">404</th><td>	<a class="typedef" href="_types/_off_t.h.html#off_t" title='off_t' data-type='__darwin_off_t' data-ref="off_t">off_t</a>           <dfn class="decl" id="fchecklv::lv_file_start" title='fchecklv::lv_file_start' data-ref="fchecklv::lv_file_start">lv_file_start</dfn>;</td></tr>
+<tr><th id="405">405</th><td>	<a class="typedef" href="_types/_size_t.h.html#size_t" title='size_t' data-type='__darwin_size_t' data-ref="size_t">size_t</a>          <dfn class="decl" id="fchecklv::lv_error_message_size" title='fchecklv::lv_error_message_size' data-ref="fchecklv::lv_error_message_size">lv_error_message_size</dfn>;</td></tr>
+<tr><th id="406">406</th><td>	<em>void</em>            *<dfn class="decl" id="fchecklv::lv_error_message" title='fchecklv::lv_error_message' data-ref="fchecklv::lv_error_message">lv_error_message</dfn>;</td></tr>
+<tr><th id="407">407</th><td>} <dfn class="typedef" id="fchecklv_t" title='fchecklv_t' data-type='struct fchecklv' data-ref="fchecklv_t">fchecklv_t</dfn>;</td></tr>
+<tr><th id="408">408</th><td></td></tr>
+<tr><th id="409">409</th><td></td></tr>
+<tr><th id="410">410</th><td></td></tr>
+<tr><th id="411">411</th><td><i>/* lock operations for flock(2) */</i></td></tr>
+<tr><th id="412">412</th><td><u>#define <dfn class="macro" id="_M/LOCK_SH" data-ref="_M/LOCK_SH">LOCK_SH</dfn>         0x01            /* shared file lock */</u></td></tr>
+<tr><th id="413">413</th><td><u>#define <dfn class="macro" id="_M/LOCK_EX" data-ref="_M/LOCK_EX">LOCK_EX</dfn>         0x02            /* exclusive file lock */</u></td></tr>
+<tr><th id="414">414</th><td><u>#define <dfn class="macro" id="_M/LOCK_NB" data-ref="_M/LOCK_NB">LOCK_NB</dfn>         0x04            /* don't block when locking */</u></td></tr>
+<tr><th id="415">415</th><td><u>#define <dfn class="macro" id="_M/LOCK_UN" data-ref="_M/LOCK_UN">LOCK_UN</dfn>         0x08            /* unlock file */</u></td></tr>
+<tr><th id="416">416</th><td></td></tr>
+<tr><th id="417">417</th><td><i>/* fstore_t type used by F_PREALLOCATE command */</i></td></tr>
+<tr><th id="418">418</th><td></td></tr>
+<tr><th id="419">419</th><td><b>typedef</b> <b>struct</b> <dfn class="type def" id="fstore" title='fstore' data-ref="fstore"><a class="type" href="#fstore" title='fstore' data-ref="fstore">fstore</a></dfn> {</td></tr>
+<tr><th id="420">420</th><td>	<em>unsigned</em> <em>int</em> <dfn class="decl" id="fstore::fst_flags" title='fstore::fst_flags' data-ref="fstore::fst_flags">fst_flags</dfn>; <i>/* IN: flags word */</i></td></tr>
+<tr><th id="421">421</th><td>	<em>int</em>     <dfn class="decl" id="fstore::fst_posmode" title='fstore::fst_posmode' data-ref="fstore::fst_posmode">fst_posmode</dfn>;    <i>/* IN: indicates use of offset field */</i></td></tr>
+<tr><th id="422">422</th><td>	<a class="typedef" href="_types/_off_t.h.html#off_t" title='off_t' data-type='__darwin_off_t' data-ref="off_t">off_t</a>   <dfn class="decl" id="fstore::fst_offset" title='fstore::fst_offset' data-ref="fstore::fst_offset">fst_offset</dfn>;     <i>/* IN: start of the region */</i></td></tr>
+<tr><th id="423">423</th><td>	<a class="typedef" href="_types/_off_t.h.html#off_t" title='off_t' data-type='__darwin_off_t' data-ref="off_t">off_t</a>   <dfn class="decl" id="fstore::fst_length" title='fstore::fst_length' data-ref="fstore::fst_length">fst_length</dfn>;     <i>/* IN: size of the region */</i></td></tr>
+<tr><th id="424">424</th><td>	<a class="typedef" href="_types/_off_t.h.html#off_t" title='off_t' data-type='__darwin_off_t' data-ref="off_t">off_t</a>   <dfn class="decl" id="fstore::fst_bytesalloc" title='fstore::fst_bytesalloc' data-ref="fstore::fst_bytesalloc">fst_bytesalloc</dfn>; <i>/* OUT: number of bytes allocated */</i></td></tr>
+<tr><th id="425">425</th><td>} <dfn class="typedef" id="fstore_t" title='fstore_t' data-type='struct fstore' data-ref="fstore_t">fstore_t</dfn>;</td></tr>
+<tr><th id="426">426</th><td></td></tr>
+<tr><th id="427">427</th><td><i>/* fpunchhole_t used by F_PUNCHHOLE */</i></td></tr>
+<tr><th id="428">428</th><td><b>typedef</b> <b>struct</b> <dfn class="type def" id="fpunchhole" title='fpunchhole' data-ref="fpunchhole"><a class="type" href="#fpunchhole" title='fpunchhole' data-ref="fpunchhole">fpunchhole</a></dfn> {</td></tr>
+<tr><th id="429">429</th><td>	<em>unsigned</em> <em>int</em> <dfn class="decl" id="fpunchhole::fp_flags" title='fpunchhole::fp_flags' data-ref="fpunchhole::fp_flags">fp_flags</dfn>; <i>/* unused */</i></td></tr>
+<tr><th id="430">430</th><td>	<em>unsigned</em> <em>int</em> <dfn class="decl" id="fpunchhole::reserved" title='fpunchhole::reserved' data-ref="fpunchhole::reserved">reserved</dfn>; <i>/* (to maintain 8-byte alignment) */</i></td></tr>
+<tr><th id="431">431</th><td>	<a class="typedef" href="_types/_off_t.h.html#off_t" title='off_t' data-type='__darwin_off_t' data-ref="off_t">off_t</a> <dfn class="decl" id="fpunchhole::fp_offset" title='fpunchhole::fp_offset' data-ref="fpunchhole::fp_offset">fp_offset</dfn>; <i>/* IN: start of the region */</i></td></tr>
+<tr><th id="432">432</th><td>	<a class="typedef" href="_types/_off_t.h.html#off_t" title='off_t' data-type='__darwin_off_t' data-ref="off_t">off_t</a> <dfn class="decl" id="fpunchhole::fp_length" title='fpunchhole::fp_length' data-ref="fpunchhole::fp_length">fp_length</dfn>; <i>/* IN: size of the region */</i></td></tr>
+<tr><th id="433">433</th><td>} <dfn class="typedef" id="fpunchhole_t" title='fpunchhole_t' data-type='struct fpunchhole' data-ref="fpunchhole_t">fpunchhole_t</dfn>;</td></tr>
+<tr><th id="434">434</th><td></td></tr>
+<tr><th id="435">435</th><td><i>/* factive_file_trim_t used by F_TRIM_ACTIVE_FILE */</i></td></tr>
+<tr><th id="436">436</th><td><b>typedef</b> <b>struct</b> <dfn class="type def" id="ftrimactivefile" title='ftrimactivefile' data-ref="ftrimactivefile"><a class="type" href="#ftrimactivefile" title='ftrimactivefile' data-ref="ftrimactivefile">ftrimactivefile</a></dfn> {</td></tr>
+<tr><th id="437">437</th><td>	<a class="typedef" href="_types/_off_t.h.html#off_t" title='off_t' data-type='__darwin_off_t' data-ref="off_t">off_t</a> <dfn class="decl" id="ftrimactivefile::fta_offset" title='ftrimactivefile::fta_offset' data-ref="ftrimactivefile::fta_offset">fta_offset</dfn>;  <i>/* IN: start of the region */</i></td></tr>
+<tr><th id="438">438</th><td>	<a class="typedef" href="_types/_off_t.h.html#off_t" title='off_t' data-type='__darwin_off_t' data-ref="off_t">off_t</a> <dfn class="decl" id="ftrimactivefile::fta_length" title='ftrimactivefile::fta_length' data-ref="ftrimactivefile::fta_length">fta_length</dfn>; <i>/* IN: size of the region */</i></td></tr>
+<tr><th id="439">439</th><td>} <dfn class="typedef" id="ftrimactivefile_t" title='ftrimactivefile_t' data-type='struct ftrimactivefile' data-ref="ftrimactivefile_t">ftrimactivefile_t</dfn>;</td></tr>
+<tr><th id="440">440</th><td></td></tr>
+<tr><th id="441">441</th><td><i>/* fbootstraptransfer_t used by F_READBOOTSTRAP and F_WRITEBOOTSTRAP commands */</i></td></tr>
+<tr><th id="442">442</th><td></td></tr>
+<tr><th id="443">443</th><td><b>typedef</b> <b>struct</b> <dfn class="type def" id="fbootstraptransfer" title='fbootstraptransfer' data-ref="fbootstraptransfer"><a class="type" href="#fbootstraptransfer" title='fbootstraptransfer' data-ref="fbootstraptransfer">fbootstraptransfer</a></dfn> {</td></tr>
+<tr><th id="444">444</th><td>	<a class="typedef" href="_types/_off_t.h.html#off_t" title='off_t' data-type='__darwin_off_t' data-ref="off_t">off_t</a> <dfn class="decl" id="fbootstraptransfer::fbt_offset" title='fbootstraptransfer::fbt_offset' data-ref="fbootstraptransfer::fbt_offset">fbt_offset</dfn>;       <i>/* IN: offset to start read/write */</i></td></tr>
+<tr><th id="445">445</th><td>	<a class="typedef" href="_types/_size_t.h.html#size_t" title='size_t' data-type='__darwin_size_t' data-ref="size_t">size_t</a> <dfn class="decl" id="fbootstraptransfer::fbt_length" title='fbootstraptransfer::fbt_length' data-ref="fbootstraptransfer::fbt_length">fbt_length</dfn>;    <i>/* IN: number of bytes to transfer */</i></td></tr>
+<tr><th id="446">446</th><td>	<em>void</em> *<dfn class="decl" id="fbootstraptransfer::fbt_buffer" title='fbootstraptransfer::fbt_buffer' data-ref="fbootstraptransfer::fbt_buffer">fbt_buffer</dfn>;       <i>/* IN: buffer to be read/written */</i></td></tr>
+<tr><th id="447">447</th><td>} <dfn class="typedef" id="fbootstraptransfer_t" title='fbootstraptransfer_t' data-type='struct fbootstraptransfer' data-ref="fbootstraptransfer_t">fbootstraptransfer_t</dfn>;</td></tr>
+<tr><th id="448">448</th><td></td></tr>
+<tr><th id="449">449</th><td></td></tr>
+<tr><th id="450">450</th><td><i>/*</i></td></tr>
+<tr><th id="451">451</th><td><i> * For F_LOG2PHYS this information is passed back to user</i></td></tr>
+<tr><th id="452">452</th><td><i> * Currently only devoffset is returned - that is the VOP_BMAP</i></td></tr>
+<tr><th id="453">453</th><td><i> * result - the disk device address corresponding to the</i></td></tr>
+<tr><th id="454">454</th><td><i> * current file offset (likely set with an lseek).</i></td></tr>
+<tr><th id="455">455</th><td><i> *</i></td></tr>
+<tr><th id="456">456</th><td><i> * The flags could hold an indication of whether the # of</i></td></tr>
+<tr><th id="457">457</th><td><i> * contiguous bytes reflects the true extent length on disk,</i></td></tr>
+<tr><th id="458">458</th><td><i> * or is an advisory value that indicates there is at least that</i></td></tr>
+<tr><th id="459">459</th><td><i> * many bytes contiguous.  For some filesystems it might be too</i></td></tr>
+<tr><th id="460">460</th><td><i> * inefficient to provide anything beyond the advisory value.</i></td></tr>
+<tr><th id="461">461</th><td><i> * Flags and contiguous bytes return values are not yet implemented.</i></td></tr>
+<tr><th id="462">462</th><td><i> * For them the fcntl will nedd to switch from using BMAP to CMAP</i></td></tr>
+<tr><th id="463">463</th><td><i> * and a per filesystem type flag will be needed to interpret the</i></td></tr>
+<tr><th id="464">464</th><td><i> * contiguous bytes count result from CMAP.</i></td></tr>
+<tr><th id="465">465</th><td><i> *</i></td></tr>
+<tr><th id="466">466</th><td><i> * F_LOG2PHYS_EXT is a variant of F_LOG2PHYS that uses a passed in</i></td></tr>
+<tr><th id="467">467</th><td><i> * file offset and length instead of the current file offset.</i></td></tr>
+<tr><th id="468">468</th><td><i> * F_LOG2PHYS_EXT operates on the same structure as F_LOG2PHYS, but</i></td></tr>
+<tr><th id="469">469</th><td><i> * treats it as an in/out.</i></td></tr>
+<tr><th id="470">470</th><td><i> */</i></td></tr>
+<tr><th id="471">471</th><td><u>#pragma pack(4)</u></td></tr>
+<tr><th id="472">472</th><td></td></tr>
+<tr><th id="473">473</th><td><b>struct</b> <dfn class="type def" id="log2phys" title='log2phys' data-ref="log2phys">log2phys</dfn> {</td></tr>
+<tr><th id="474">474</th><td>	<em>unsigned</em> <em>int</em>    <dfn class="decl" id="log2phys::l2p_flags" title='log2phys::l2p_flags' data-ref="log2phys::l2p_flags">l2p_flags</dfn>;       <i>/* unused so far */</i></td></tr>
+<tr><th id="475">475</th><td>	<a class="typedef" href="_types/_off_t.h.html#off_t" title='off_t' data-type='__darwin_off_t' data-ref="off_t">off_t</a>           <dfn class="decl" id="log2phys::l2p_contigbytes" title='log2phys::l2p_contigbytes' data-ref="log2phys::l2p_contigbytes">l2p_contigbytes</dfn>; <i>/* F_LOG2PHYS:     unused so far */</i></td></tr>
+<tr><th id="476">476</th><td>	                                 <i>/* F_LOG2PHYS_EXT: IN:  number of bytes to be queried */</i></td></tr>
+<tr><th id="477">477</th><td>	                                 <i>/*                 OUT: number of contiguous bytes at this position */</i></td></tr>
+<tr><th id="478">478</th><td>	<a class="typedef" href="_types/_off_t.h.html#off_t" title='off_t' data-type='__darwin_off_t' data-ref="off_t">off_t</a>           <dfn class="decl" id="log2phys::l2p_devoffset" title='log2phys::l2p_devoffset' data-ref="log2phys::l2p_devoffset">l2p_devoffset</dfn>;   <i>/* F_LOG2PHYS:     OUT: bytes into device */</i></td></tr>
+<tr><th id="479">479</th><td>	                                 <i>/* F_LOG2PHYS_EXT: IN:  bytes into file */</i></td></tr>
+<tr><th id="480">480</th><td>	                                 <i>/*                 OUT: bytes into device */</i></td></tr>
+<tr><th id="481">481</th><td>};</td></tr>
+<tr><th id="482">482</th><td></td></tr>
+<tr><th id="483">483</th><td><u>#pragma pack()</u></td></tr>
+<tr><th id="484">484</th><td></td></tr>
+<tr><th id="485">485</th><td><u>#define <dfn class="macro" id="_M/O_POPUP" data-ref="_M/O_POPUP">O_POPUP</dfn>    0x80000000   /* force window to popup on open */</u></td></tr>
+<tr><th id="486">486</th><td><u>#define <dfn class="macro" id="_M/O_ALERT" data-ref="_M/O_ALERT">O_ALERT</dfn>    0x20000000   /* small, clean popup window */</u></td></tr>
+<tr><th id="487">487</th><td></td></tr>
+<tr><th id="488">488</th><td></td></tr>
+<tr><th id="489">489</th><td><u>#<span data-ppcond="356">endif</span> /* (_POSIX_C_SOURCE &amp;&amp; !_DARWIN_C_SOURCE) */</u></td></tr>
+<tr><th id="490">490</th><td></td></tr>
+<tr><th id="491">491</th><td></td></tr>
+<tr><th id="492">492</th><td><u>#<span data-ppcond="492">if</span> !defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>) || defined(<span class="macro" data-ref="_M/_DARWIN_C_SOURCE">_DARWIN_C_SOURCE</span>)</u></td></tr>
+<tr><th id="493">493</th><td></td></tr>
+<tr><th id="494">494</th><td><u>#include <a href="_types/_filesec_t.h.html">&lt;sys/_types/_filesec_t.h&gt;</a></u></td></tr>
+<tr><th id="495">495</th><td></td></tr>
+<tr><th id="496">496</th><td><b>typedef</b> <b>enum</b> {</td></tr>
+<tr><th id="497">497</th><td>	<dfn class="enum" id="FILESEC_OWNER" title='FILESEC_OWNER' data-ref="FILESEC_OWNER">FILESEC_OWNER</dfn> = <var>1</var>,</td></tr>
+<tr><th id="498">498</th><td>	<dfn class="enum" id="FILESEC_GROUP" title='FILESEC_GROUP' data-ref="FILESEC_GROUP">FILESEC_GROUP</dfn> = <var>2</var>,</td></tr>
+<tr><th id="499">499</th><td>	<dfn class="enum" id="FILESEC_UUID" title='FILESEC_UUID' data-ref="FILESEC_UUID">FILESEC_UUID</dfn> = <var>3</var>,</td></tr>
+<tr><th id="500">500</th><td>	<dfn class="enum" id="FILESEC_MODE" title='FILESEC_MODE' data-ref="FILESEC_MODE">FILESEC_MODE</dfn> = <var>4</var>,</td></tr>
+<tr><th id="501">501</th><td>	<dfn class="enum" id="FILESEC_ACL" title='FILESEC_ACL' data-ref="FILESEC_ACL">FILESEC_ACL</dfn> = <var>5</var>,</td></tr>
+<tr><th id="502">502</th><td>	<dfn class="enum" id="FILESEC_GRPUUID" title='FILESEC_GRPUUID' data-ref="FILESEC_GRPUUID">FILESEC_GRPUUID</dfn> = <var>6</var>,</td></tr>
+<tr><th id="503">503</th><td></td></tr>
+<tr><th id="504">504</th><td><i>/* XXX these are private to the implementation */</i></td></tr>
+<tr><th id="505">505</th><td>	<dfn class="enum" id="FILESEC_ACL_RAW" title='FILESEC_ACL_RAW' data-ref="FILESEC_ACL_RAW">FILESEC_ACL_RAW</dfn> = <var>100</var>,</td></tr>
+<tr><th id="506">506</th><td>	<dfn class="enum" id="FILESEC_ACL_ALLOCSIZE" title='FILESEC_ACL_ALLOCSIZE' data-ref="FILESEC_ACL_ALLOCSIZE">FILESEC_ACL_ALLOCSIZE</dfn> = <var>101</var></td></tr>
+<tr><th id="507">507</th><td>} <dfn class="typedef" id="filesec_property_t" title='filesec_property_t' data-type='enum filesec_property_t' data-ref="filesec_property_t">filesec_property_t</dfn>;</td></tr>
+<tr><th id="508">508</th><td></td></tr>
+<tr><th id="509">509</th><td><i>/* XXX backwards compatibility */</i></td></tr>
+<tr><th id="510">510</th><td><u>#define <dfn class="macro" id="_M/FILESEC_GUID" data-ref="_M/FILESEC_GUID">FILESEC_GUID</dfn> FILESEC_UUID</u></td></tr>
+<tr><th id="511">511</th><td><u>#<span data-ppcond="492">endif</span> /* (_POSIX_C_SOURCE &amp;&amp; !_DARWIN_C_SOURCE) */</u></td></tr>
+<tr><th id="512">512</th><td></td></tr>
+<tr><th id="513">513</th><td><a class="macro" href="cdefs.h.html#74" title="" data-ref="_M/__BEGIN_DECLS">__BEGIN_DECLS</a></td></tr>
+<tr><th id="514">514</th><td><em>int</em>     <dfn class="decl" id="_open" title='open' data-ref="_open">open</dfn>(<em>const</em> <em>char</em> *, <em>int</em>, ...) <a class="macro" href="cdefs.h.html#591" title="__asm(&quot;_&quot; &quot;open&quot; )" data-ref="_M/__DARWIN_ALIAS_C">__DARWIN_ALIAS_C</a>(open);</td></tr>
+<tr><th id="515">515</th><td><u>#<span data-ppcond="515">if</span> <a class="macro" href="cdefs.h.html#692" title="900000L" data-ref="_M/__DARWIN_C_LEVEL">__DARWIN_C_LEVEL</a> &gt;= 200809L</u></td></tr>
+<tr><th id="516">516</th><td><em>int</em>     <dfn class="decl" id="_openat" title='openat' data-ref="_openat">openat</dfn>(<em>int</em>, <em>const</em> <em>char</em> *, <em>int</em>, ...) <a class="macro" href="cdefs.h.html#593" title="__asm(&quot;_&quot; &quot;openat&quot; )" data-ref="_M/__DARWIN_NOCANCEL">__DARWIN_NOCANCEL</a>(openat) <a class="macro" href="../Availability.h.html#246" title="__attribute__((availability(macosx,introduced=10.10)))" data-ref="_M/__OSX_AVAILABLE_STARTING">__OSX_AVAILABLE_STARTING</a>(__MAC_10_10, __IPHONE_8_0);</td></tr>
+<tr><th id="517">517</th><td><u>#<span data-ppcond="515">endif</span></u></td></tr>
+<tr><th id="518">518</th><td><em>int</em>     <dfn class="decl" id="_creat" title='creat' data-ref="_creat">creat</dfn>(<em>const</em> <em>char</em> *, <a class="typedef" href="_types/_mode_t.h.html#mode_t" title='mode_t' data-type='__darwin_mode_t' data-ref="mode_t">mode_t</a>) <a class="macro" href="cdefs.h.html#591" title="__asm(&quot;_&quot; &quot;creat&quot; )" data-ref="_M/__DARWIN_ALIAS_C">__DARWIN_ALIAS_C</a>(creat);</td></tr>
+<tr><th id="519">519</th><td><em>int</em>     <dfn class="decl" id="_fcntl" title='fcntl' data-ref="_fcntl">fcntl</dfn>(<em>int</em>, <em>int</em>, ...) <a class="macro" href="cdefs.h.html#591" title="__asm(&quot;_&quot; &quot;fcntl&quot; )" data-ref="_M/__DARWIN_ALIAS_C">__DARWIN_ALIAS_C</a>(fcntl);</td></tr>
+<tr><th id="520">520</th><td><u>#<span data-ppcond="520">if</span> !defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>) || defined(<span class="macro" data-ref="_M/_DARWIN_C_SOURCE">_DARWIN_C_SOURCE</span>)</u></td></tr>
+<tr><th id="521">521</th><td></td></tr>
+<tr><th id="522">522</th><td><em>int</em>     <dfn class="decl" id="openx_np" title='openx_np' data-ref="openx_np">openx_np</dfn>(<em>const</em> <em>char</em> *, <em>int</em>, <a class="typedef" href="_types/_filesec_t.h.html#filesec_t" title='filesec_t' data-type='struct _filesec *' data-ref="filesec_t">filesec_t</a>);</td></tr>
+<tr><th id="523">523</th><td><i>/*</i></td></tr>
+<tr><th id="524">524</th><td><i> * data-protected non-portable open(2) :</i></td></tr>
+<tr><th id="525">525</th><td><i> *  int open_dprotected_np(user_addr_t path, int flags, int class, int dpflags, int mode)</i></td></tr>
+<tr><th id="526">526</th><td><i> */</i></td></tr>
+<tr><th id="527">527</th><td><em>int</em> <dfn class="decl" id="open_dprotected_np" title='open_dprotected_np' data-ref="open_dprotected_np">open_dprotected_np</dfn>( <em>const</em> <em>char</em> *, <em>int</em>, <em>int</em>, <em>int</em>, ...);</td></tr>
+<tr><th id="528">528</th><td><em>int</em>     <dfn class="decl" id="flock" title='flock' data-ref="flock">flock</dfn>(<em>int</em>, <em>int</em>);</td></tr>
+<tr><th id="529">529</th><td><a class="typedef" href="_types/_filesec_t.h.html#filesec_t" title='filesec_t' data-type='struct _filesec *' data-ref="filesec_t">filesec_t</a> <dfn class="decl" id="filesec_init" title='filesec_init' data-ref="filesec_init">filesec_init</dfn>(<em>void</em>);</td></tr>
+<tr><th id="530">530</th><td><a class="typedef" href="_types/_filesec_t.h.html#filesec_t" title='filesec_t' data-type='struct _filesec *' data-ref="filesec_t">filesec_t</a> <dfn class="decl" id="filesec_dup" title='filesec_dup' data-ref="filesec_dup">filesec_dup</dfn>(<a class="typedef" href="_types/_filesec_t.h.html#filesec_t" title='filesec_t' data-type='struct _filesec *' data-ref="filesec_t">filesec_t</a>);</td></tr>
+<tr><th id="531">531</th><td><em>void</em>    <dfn class="decl" id="filesec_free" title='filesec_free' data-ref="filesec_free">filesec_free</dfn>(<a class="typedef" href="_types/_filesec_t.h.html#filesec_t" title='filesec_t' data-type='struct _filesec *' data-ref="filesec_t">filesec_t</a>);</td></tr>
+<tr><th id="532">532</th><td><em>int</em>     <dfn class="decl" id="filesec_get_property" title='filesec_get_property' data-ref="filesec_get_property">filesec_get_property</dfn>(<a class="typedef" href="_types/_filesec_t.h.html#filesec_t" title='filesec_t' data-type='struct _filesec *' data-ref="filesec_t">filesec_t</a>, <a class="typedef" href="#filesec_property_t" title='filesec_property_t' data-type='enum filesec_property_t' data-ref="filesec_property_t">filesec_property_t</a>, <em>void</em> *);</td></tr>
+<tr><th id="533">533</th><td><em>int</em>     <dfn class="decl" id="filesec_query_property" title='filesec_query_property' data-ref="filesec_query_property">filesec_query_property</dfn>(<a class="typedef" href="_types/_filesec_t.h.html#filesec_t" title='filesec_t' data-type='struct _filesec *' data-ref="filesec_t">filesec_t</a>, <a class="typedef" href="#filesec_property_t" title='filesec_property_t' data-type='enum filesec_property_t' data-ref="filesec_property_t">filesec_property_t</a>, <em>int</em> *);</td></tr>
+<tr><th id="534">534</th><td><em>int</em>     <dfn class="decl" id="filesec_set_property" title='filesec_set_property' data-ref="filesec_set_property">filesec_set_property</dfn>(<a class="typedef" href="_types/_filesec_t.h.html#filesec_t" title='filesec_t' data-type='struct _filesec *' data-ref="filesec_t">filesec_t</a>, <a class="typedef" href="#filesec_property_t" title='filesec_property_t' data-type='enum filesec_property_t' data-ref="filesec_property_t">filesec_property_t</a>, <em>const</em> <em>void</em> *);</td></tr>
+<tr><th id="535">535</th><td><em>int</em>     <dfn class="decl" id="filesec_unset_property" title='filesec_unset_property' data-ref="filesec_unset_property">filesec_unset_property</dfn>(<a class="typedef" href="_types/_filesec_t.h.html#filesec_t" title='filesec_t' data-type='struct _filesec *' data-ref="filesec_t">filesec_t</a>, <a class="typedef" href="#filesec_property_t" title='filesec_property_t' data-type='enum filesec_property_t' data-ref="filesec_property_t">filesec_property_t</a>) <a class="macro" href="../Availability.h.html#246" title="__attribute__((availability(macosx,introduced=10.6)))" data-ref="_M/__OSX_AVAILABLE_STARTING">__OSX_AVAILABLE_STARTING</a>(__MAC_10_6, __IPHONE_3_2);</td></tr>
+<tr><th id="536">536</th><td><u>#define <dfn class="macro" id="_M/_FILESEC_UNSET_PROPERTY" data-ref="_M/_FILESEC_UNSET_PROPERTY">_FILESEC_UNSET_PROPERTY</dfn> ((void *)0)</u></td></tr>
+<tr><th id="537">537</th><td><u>#define <dfn class="macro" id="_M/_FILESEC_REMOVE_ACL" data-ref="_M/_FILESEC_REMOVE_ACL">_FILESEC_REMOVE_ACL</dfn>     ((void *)1)</u></td></tr>
+<tr><th id="538">538</th><td><u>#<span data-ppcond="520">endif</span> /* (!_POSIX_C_SOURCE || _DARWIN_C_SOURCE) */</u></td></tr>
+<tr><th id="539">539</th><td><a class="macro" href="cdefs.h.html#75" title="" data-ref="_M/__END_DECLS">__END_DECLS</a></td></tr>
+<tr><th id="540">540</th><td></td></tr>
+<tr><th id="541">541</th><td><u>#<span data-ppcond="70">endif</span> /* !_SYS_FCNTL_H_ */</u></td></tr>
+<tr><th id="542">542</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../xv6/mkfs.c.html'>xv6/mkfs.c</a><br/>Generated on <em>2019-Jul-19</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 2.1
+<br/>Generator usage only permitted with license.</p>
+</div></body></html>

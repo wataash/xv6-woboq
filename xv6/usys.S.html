@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>usys.S source code [xv6/usys.S] - Woboq Code Browser</title>
+<link rel="stylesheet" href="https://code.woboq.org/data/qtcreator.css" title="QtCreator"/>
+<link rel="alternate stylesheet" href="https://code.woboq.org/data/kdevelop.css" title="KDevelop"/>
+<script type="text/javascript" src="https://code.woboq.org/data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="https://code.woboq.org/data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'xv6/usys.S'; var root_path = '..'; var data_path = 'https://code.woboq.org/data';</script>
+<script src='https://code.woboq.org/data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Browse the source code of </span><a href='./'>xv6</a>/<a href='usys.S.html'>usys.S</a></h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><u>#include <a href="syscall.h.html">"syscall.h"</a></u></td></tr>
+<tr><th id="2">2</th><td><u>#include <a href="traps.h.html">"traps.h"</a></u></td></tr>
+<tr><th id="3">3</th><td></td></tr>
+<tr><th id="4">4</th><td><u>#define <dfn class="macro" id="_M/SYSCALL" data-ref="_M/SYSCALL">SYSCALL</dfn>(name) \</u></td></tr>
+<tr><th id="5">5</th><td><u>  <span class='error' title="expected identifier or &apos;(&apos;">.</span>globl name; \</u></td></tr>
+<tr><th id="6">6</th><td><u>  name<span class='error' title="expected &apos;;&apos; after top level declarator">:</span> \</u></td></tr>
+<tr><th id="7">7</th><td><u>    <span class='error' title="unknown type name &apos;movl&apos;">movl</span> <span class='error' title="expected identifier or &apos;(&apos;">$</span>SYS_ ## name, %eax; \</u></td></tr>
+<tr><th id="8">8</th><td><u>    int <span class='error' title="expected identifier or &apos;(&apos;">$</span>T_SYSCALL; \</u></td></tr>
+<tr><th id="9">9</th><td><u>    <span class='error' title="unknown type name &apos;ret&apos;">ret</span></u></td></tr>
+<tr><th id="10">10</th><td></td></tr>
+<tr><th id="11">11</th><td><a class="macro" href="#4" title=".globl fork; fork: movl $1, %eax; int $64; ret" data-ref="_M/SYSCALL">SYSCALL</a>(<span class='warning' title="type specifier missing, defaults to &apos;int&apos;"><dfn class="decl def" id="fork" title='fork' data-ref="fork">fork</dfn></span>)</td></tr>
+<tr><th id="12">12</th><td><a class="macro" href="#4" title=".globl exit; exit: movl $2, %eax; int $64; ret" data-ref="_M/SYSCALL">SYSCALL</a>(<span class='warning' title="type specifier missing, defaults to &apos;int&apos;"><span class='error' title="redefinition of &apos;exit&apos; as different kind of symbol"><dfn class="tu decl def" id="exit" title='exit' data-type='int' data-ref="exit">exit</dfn></span></span>)</td></tr>
+<tr><th id="13">13</th><td><a class="macro" href="#4" title=".globl wait; wait: movl $3, %eax; int $64; ret" data-ref="_M/SYSCALL">SYSCALL</a>(<span class='warning' title="type specifier missing, defaults to &apos;int&apos;"><dfn class="decl def" id="wait" title='wait' data-ref="wait">wait</dfn></span>)</td></tr>
+<tr><th id="14">14</th><td><a class="macro" href="#4" title=".globl pipe; pipe: movl $4, %eax; int $64; ret" data-ref="_M/SYSCALL">SYSCALL</a>(<span class='warning' title="type specifier missing, defaults to &apos;int&apos;"><dfn class="decl def" id="pipe" title='pipe' data-ref="pipe">pipe</dfn></span>)</td></tr>
+<tr><th id="15">15</th><td><a class="macro" href="#4" title=".globl read; read: movl $5, %eax; int $64; ret" data-ref="_M/SYSCALL">SYSCALL</a>(<span class='warning' title="type specifier missing, defaults to &apos;int&apos;"><dfn class="decl def" id="read" title='read' data-ref="read">read</dfn></span>)</td></tr>
+<tr><th id="16">16</th><td><a class="macro" href="#4" title=".globl write; write: movl $16, %eax; int $64; ret" data-ref="_M/SYSCALL">SYSCALL</a>(<span class='warning' title="type specifier missing, defaults to &apos;int&apos;"><dfn class="decl def" id="write" title='write' data-ref="write">write</dfn></span>)</td></tr>
+<tr><th id="17">17</th><td><a class="macro" href="#4" title=".globl close; close: movl $21, %eax; int $64; ret" data-ref="_M/SYSCALL">SYSCALL</a>(<span class='warning' title="type specifier missing, defaults to &apos;int&apos;"><dfn class="decl def" id="close" title='close' data-ref="close">close</dfn></span>)</td></tr>
+<tr><th id="18">18</th><td><a class="macro" href="#4" title=".globl kill; kill: movl $6, %eax; int $64; ret" data-ref="_M/SYSCALL">SYSCALL</a>(<span class='warning' title="type specifier missing, defaults to &apos;int&apos;"><dfn class="decl def" id="kill" title='kill' data-ref="kill">kill</dfn></span>)</td></tr>
+<tr><th id="19">19</th><td><a class="macro" href="#4" title=".globl exec; exec: movl $7, %eax; int $64; ret" data-ref="_M/SYSCALL">SYSCALL</a>(<span class='warning' title="type specifier missing, defaults to &apos;int&apos;"><dfn class="decl def" id="exec" title='exec' data-ref="exec">exec</dfn></span>)</td></tr>
+<tr><th id="20">20</th><td><a class="macro" href="#4" title=".globl open; open: movl $15, %eax; int $64; ret" data-ref="_M/SYSCALL">SYSCALL</a>(<span class='warning' title="type specifier missing, defaults to &apos;int&apos;"><dfn class="decl def" id="open" title='open' data-ref="open">open</dfn></span>)</td></tr>
+<tr><th id="21">21</th><td><a class="macro" href="#4" title=".globl mknod; mknod: movl $17, %eax; int $64; ret" data-ref="_M/SYSCALL">SYSCALL</a>(<span class='warning' title="type specifier missing, defaults to &apos;int&apos;"><dfn class="decl def" id="mknod" title='mknod' data-ref="mknod">mknod</dfn></span>)</td></tr>
+<tr><th id="22">22</th><td><a class="macro" href="#4" title=".globl unlink; unlink: movl $18, %eax; int $64; ret" data-ref="_M/SYSCALL">SYSCALL</a>(<span class='warning' title="type specifier missing, defaults to &apos;int&apos;"><dfn class="decl def" id="unlink" title='unlink' data-ref="unlink">unlink</dfn></span>)</td></tr>
+<tr><th id="23">23</th><td><a class="macro" href="#4" title=".globl fstat; fstat: movl $8, %eax; int $64; ret" data-ref="_M/SYSCALL">SYSCALL</a>(<span class='warning' title="type specifier missing, defaults to &apos;int&apos;"><dfn class="decl def" id="fstat" title='fstat' data-ref="fstat">fstat</dfn></span>)</td></tr>
+<tr><th id="24">24</th><td><a class="macro" href="#4" title=".globl link; link: movl $19, %eax; int $64; ret" data-ref="_M/SYSCALL">SYSCALL</a>(<span class='warning' title="type specifier missing, defaults to &apos;int&apos;"><dfn class="decl def" id="link" title='link' data-ref="link">link</dfn></span>)</td></tr>
+<tr><th id="25">25</th><td><a class="macro" href="#4" title=".globl mkdir; mkdir: movl $20, %eax; int $64; ret" data-ref="_M/SYSCALL">SYSCALL</a>(<span class='warning' title="type specifier missing, defaults to &apos;int&apos;"><dfn class="decl def" id="mkdir" title='mkdir' data-ref="mkdir">mkdir</dfn></span>)</td></tr>
+<tr><th id="26">26</th><td><a class="macro" href="#4" title=".globl chdir; chdir: movl $9, %eax; int $64; ret" data-ref="_M/SYSCALL">SYSCALL</a>(<span class='warning' title="type specifier missing, defaults to &apos;int&apos;"><dfn class="decl def" id="chdir" title='chdir' data-ref="chdir">chdir</dfn></span>)</td></tr>
+<tr><th id="27">27</th><td><a class="macro" href="#4" title=".globl dup; dup: movl $10, %eax; int $64; ret" data-ref="_M/SYSCALL">SYSCALL</a>(<span class='warning' title="type specifier missing, defaults to &apos;int&apos;"><dfn class="decl def" id="dup" title='dup' data-ref="dup">dup</dfn></span>)</td></tr>
+<tr><th id="28">28</th><td><a class="macro" href="#4" title=".globl getpid; getpid: movl $11, %eax; int $64; ret" data-ref="_M/SYSCALL">SYSCALL</a>(<span class='warning' title="type specifier missing, defaults to &apos;int&apos;"><dfn class="decl def" id="getpid" title='getpid' data-ref="getpid">getpid</dfn></span>)</td></tr>
+<tr><th id="29">29</th><td><a class="macro" href="#4" title=".globl sbrk; sbrk: movl $12, %eax; int $64; ret" data-ref="_M/SYSCALL">SYSCALL</a>(<span class='warning' title="type specifier missing, defaults to &apos;int&apos;"><dfn class="decl def" id="sbrk" title='sbrk' data-ref="sbrk">sbrk</dfn></span>)</td></tr>
+<tr><th id="30">30</th><td><a class="macro" href="#4" title=".globl sleep; sleep: movl $13, %eax; int $64; ret" data-ref="_M/SYSCALL">SYSCALL</a>(<span class='warning' title="type specifier missing, defaults to &apos;int&apos;"><dfn class="decl def" id="sleep" title='sleep' data-ref="sleep">sleep</dfn></span>)</td></tr>
+<tr><th id="31">31</th><td><a class="macro" href="#4" title=".globl uptime; uptime: movl $14, %eax; int $64; ret" data-ref="_M/SYSCALL">SYSCALL</a>(<span class='warning' title="type specifier missing, defaults to &apos;int&apos;"><dfn class="decl def" id="uptime" title='uptime' data-ref="uptime">uptime</dfn></span>)<span class='error' title="expected identifier or &apos;(&apos;"></span></td></tr>
+<tr><th id="32">32</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2019-Jul-19</em> from project xv6 revision <em>xv6-rev11</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 2.1
+<br/>Generator usage only permitted with license.</p>
+</div></body></html>

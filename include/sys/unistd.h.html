@@ -1,0 +1,237 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>unistd.h source code [include/sys/unistd.h] - Woboq Code Browser</title>
+<meta name="woboq:interestingDefinitions" content="accessx_descriptor "/>
+<link rel="stylesheet" href="https://code.woboq.org/data/qtcreator.css" title="QtCreator"/>
+<link rel="alternate stylesheet" href="https://code.woboq.org/data/kdevelop.css" title="KDevelop"/>
+<script type="text/javascript" src="https://code.woboq.org/data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="https://code.woboq.org/data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/sys/unistd.h'; var root_path = '../..'; var data_path = 'https://code.woboq.org/data';</script>
+<script src='https://code.woboq.org/data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Browse the source code of </span><a href='..'>include</a>/<a href='./'>sys</a>/<a href='unistd.h.html'>unistd.h</a></h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (c) 2000-2013 Apple Inc. All rights reserved.</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * @APPLE_OSREFERENCE_LICENSE_HEADER_START@</i></td></tr>
+<tr><th id="5">5</th><td><i> *</i></td></tr>
+<tr><th id="6">6</th><td><i> * This file contains Original Code and/or Modifications of Original Code</i></td></tr>
+<tr><th id="7">7</th><td><i> * as defined in and that are subject to the Apple Public Source License</i></td></tr>
+<tr><th id="8">8</th><td><i> * Version 2.0 (the 'License'). You may not use this file except in</i></td></tr>
+<tr><th id="9">9</th><td><i> * compliance with the License. The rights granted to you under the License</i></td></tr>
+<tr><th id="10">10</th><td><i> * may not be used to create, or enable the creation or redistribution of,</i></td></tr>
+<tr><th id="11">11</th><td><i> * unlawful or unlicensed copies of an Apple operating system, or to</i></td></tr>
+<tr><th id="12">12</th><td><i> * circumvent, violate, or enable the circumvention or violation of, any</i></td></tr>
+<tr><th id="13">13</th><td><i> * terms of an Apple operating system software license agreement.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * Please obtain a copy of the License at</i></td></tr>
+<tr><th id="16">16</th><td><i> * <a href="http://www.opensource.apple.com/apsl/">http://www.opensource.apple.com/apsl/</a> and read it before using this file.</i></td></tr>
+<tr><th id="17">17</th><td><i> *</i></td></tr>
+<tr><th id="18">18</th><td><i> * The Original Code and all software distributed under the License are</i></td></tr>
+<tr><th id="19">19</th><td><i> * distributed on an 'AS IS' basis, WITHOUT WARRANTY OF ANY KIND, EITHER</i></td></tr>
+<tr><th id="20">20</th><td><i> * EXPRESS OR IMPLIED, AND APPLE HEREBY DISCLAIMS ALL SUCH WARRANTIES,</i></td></tr>
+<tr><th id="21">21</th><td><i> * INCLUDING WITHOUT LIMITATION, ANY WARRANTIES OF MERCHANTABILITY,</i></td></tr>
+<tr><th id="22">22</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE, QUIET ENJOYMENT OR NON-INFRINGEMENT.</i></td></tr>
+<tr><th id="23">23</th><td><i> * Please see the License for the specific language governing rights and</i></td></tr>
+<tr><th id="24">24</th><td><i> * limitations under the License.</i></td></tr>
+<tr><th id="25">25</th><td><i> *</i></td></tr>
+<tr><th id="26">26</th><td><i> * @APPLE_OSREFERENCE_LICENSE_HEADER_END@</i></td></tr>
+<tr><th id="27">27</th><td><i> */</i></td></tr>
+<tr><th id="28">28</th><td><i>/* Copyright (c) 1995 NeXT Computer, Inc. All Rights Reserved */</i></td></tr>
+<tr><th id="29">29</th><td><i>/*</i></td></tr>
+<tr><th id="30">30</th><td><i> * Copyright (c) 1989, 1993</i></td></tr>
+<tr><th id="31">31</th><td><i> *	The Regents of the University of California.  All rights reserved.</i></td></tr>
+<tr><th id="32">32</th><td><i> *</i></td></tr>
+<tr><th id="33">33</th><td><i> * Redistribution and use in source and binary forms, with or without</i></td></tr>
+<tr><th id="34">34</th><td><i> * modification, are permitted provided that the following conditions</i></td></tr>
+<tr><th id="35">35</th><td><i> * are met:</i></td></tr>
+<tr><th id="36">36</th><td><i> * 1. Redistributions of source code must retain the above copyright</i></td></tr>
+<tr><th id="37">37</th><td><i> *    notice, this list of conditions and the following disclaimer.</i></td></tr>
+<tr><th id="38">38</th><td><i> * 2. Redistributions in binary form must reproduce the above copyright</i></td></tr>
+<tr><th id="39">39</th><td><i> *    notice, this list of conditions and the following disclaimer in the</i></td></tr>
+<tr><th id="40">40</th><td><i> *    documentation and/or other materials provided with the distribution.</i></td></tr>
+<tr><th id="41">41</th><td><i> * 3. All advertising materials mentioning features or use of this software</i></td></tr>
+<tr><th id="42">42</th><td><i> *    must display the following acknowledgement:</i></td></tr>
+<tr><th id="43">43</th><td><i> *	This product includes software developed by the University of</i></td></tr>
+<tr><th id="44">44</th><td><i> *	California, Berkeley and its contributors.</i></td></tr>
+<tr><th id="45">45</th><td><i> * 4. Neither the name of the University nor the names of its contributors</i></td></tr>
+<tr><th id="46">46</th><td><i> *    may be used to endorse or promote products derived from this software</i></td></tr>
+<tr><th id="47">47</th><td><i> *    without specific prior written permission.</i></td></tr>
+<tr><th id="48">48</th><td><i> *</i></td></tr>
+<tr><th id="49">49</th><td><i> * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND</i></td></tr>
+<tr><th id="50">50</th><td><i> * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE</i></td></tr>
+<tr><th id="51">51</th><td><i> * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE</i></td></tr>
+<tr><th id="52">52</th><td><i> * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE</i></td></tr>
+<tr><th id="53">53</th><td><i> * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL</i></td></tr>
+<tr><th id="54">54</th><td><i> * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS</i></td></tr>
+<tr><th id="55">55</th><td><i> * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)</i></td></tr>
+<tr><th id="56">56</th><td><i> * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT</i></td></tr>
+<tr><th id="57">57</th><td><i> * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY</i></td></tr>
+<tr><th id="58">58</th><td><i> * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF</i></td></tr>
+<tr><th id="59">59</th><td><i> * SUCH DAMAGE.</i></td></tr>
+<tr><th id="60">60</th><td><i> *</i></td></tr>
+<tr><th id="61">61</th><td><i> *	@(#)unistd.h	8.2 (Berkeley) 1/7/94</i></td></tr>
+<tr><th id="62">62</th><td><i> */</i></td></tr>
+<tr><th id="63">63</th><td></td></tr>
+<tr><th id="64">64</th><td><u>#<span data-ppcond="64">ifndef</span> <span class="macro" data-ref="_M/_SYS_UNISTD_H_">_SYS_UNISTD_H_</span></u></td></tr>
+<tr><th id="65">65</th><td><u>#define <dfn class="macro" id="_M/_SYS_UNISTD_H_" data-ref="_M/_SYS_UNISTD_H_">_SYS_UNISTD_H_</dfn></u></td></tr>
+<tr><th id="66">66</th><td></td></tr>
+<tr><th id="67">67</th><td><u>#include <a href="cdefs.h.html">&lt;sys/cdefs.h&gt;</a></u></td></tr>
+<tr><th id="68">68</th><td></td></tr>
+<tr><th id="69">69</th><td><i>/*</i></td></tr>
+<tr><th id="70">70</th><td><i> * Although we have saved user/group IDs, we do not use them in setuid</i></td></tr>
+<tr><th id="71">71</th><td><i> * as described in POSIX 1003.1, because the feature does not work for</i></td></tr>
+<tr><th id="72">72</th><td><i> * root.  We use the saved IDs in seteuid/setegid, which are not currently</i></td></tr>
+<tr><th id="73">73</th><td><i> * part of the POSIX 1003.1 specification.</i></td></tr>
+<tr><th id="74">74</th><td><i> */</i></td></tr>
+<tr><th id="75">75</th><td><u>#<span data-ppcond="75">ifdef</span>  <span class="macro" data-ref="_M/_NOT_AVAILABLE">_NOT_AVAILABLE</span></u></td></tr>
+<tr><th id="76">76</th><td><u>#define _POSIX_SAVED_IDS        /* saved set-user-ID and set-group-ID */</u></td></tr>
+<tr><th id="77">77</th><td><u>#<span data-ppcond="75">endif</span></u></td></tr>
+<tr><th id="78">78</th><td></td></tr>
+<tr><th id="79">79</th><td><u>#define <dfn class="macro" id="_M/_POSIX_VERSION" data-ref="_M/_POSIX_VERSION">_POSIX_VERSION</dfn>          200112L</u></td></tr>
+<tr><th id="80">80</th><td><u>#define <dfn class="macro" id="_M/_POSIX2_VERSION" data-ref="_M/_POSIX2_VERSION">_POSIX2_VERSION</dfn>         200112L</u></td></tr>
+<tr><th id="81">81</th><td></td></tr>
+<tr><th id="82">82</th><td><i>/* execution-time symbolic constants */</i></td></tr>
+<tr><th id="83">83</th><td><i>/* may disable terminal special characters */</i></td></tr>
+<tr><th id="84">84</th><td><u>#include <a href="_types/_posix_vdisable.h.html">&lt;sys/_types/_posix_vdisable.h&gt;</a></u></td></tr>
+<tr><th id="85">85</th><td></td></tr>
+<tr><th id="86">86</th><td><u>#define <dfn class="macro" id="_M/_POSIX_THREAD_KEYS_MAX" data-ref="_M/_POSIX_THREAD_KEYS_MAX">_POSIX_THREAD_KEYS_MAX</dfn> 128</u></td></tr>
+<tr><th id="87">87</th><td></td></tr>
+<tr><th id="88">88</th><td><i>/* access function */</i></td></tr>
+<tr><th id="89">89</th><td><u>#define <dfn class="macro" id="_M/F_OK" data-ref="_M/F_OK">F_OK</dfn>            0       /* test for existence of file */</u></td></tr>
+<tr><th id="90">90</th><td><u>#define <dfn class="macro" id="_M/X_OK" data-ref="_M/X_OK">X_OK</dfn>            (1&lt;&lt;0)  /* test for execute or search permission */</u></td></tr>
+<tr><th id="91">91</th><td><u>#define <dfn class="macro" id="_M/W_OK" data-ref="_M/W_OK">W_OK</dfn>            (1&lt;&lt;1)  /* test for write permission */</u></td></tr>
+<tr><th id="92">92</th><td><u>#define <dfn class="macro" id="_M/R_OK" data-ref="_M/R_OK">R_OK</dfn>            (1&lt;&lt;2)  /* test for read permission */</u></td></tr>
+<tr><th id="93">93</th><td></td></tr>
+<tr><th id="94">94</th><td><u>#<span data-ppcond="94">if</span> !defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>) || defined(<span class="macro" data-ref="_M/_DARWIN_C_SOURCE">_DARWIN_C_SOURCE</span>)</u></td></tr>
+<tr><th id="95">95</th><td><i>/*</i></td></tr>
+<tr><th id="96">96</th><td><i> * Extended access functions.</i></td></tr>
+<tr><th id="97">97</th><td><i> * Note that we depend on these matching the definitions in sys/kauth.h,</i></td></tr>
+<tr><th id="98">98</th><td><i> * but with the bits shifted left by 8.</i></td></tr>
+<tr><th id="99">99</th><td><i> */</i></td></tr>
+<tr><th id="100">100</th><td><u>#define <dfn class="macro" id="_M/_READ_OK" data-ref="_M/_READ_OK">_READ_OK</dfn>        (1&lt;&lt;9)  /* read file data / read directory */</u></td></tr>
+<tr><th id="101">101</th><td><u>#define <dfn class="macro" id="_M/_WRITE_OK" data-ref="_M/_WRITE_OK">_WRITE_OK</dfn>       (1&lt;&lt;10) /* write file data / add file to directory */</u></td></tr>
+<tr><th id="102">102</th><td><u>#define <dfn class="macro" id="_M/_EXECUTE_OK" data-ref="_M/_EXECUTE_OK">_EXECUTE_OK</dfn>     (1&lt;&lt;11) /* execute file / search in directory*/</u></td></tr>
+<tr><th id="103">103</th><td><u>#define <dfn class="macro" id="_M/_DELETE_OK" data-ref="_M/_DELETE_OK">_DELETE_OK</dfn>      (1&lt;&lt;12) /* delete file / delete directory */</u></td></tr>
+<tr><th id="104">104</th><td><u>#define <dfn class="macro" id="_M/_APPEND_OK" data-ref="_M/_APPEND_OK">_APPEND_OK</dfn>      (1&lt;&lt;13) /* append to file / add subdirectory to directory */</u></td></tr>
+<tr><th id="105">105</th><td><u>#define <dfn class="macro" id="_M/_RMFILE_OK" data-ref="_M/_RMFILE_OK">_RMFILE_OK</dfn>      (1&lt;&lt;14) /* - / remove file from directory */</u></td></tr>
+<tr><th id="106">106</th><td><u>#define <dfn class="macro" id="_M/_RATTR_OK" data-ref="_M/_RATTR_OK">_RATTR_OK</dfn>       (1&lt;&lt;15) /* read basic attributes */</u></td></tr>
+<tr><th id="107">107</th><td><u>#define <dfn class="macro" id="_M/_WATTR_OK" data-ref="_M/_WATTR_OK">_WATTR_OK</dfn>       (1&lt;&lt;16) /* write basic attributes */</u></td></tr>
+<tr><th id="108">108</th><td><u>#define <dfn class="macro" id="_M/_REXT_OK" data-ref="_M/_REXT_OK">_REXT_OK</dfn>        (1&lt;&lt;17) /* read extended attributes */</u></td></tr>
+<tr><th id="109">109</th><td><u>#define <dfn class="macro" id="_M/_WEXT_OK" data-ref="_M/_WEXT_OK">_WEXT_OK</dfn>        (1&lt;&lt;18) /* write extended attributes */</u></td></tr>
+<tr><th id="110">110</th><td><u>#define <dfn class="macro" id="_M/_RPERM_OK" data-ref="_M/_RPERM_OK">_RPERM_OK</dfn>       (1&lt;&lt;19) /* read permissions */</u></td></tr>
+<tr><th id="111">111</th><td><u>#define <dfn class="macro" id="_M/_WPERM_OK" data-ref="_M/_WPERM_OK">_WPERM_OK</dfn>       (1&lt;&lt;20) /* write permissions */</u></td></tr>
+<tr><th id="112">112</th><td><u>#define <dfn class="macro" id="_M/_CHOWN_OK" data-ref="_M/_CHOWN_OK">_CHOWN_OK</dfn>       (1&lt;&lt;21) /* change ownership */</u></td></tr>
+<tr><th id="113">113</th><td></td></tr>
+<tr><th id="114">114</th><td><u>#define <dfn class="macro" id="_M/_ACCESS_EXTENDED_MASK" data-ref="_M/_ACCESS_EXTENDED_MASK">_ACCESS_EXTENDED_MASK</dfn> (_READ_OK | _WRITE_OK | _EXECUTE_OK | \</u></td></tr>
+<tr><th id="115">115</th><td><u>	                        _DELETE_OK | _APPEND_OK | \</u></td></tr>
+<tr><th id="116">116</th><td><u>	                        _RMFILE_OK | _REXT_OK | \</u></td></tr>
+<tr><th id="117">117</th><td><u>	                        _WEXT_OK | _RATTR_OK | _WATTR_OK | _RPERM_OK | \</u></td></tr>
+<tr><th id="118">118</th><td><u>	                        _WPERM_OK | _CHOWN_OK)</u></td></tr>
+<tr><th id="119">119</th><td><u>#<span data-ppcond="94">endif</span></u></td></tr>
+<tr><th id="120">120</th><td></td></tr>
+<tr><th id="121">121</th><td><i>/* whence values for lseek(2) */</i></td></tr>
+<tr><th id="122">122</th><td><u>#include <a href="_types/_seek_set.h.html">&lt;sys/_types/_seek_set.h&gt;</a></u></td></tr>
+<tr><th id="123">123</th><td></td></tr>
+<tr><th id="124">124</th><td><u>#<span data-ppcond="124">if</span> !defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>) || defined(<span class="macro" data-ref="_M/_DARWIN_C_SOURCE">_DARWIN_C_SOURCE</span>)</u></td></tr>
+<tr><th id="125">125</th><td><i>/* whence values for lseek(2); renamed by POSIX 1003.1 */</i></td></tr>
+<tr><th id="126">126</th><td><u>#define <dfn class="macro" id="_M/L_SET" data-ref="_M/L_SET">L_SET</dfn>           SEEK_SET</u></td></tr>
+<tr><th id="127">127</th><td><u>#define <dfn class="macro" id="_M/L_INCR" data-ref="_M/L_INCR">L_INCR</dfn>          SEEK_CUR</u></td></tr>
+<tr><th id="128">128</th><td><u>#define <dfn class="macro" id="_M/L_XTND" data-ref="_M/L_XTND">L_XTND</dfn>          SEEK_END</u></td></tr>
+<tr><th id="129">129</th><td><u>#<span data-ppcond="124">endif</span></u></td></tr>
+<tr><th id="130">130</th><td></td></tr>
+<tr><th id="131">131</th><td><u>#<span data-ppcond="131">if</span> !defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>) || defined(<span class="macro" data-ref="_M/_DARWIN_C_SOURCE">_DARWIN_C_SOURCE</span>)</u></td></tr>
+<tr><th id="132">132</th><td><b>struct</b> <dfn class="type def" id="accessx_descriptor" title='accessx_descriptor' data-ref="accessx_descriptor">accessx_descriptor</dfn> {</td></tr>
+<tr><th id="133">133</th><td>	<em>unsigned</em> <em>int</em> <dfn class="decl" id="accessx_descriptor::ad_name_offset" title='accessx_descriptor::ad_name_offset' data-ref="accessx_descriptor::ad_name_offset">ad_name_offset</dfn>;</td></tr>
+<tr><th id="134">134</th><td>	<em>int</em> <dfn class="decl" id="accessx_descriptor::ad_flags" title='accessx_descriptor::ad_flags' data-ref="accessx_descriptor::ad_flags">ad_flags</dfn>;</td></tr>
+<tr><th id="135">135</th><td>	<em>int</em> <dfn class="decl" id="accessx_descriptor::ad_pad" title='accessx_descriptor::ad_pad' data-ref="accessx_descriptor::ad_pad">ad_pad</dfn>[<var>2</var>];</td></tr>
+<tr><th id="136">136</th><td>};</td></tr>
+<tr><th id="137">137</th><td><u>#define <dfn class="macro" id="_M/ACCESSX_MAX_DESCRIPTORS" data-ref="_M/ACCESSX_MAX_DESCRIPTORS">ACCESSX_MAX_DESCRIPTORS</dfn> 100</u></td></tr>
+<tr><th id="138">138</th><td><u>#define <dfn class="macro" id="_M/ACCESSX_MAX_TABLESIZE" data-ref="_M/ACCESSX_MAX_TABLESIZE">ACCESSX_MAX_TABLESIZE</dfn>   (16 * 1024)</u></td></tr>
+<tr><th id="139">139</th><td><u>#<span data-ppcond="131">endif</span></u></td></tr>
+<tr><th id="140">140</th><td></td></tr>
+<tr><th id="141">141</th><td><i>/* configurable pathname variables */</i></td></tr>
+<tr><th id="142">142</th><td><u>#define <dfn class="macro" id="_M/_PC_LINK_MAX" data-ref="_M/_PC_LINK_MAX">_PC_LINK_MAX</dfn>             1</u></td></tr>
+<tr><th id="143">143</th><td><u>#define <dfn class="macro" id="_M/_PC_MAX_CANON" data-ref="_M/_PC_MAX_CANON">_PC_MAX_CANON</dfn>            2</u></td></tr>
+<tr><th id="144">144</th><td><u>#define <dfn class="macro" id="_M/_PC_MAX_INPUT" data-ref="_M/_PC_MAX_INPUT">_PC_MAX_INPUT</dfn>            3</u></td></tr>
+<tr><th id="145">145</th><td><u>#define <dfn class="macro" id="_M/_PC_NAME_MAX" data-ref="_M/_PC_NAME_MAX">_PC_NAME_MAX</dfn>             4</u></td></tr>
+<tr><th id="146">146</th><td><u>#define <dfn class="macro" id="_M/_PC_PATH_MAX" data-ref="_M/_PC_PATH_MAX">_PC_PATH_MAX</dfn>             5</u></td></tr>
+<tr><th id="147">147</th><td><u>#define <dfn class="macro" id="_M/_PC_PIPE_BUF" data-ref="_M/_PC_PIPE_BUF">_PC_PIPE_BUF</dfn>             6</u></td></tr>
+<tr><th id="148">148</th><td><u>#define <dfn class="macro" id="_M/_PC_CHOWN_RESTRICTED" data-ref="_M/_PC_CHOWN_RESTRICTED">_PC_CHOWN_RESTRICTED</dfn>     7</u></td></tr>
+<tr><th id="149">149</th><td><u>#define <dfn class="macro" id="_M/_PC_NO_TRUNC" data-ref="_M/_PC_NO_TRUNC">_PC_NO_TRUNC</dfn>             8</u></td></tr>
+<tr><th id="150">150</th><td><u>#define <dfn class="macro" id="_M/_PC_VDISABLE" data-ref="_M/_PC_VDISABLE">_PC_VDISABLE</dfn>             9</u></td></tr>
+<tr><th id="151">151</th><td></td></tr>
+<tr><th id="152">152</th><td><u>#<span data-ppcond="152">if</span> !defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>) || defined(<span class="macro" data-ref="_M/_DARWIN_C_SOURCE">_DARWIN_C_SOURCE</span>)</u></td></tr>
+<tr><th id="153">153</th><td><u>#define <dfn class="macro" id="_M/_PC_NAME_CHARS_MAX" data-ref="_M/_PC_NAME_CHARS_MAX">_PC_NAME_CHARS_MAX</dfn>       10</u></td></tr>
+<tr><th id="154">154</th><td><u>#define <dfn class="macro" id="_M/_PC_CASE_SENSITIVE" data-ref="_M/_PC_CASE_SENSITIVE">_PC_CASE_SENSITIVE</dfn>               11</u></td></tr>
+<tr><th id="155">155</th><td><u>#define <dfn class="macro" id="_M/_PC_CASE_PRESERVING" data-ref="_M/_PC_CASE_PRESERVING">_PC_CASE_PRESERVING</dfn>              12</u></td></tr>
+<tr><th id="156">156</th><td><u>#define <dfn class="macro" id="_M/_PC_EXTENDED_SECURITY_NP" data-ref="_M/_PC_EXTENDED_SECURITY_NP">_PC_EXTENDED_SECURITY_NP</dfn>        13</u></td></tr>
+<tr><th id="157">157</th><td><u>#define <dfn class="macro" id="_M/_PC_AUTH_OPAQUE_NP" data-ref="_M/_PC_AUTH_OPAQUE_NP">_PC_AUTH_OPAQUE_NP</dfn>      14</u></td></tr>
+<tr><th id="158">158</th><td><u>#<span data-ppcond="152">endif</span></u></td></tr>
+<tr><th id="159">159</th><td></td></tr>
+<tr><th id="160">160</th><td><u>#define <dfn class="macro" id="_M/_PC_2_SYMLINKS" data-ref="_M/_PC_2_SYMLINKS">_PC_2_SYMLINKS</dfn>          15      /* Symlink supported in directory */</u></td></tr>
+<tr><th id="161">161</th><td><u>#define <dfn class="macro" id="_M/_PC_ALLOC_SIZE_MIN" data-ref="_M/_PC_ALLOC_SIZE_MIN">_PC_ALLOC_SIZE_MIN</dfn>      16      /* Minimum storage actually allocated */</u></td></tr>
+<tr><th id="162">162</th><td><u>#define <dfn class="macro" id="_M/_PC_ASYNC_IO" data-ref="_M/_PC_ASYNC_IO">_PC_ASYNC_IO</dfn>            17      /* Async I/O [AIO] supported? */</u></td></tr>
+<tr><th id="163">163</th><td><u>#define <dfn class="macro" id="_M/_PC_FILESIZEBITS" data-ref="_M/_PC_FILESIZEBITS">_PC_FILESIZEBITS</dfn>        18      /* # of bits to represent file size */</u></td></tr>
+<tr><th id="164">164</th><td><u>#define <dfn class="macro" id="_M/_PC_PRIO_IO" data-ref="_M/_PC_PRIO_IO">_PC_PRIO_IO</dfn>             19      /* Priority I/O [PIO] supported? */</u></td></tr>
+<tr><th id="165">165</th><td><u>#define <dfn class="macro" id="_M/_PC_REC_INCR_XFER_SIZE" data-ref="_M/_PC_REC_INCR_XFER_SIZE">_PC_REC_INCR_XFER_SIZE</dfn>  20      /* Recommended increment for next two */</u></td></tr>
+<tr><th id="166">166</th><td><u>#define <dfn class="macro" id="_M/_PC_REC_MAX_XFER_SIZE" data-ref="_M/_PC_REC_MAX_XFER_SIZE">_PC_REC_MAX_XFER_SIZE</dfn>   21      /* Recommended max file transfer size */</u></td></tr>
+<tr><th id="167">167</th><td><u>#define <dfn class="macro" id="_M/_PC_REC_MIN_XFER_SIZE" data-ref="_M/_PC_REC_MIN_XFER_SIZE">_PC_REC_MIN_XFER_SIZE</dfn>   22      /* Recommended min file transfer size */</u></td></tr>
+<tr><th id="168">168</th><td><u>#define <dfn class="macro" id="_M/_PC_REC_XFER_ALIGN" data-ref="_M/_PC_REC_XFER_ALIGN">_PC_REC_XFER_ALIGN</dfn>      23      /* Recommended buffer alignment */</u></td></tr>
+<tr><th id="169">169</th><td><u>#define <dfn class="macro" id="_M/_PC_SYMLINK_MAX" data-ref="_M/_PC_SYMLINK_MAX">_PC_SYMLINK_MAX</dfn>         24      /* Max # of bytes in symlink name */</u></td></tr>
+<tr><th id="170">170</th><td><u>#define <dfn class="macro" id="_M/_PC_SYNC_IO" data-ref="_M/_PC_SYNC_IO">_PC_SYNC_IO</dfn>             25      /* Sync I/O [SIO] supported? */</u></td></tr>
+<tr><th id="171">171</th><td><u>#define <dfn class="macro" id="_M/_PC_XATTR_SIZE_BITS" data-ref="_M/_PC_XATTR_SIZE_BITS">_PC_XATTR_SIZE_BITS</dfn>     26      /* # of bits to represent maximum xattr size */</u></td></tr>
+<tr><th id="172">172</th><td><u>#define <dfn class="macro" id="_M/_PC_MIN_HOLE_SIZE" data-ref="_M/_PC_MIN_HOLE_SIZE">_PC_MIN_HOLE_SIZE</dfn>       27      /* Recommended minimum hole size for sparse files */</u></td></tr>
+<tr><th id="173">173</th><td></td></tr>
+<tr><th id="174">174</th><td><i>/* configurable system strings */</i></td></tr>
+<tr><th id="175">175</th><td><u>#define <dfn class="macro" id="_M/_CS_PATH" data-ref="_M/_CS_PATH">_CS_PATH</dfn>                 1</u></td></tr>
+<tr><th id="176">176</th><td></td></tr>
+<tr><th id="177">177</th><td><u>#<span data-ppcond="177">if</span> <a class="macro" href="cdefs.h.html#692" title="900000L" data-ref="_M/__DARWIN_C_LEVEL">__DARWIN_C_LEVEL</a> &gt;= <a class="macro" href="cdefs.h.html#685" title="900000L" data-ref="_M/__DARWIN_C_FULL">__DARWIN_C_FULL</a></u></td></tr>
+<tr><th id="178">178</th><td></td></tr>
+<tr><th id="179">179</th><td><u>#include <a href="../machine/_types.h.html">&lt;machine/_types.h&gt;</a></u></td></tr>
+<tr><th id="180">180</th><td><u>#include <a href="_types/_size_t.h.html">&lt;sys/_types/_size_t.h&gt;</a></u></td></tr>
+<tr><th id="181">181</th><td><u>#include <a href="../_types/_uint64_t.h.html">&lt;_types/_uint64_t.h&gt;</a></u></td></tr>
+<tr><th id="182">182</th><td><u>#include <a href="../_types/_uint32_t.h.html">&lt;_types/_uint32_t.h&gt;</a></u></td></tr>
+<tr><th id="183">183</th><td><u>#include <a href="../Availability.h.html">&lt;Availability.h&gt;</a></u></td></tr>
+<tr><th id="184">184</th><td></td></tr>
+<tr><th id="185">185</th><td><a class="macro" href="cdefs.h.html#74" title="" data-ref="_M/__BEGIN_DECLS">__BEGIN_DECLS</a></td></tr>
+<tr><th id="186">186</th><td></td></tr>
+<tr><th id="187">187</th><td><em>int</em>     <dfn class="decl" id="getattrlistbulk" title='getattrlistbulk' data-ref="getattrlistbulk">getattrlistbulk</dfn>(<em>int</em>, <em>void</em> *, <em>void</em> *, <a class="typedef" href="_types/_size_t.h.html#size_t" title='size_t' data-type='__darwin_size_t' data-ref="size_t">size_t</a>, <a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a>) <a class="macro" href="../Availability.h.html#246" title="__attribute__((availability(macosx,introduced=10.10)))" data-ref="_M/__OSX_AVAILABLE_STARTING">__OSX_AVAILABLE_STARTING</a>(__MAC_10_10, __IPHONE_8_0);</td></tr>
+<tr><th id="188">188</th><td><em>int</em>     <dfn class="decl" id="getattrlistat" title='getattrlistat' data-ref="getattrlistat">getattrlistat</dfn>(<em>int</em>, <em>const</em> <em>char</em> *, <em>void</em> *, <em>void</em> *, <a class="typedef" href="_types/_size_t.h.html#size_t" title='size_t' data-type='__darwin_size_t' data-ref="size_t">size_t</a>, <em>unsigned</em> <em>long</em>) <a class="macro" href="../Availability.h.html#246" title="__attribute__((availability(macosx,introduced=10.10)))" data-ref="_M/__OSX_AVAILABLE_STARTING">__OSX_AVAILABLE_STARTING</a>(__MAC_10_10, __IPHONE_8_0);</td></tr>
+<tr><th id="189">189</th><td><em>int</em>     <dfn class="decl" id="setattrlistat" title='setattrlistat' data-ref="setattrlistat">setattrlistat</dfn>(<em>int</em>, <em>const</em> <em>char</em> *, <em>void</em> *, <em>void</em> *, <a class="typedef" href="_types/_size_t.h.html#size_t" title='size_t' data-type='__darwin_size_t' data-ref="size_t">size_t</a>, <a class="typedef" href="../_types/_uint32_t.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t">uint32_t</a>) <a class="macro" href="../Availability.h.html#298" title="__attribute__((availability(macosx,introduced=10.13)))" data-ref="_M/__OSX_AVAILABLE">__OSX_AVAILABLE</a>(<var>10.13</var>) <a class="macro" href="../Availability.h.html#321" title="__attribute__((availability(ios,introduced=11.0)))" data-ref="_M/__IOS_AVAILABLE">__IOS_AVAILABLE</a>(<var>11.0</var>) <a class="macro" href="../Availability.h.html#348" title="__attribute__((availability(tvos,introduced=11.0)))" data-ref="_M/__TVOS_AVAILABLE">__TVOS_AVAILABLE</a>(<var>11.0</var>) <a class="macro" href="../Availability.h.html#375" title="__attribute__((availability(watchos,introduced=4.0)))" data-ref="_M/__WATCHOS_AVAILABLE">__WATCHOS_AVAILABLE</a>(<var>4.0</var>);</td></tr>
+<tr><th id="190">190</th><td></td></tr>
+<tr><th id="191">191</th><td><a class="macro" href="cdefs.h.html#75" title="" data-ref="_M/__END_DECLS">__END_DECLS</a></td></tr>
+<tr><th id="192">192</th><td></td></tr>
+<tr><th id="193">193</th><td><u>#<span data-ppcond="177">endif</span> /* __DARWIN_C_LEVEL &gt;= __DARWIN_C_FULL */</u></td></tr>
+<tr><th id="194">194</th><td></td></tr>
+<tr><th id="195">195</th><td><u>#<span data-ppcond="195">if</span> <a class="macro" href="cdefs.h.html#692" title="900000L" data-ref="_M/__DARWIN_C_LEVEL">__DARWIN_C_LEVEL</a> &gt;= 200809L</u></td></tr>
+<tr><th id="196">196</th><td></td></tr>
+<tr><th id="197">197</th><td><u>#include <a href="../machine/_types.h.html">&lt;machine/_types.h&gt;</a></u></td></tr>
+<tr><th id="198">198</th><td><u>#include <a href="_types/_size_t.h.html">&lt;sys/_types/_size_t.h&gt;</a></u></td></tr>
+<tr><th id="199">199</th><td><u>#include <a href="_types/_ssize_t.h.html">&lt;sys/_types/_ssize_t.h&gt;</a></u></td></tr>
+<tr><th id="200">200</th><td><u>#include <a href="_types.h.html">&lt;sys/_types.h&gt;</a></u></td></tr>
+<tr><th id="201">201</th><td><u>#include <a href="_types/_uid_t.h.html">&lt;sys/_types/_uid_t.h&gt;</a></u></td></tr>
+<tr><th id="202">202</th><td><u>#include <a href="_types/_gid_t.h.html">&lt;sys/_types/_gid_t.h&gt;</a></u></td></tr>
+<tr><th id="203">203</th><td><u>#include <a href="../Availability.h.html">&lt;Availability.h&gt;</a></u></td></tr>
+<tr><th id="204">204</th><td></td></tr>
+<tr><th id="205">205</th><td><a class="macro" href="cdefs.h.html#74" title="" data-ref="_M/__BEGIN_DECLS">__BEGIN_DECLS</a></td></tr>
+<tr><th id="206">206</th><td></td></tr>
+<tr><th id="207">207</th><td><em>int</em>     <dfn class="decl" id="faccessat" title='faccessat' data-ref="faccessat">faccessat</dfn>(<em>int</em>, <em>const</em> <em>char</em> *, <em>int</em>, <em>int</em>) <a class="macro" href="../Availability.h.html#246" title="__attribute__((availability(macosx,introduced=10.10)))" data-ref="_M/__OSX_AVAILABLE_STARTING">__OSX_AVAILABLE_STARTING</a>(__MAC_10_10, __IPHONE_8_0);</td></tr>
+<tr><th id="208">208</th><td><em>int</em>     <dfn class="decl" id="fchownat" title='fchownat' data-ref="fchownat">fchownat</dfn>(<em>int</em>, <em>const</em> <em>char</em> *, <a class="typedef" href="_types/_uid_t.h.html#uid_t" title='uid_t' data-type='__darwin_uid_t' data-ref="uid_t">uid_t</a>, <a class="typedef" href="_types/_gid_t.h.html#gid_t" title='gid_t' data-type='__darwin_gid_t' data-ref="gid_t">gid_t</a>, <em>int</em>)  <a class="macro" href="../Availability.h.html#246" title="__attribute__((availability(macosx,introduced=10.10)))" data-ref="_M/__OSX_AVAILABLE_STARTING">__OSX_AVAILABLE_STARTING</a>(__MAC_10_10, __IPHONE_8_0);</td></tr>
+<tr><th id="209">209</th><td><em>int</em>     <dfn class="decl" id="linkat" title='linkat' data-ref="linkat">linkat</dfn>(<em>int</em>, <em>const</em> <em>char</em> *, <em>int</em>, <em>const</em> <em>char</em> *, <em>int</em>)       <a class="macro" href="../Availability.h.html#246" title="__attribute__((availability(macosx,introduced=10.10)))" data-ref="_M/__OSX_AVAILABLE_STARTING">__OSX_AVAILABLE_STARTING</a>(__MAC_10_10, __IPHONE_8_0);</td></tr>
+<tr><th id="210">210</th><td><a class="typedef" href="_types/_ssize_t.h.html#ssize_t" title='ssize_t' data-type='__darwin_ssize_t' data-ref="ssize_t">ssize_t</a> <dfn class="decl" id="readlinkat" title='readlinkat' data-ref="readlinkat">readlinkat</dfn>(<em>int</em>, <em>const</em> <em>char</em> *, <em>char</em> *, <a class="typedef" href="_types/_size_t.h.html#size_t" title='size_t' data-type='__darwin_size_t' data-ref="size_t">size_t</a>)   <a class="macro" href="../Availability.h.html#246" title="__attribute__((availability(macosx,introduced=10.10)))" data-ref="_M/__OSX_AVAILABLE_STARTING">__OSX_AVAILABLE_STARTING</a>(__MAC_10_10, __IPHONE_8_0);</td></tr>
+<tr><th id="211">211</th><td><em>int</em>     <dfn class="decl" id="symlinkat" title='symlinkat' data-ref="symlinkat">symlinkat</dfn>(<em>const</em> <em>char</em> *, <em>int</em>, <em>const</em> <em>char</em> *) <a class="macro" href="../Availability.h.html#246" title="__attribute__((availability(macosx,introduced=10.10)))" data-ref="_M/__OSX_AVAILABLE_STARTING">__OSX_AVAILABLE_STARTING</a>(__MAC_10_10, __IPHONE_8_0);</td></tr>
+<tr><th id="212">212</th><td><em>int</em>     <dfn class="decl" id="unlinkat" title='unlinkat' data-ref="unlinkat">unlinkat</dfn>(<em>int</em>, <em>const</em> <em>char</em> *, <em>int</em>) <a class="macro" href="../Availability.h.html#246" title="__attribute__((availability(macosx,introduced=10.10)))" data-ref="_M/__OSX_AVAILABLE_STARTING">__OSX_AVAILABLE_STARTING</a>(__MAC_10_10, __IPHONE_8_0);</td></tr>
+<tr><th id="213">213</th><td></td></tr>
+<tr><th id="214">214</th><td><a class="macro" href="cdefs.h.html#75" title="" data-ref="_M/__END_DECLS">__END_DECLS</a></td></tr>
+<tr><th id="215">215</th><td></td></tr>
+<tr><th id="216">216</th><td><u>#<span data-ppcond="195">endif</span> /* __DARWIN_C_LEVEL &gt;= 200809L */</u></td></tr>
+<tr><th id="217">217</th><td></td></tr>
+<tr><th id="218">218</th><td><u>#<span data-ppcond="64">endif</span> /* !_SYS_UNISTD_H_ */</u></td></tr>
+<tr><th id="219">219</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../xv6/mkfs.c.html'>xv6/mkfs.c</a><br/>Generated on <em>2019-Jul-19</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 2.1
+<br/>Generator usage only permitted with license.</p>
+</div></body></html>

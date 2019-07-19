@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ls.c source code [xv6/ls.c] - Woboq Code Browser</title>
+<meta name="woboq:interestingDefinitions" content="main "/>
+<link rel="stylesheet" href="https://code.woboq.org/data/qtcreator.css" title="QtCreator"/>
+<link rel="alternate stylesheet" href="https://code.woboq.org/data/kdevelop.css" title="KDevelop"/>
+<script type="text/javascript" src="https://code.woboq.org/data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="https://code.woboq.org/data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'xv6/ls.c'; var root_path = '..'; var data_path = 'https://code.woboq.org/data';</script>
+<script src='https://code.woboq.org/data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Browse the source code of </span><a href='./'>xv6</a>/<a href='ls.c.html'>ls.c</a></h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><u>#include <a href="types.h.html">"types.h"</a></u></td></tr>
+<tr><th id="2">2</th><td><u>#include <a href="stat.h.html">"stat.h"</a></u></td></tr>
+<tr><th id="3">3</th><td><u>#include <a href="user.h.html">"user.h"</a></u></td></tr>
+<tr><th id="4">4</th><td><u>#include <a href="fs.h.html">"fs.h"</a></u></td></tr>
+<tr><th id="5">5</th><td></td></tr>
+<tr><th id="6">6</th><td><em>char</em>*</td></tr>
+<tr><th id="7">7</th><td><dfn class="decl def" id="fmtname" title='fmtname' data-ref="fmtname">fmtname</dfn>(<em>char</em> *<dfn class="local col1 decl" id="1path" title='path' data-type='char *' data-ref="1path">path</dfn>)</td></tr>
+<tr><th id="8">8</th><td>{</td></tr>
+<tr><th id="9">9</th><td>  <em>static</em> <em>char</em> <dfn class="local col2 decl" id="2buf" title='buf' data-type='char [15]' data-ref="2buf">buf</dfn>[<a class="macro" href="fs.h.html#51" title="14" data-ref="_M/DIRSIZ">DIRSIZ</a>+<var>1</var>];</td></tr>
+<tr><th id="10">10</th><td>  <em>char</em> *<dfn class="local col3 decl" id="3p" title='p' data-type='char *' data-ref="3p">p</dfn>;</td></tr>
+<tr><th id="11">11</th><td></td></tr>
+<tr><th id="12">12</th><td>  <i>// Find first character after last slash.</i></td></tr>
+<tr><th id="13">13</th><td>  <b>for</b>(<a class="local col3 ref" href="#3p" title='p' data-ref="3p">p</a>=<a class="local col1 ref" href="#1path" title='path' data-ref="1path">path</a>+<a class="ref" href="user.h.html#strlen" title='strlen' data-ref="strlen">strlen</a>(<a class="local col1 ref" href="#1path" title='path' data-ref="1path">path</a>); <a class="local col3 ref" href="#3p" title='p' data-ref="3p">p</a> &gt;= <a class="local col1 ref" href="#1path" title='path' data-ref="1path">path</a> &amp;&amp; *<a class="local col3 ref" href="#3p" title='p' data-ref="3p">p</a> != <kbd>'/'</kbd>; <a class="local col3 ref" href="#3p" title='p' data-ref="3p">p</a>--)</td></tr>
+<tr><th id="14">14</th><td>    ;</td></tr>
+<tr><th id="15">15</th><td>  <a class="local col3 ref" href="#3p" title='p' data-ref="3p">p</a>++;</td></tr>
+<tr><th id="16">16</th><td></td></tr>
+<tr><th id="17">17</th><td>  <i>// Return blank-padded name.</i></td></tr>
+<tr><th id="18">18</th><td>  <b>if</b>(<a class="ref" href="user.h.html#strlen" title='strlen' data-ref="strlen">strlen</a>(<a class="local col3 ref" href="#3p" title='p' data-ref="3p">p</a>) &gt;= <a class="macro" href="fs.h.html#51" title="14" data-ref="_M/DIRSIZ">DIRSIZ</a>)</td></tr>
+<tr><th id="19">19</th><td>    <b>return</b> <a class="local col3 ref" href="#3p" title='p' data-ref="3p">p</a>;</td></tr>
+<tr><th id="20">20</th><td>  <a class="ref" href="user.h.html#memmove" title='memmove' data-ref="memmove">memmove</a>(<a class="local col2 ref" href="#2buf" title='buf' data-ref="2buf">buf</a>, <a class="local col3 ref" href="#3p" title='p' data-ref="3p">p</a>, <a class="ref" href="user.h.html#strlen" title='strlen' data-ref="strlen">strlen</a>(<a class="local col3 ref" href="#3p" title='p' data-ref="3p">p</a>));</td></tr>
+<tr><th id="21">21</th><td>  <a class="ref" href="user.h.html#memset" title='memset' data-ref="memset">memset</a>(<a class="local col2 ref" href="#2buf" title='buf' data-ref="2buf">buf</a>+<a class="ref" href="user.h.html#strlen" title='strlen' data-ref="strlen">strlen</a>(<a class="local col3 ref" href="#3p" title='p' data-ref="3p">p</a>), <kbd>' '</kbd>, <a class="macro" href="fs.h.html#51" title="14" data-ref="_M/DIRSIZ">DIRSIZ</a>-<a class="ref" href="user.h.html#strlen" title='strlen' data-ref="strlen">strlen</a>(<a class="local col3 ref" href="#3p" title='p' data-ref="3p">p</a>));</td></tr>
+<tr><th id="22">22</th><td>  <b>return</b> <a class="local col2 ref" href="#2buf" title='buf' data-ref="2buf">buf</a>;</td></tr>
+<tr><th id="23">23</th><td>}</td></tr>
+<tr><th id="24">24</th><td></td></tr>
+<tr><th id="25">25</th><td><em>void</em></td></tr>
+<tr><th id="26">26</th><td><dfn class="decl def" id="ls" title='ls' data-ref="ls">ls</dfn>(<em>char</em> *<dfn class="local col4 decl" id="4path" title='path' data-type='char *' data-ref="4path">path</dfn>)</td></tr>
+<tr><th id="27">27</th><td>{</td></tr>
+<tr><th id="28">28</th><td>  <em>char</em> <dfn class="local col5 decl" id="5buf" title='buf' data-type='char [512]' data-ref="5buf">buf</dfn>[<var>512</var>], *<dfn class="local col6 decl" id="6p" title='p' data-type='char *' data-ref="6p">p</dfn>;</td></tr>
+<tr><th id="29">29</th><td>  <em>int</em> <dfn class="local col7 decl" id="7fd" title='fd' data-type='int' data-ref="7fd">fd</dfn>;</td></tr>
+<tr><th id="30">30</th><td>  <b>struct</b> <a class="type" href="fs.h.html#dirent" title='dirent' data-ref="dirent">dirent</a> <dfn class="local col8 decl" id="8de" title='de' data-type='struct dirent' data-ref="8de">de</dfn>;</td></tr>
+<tr><th id="31">31</th><td>  <b>struct</b> <a class="type" href="stat.h.html#stat" title='stat' data-ref="stat">stat</a> <dfn class="local col9 decl" id="9st" title='st' data-type='struct stat' data-ref="9st">st</dfn>;</td></tr>
+<tr><th id="32">32</th><td></td></tr>
+<tr><th id="33">33</th><td>  <b>if</b>((<a class="local col7 ref" href="#7fd" title='fd' data-ref="7fd">fd</a> = <a class="ref" href="user.h.html#open" title='open' data-ref="open">open</a>(<a class="local col4 ref" href="#4path" title='path' data-ref="4path">path</a>, <var>0</var>)) &lt; <var>0</var>){</td></tr>
+<tr><th id="34">34</th><td>    <a class="ref" href="user.h.html#printf" title='printf' data-ref="printf">printf</a>(<var>2</var>, <q>"ls: cannot open %s\n"</q>, <a class="local col4 ref" href="#4path" title='path' data-ref="4path">path</a>);</td></tr>
+<tr><th id="35">35</th><td>    <b>return</b>;</td></tr>
+<tr><th id="36">36</th><td>  }</td></tr>
+<tr><th id="37">37</th><td></td></tr>
+<tr><th id="38">38</th><td>  <b>if</b>(<a class="ref" href="user.h.html#fstat" title='fstat' data-ref="fstat">fstat</a>(<a class="local col7 ref" href="#7fd" title='fd' data-ref="7fd">fd</a>, &amp;<a class="local col9 ref" href="#9st" title='st' data-ref="9st">st</a>) &lt; <var>0</var>){</td></tr>
+<tr><th id="39">39</th><td>    <a class="ref" href="user.h.html#printf" title='printf' data-ref="printf">printf</a>(<var>2</var>, <q>"ls: cannot stat %s\n"</q>, <a class="local col4 ref" href="#4path" title='path' data-ref="4path">path</a>);</td></tr>
+<tr><th id="40">40</th><td>    <a class="ref" href="user.h.html#close" title='close' data-ref="close">close</a>(<a class="local col7 ref" href="#7fd" title='fd' data-ref="7fd">fd</a>);</td></tr>
+<tr><th id="41">41</th><td>    <b>return</b>;</td></tr>
+<tr><th id="42">42</th><td>  }</td></tr>
+<tr><th id="43">43</th><td></td></tr>
+<tr><th id="44">44</th><td>  <b>switch</b>(<a class="local col9 ref" href="#9st" title='st' data-ref="9st">st</a>.<a class="ref" href="stat.h.html#stat::type" title='stat::type' data-ref="stat::type">type</a>){</td></tr>
+<tr><th id="45">45</th><td>  <b>case</b> <a class="macro" href="stat.h.html#2" title="2" data-ref="_M/T_FILE">T_FILE</a>:</td></tr>
+<tr><th id="46">46</th><td>    <a class="ref" href="user.h.html#printf" title='printf' data-ref="printf">printf</a>(<var>1</var>, <q>"%s %d %d %d\n"</q>, <a class="ref" href="#fmtname" title='fmtname' data-ref="fmtname">fmtname</a>(<a class="local col4 ref" href="#4path" title='path' data-ref="4path">path</a>), <a class="local col9 ref" href="#9st" title='st' data-ref="9st">st</a>.<a class="ref" href="stat.h.html#stat::type" title='stat::type' data-ref="stat::type">type</a>, <a class="local col9 ref" href="#9st" title='st' data-ref="9st">st</a>.<a class="ref" href="stat.h.html#stat::ino" title='stat::ino' data-ref="stat::ino">ino</a>, <a class="local col9 ref" href="#9st" title='st' data-ref="9st">st</a>.<a class="ref" href="stat.h.html#stat::size" title='stat::size' data-ref="stat::size">size</a>);</td></tr>
+<tr><th id="47">47</th><td>    <b>break</b>;</td></tr>
+<tr><th id="48">48</th><td></td></tr>
+<tr><th id="49">49</th><td>  <b>case</b> <a class="macro" href="stat.h.html#1" title="1" data-ref="_M/T_DIR">T_DIR</a>:</td></tr>
+<tr><th id="50">50</th><td>    <b>if</b>(<a class="ref" href="user.h.html#strlen" title='strlen' data-ref="strlen">strlen</a>(<a class="local col4 ref" href="#4path" title='path' data-ref="4path">path</a>) + <var>1</var> + <a class="macro" href="fs.h.html#51" title="14" data-ref="_M/DIRSIZ">DIRSIZ</a> + <var>1</var> &gt; <b>sizeof</b> <a class="local col5 ref" href="#5buf" title='buf' data-ref="5buf">buf</a>){</td></tr>
+<tr><th id="51">51</th><td>      <a class="ref" href="user.h.html#printf" title='printf' data-ref="printf">printf</a>(<var>1</var>, <q>"ls: path too long\n"</q>);</td></tr>
+<tr><th id="52">52</th><td>      <b>break</b>;</td></tr>
+<tr><th id="53">53</th><td>    }</td></tr>
+<tr><th id="54">54</th><td>    <a class="ref" href="user.h.html#strcpy" title='strcpy' data-ref="strcpy">strcpy</a>(<a class="local col5 ref" href="#5buf" title='buf' data-ref="5buf">buf</a>, <a class="local col4 ref" href="#4path" title='path' data-ref="4path">path</a>);</td></tr>
+<tr><th id="55">55</th><td>    <a class="local col6 ref" href="#6p" title='p' data-ref="6p">p</a> = <a class="local col5 ref" href="#5buf" title='buf' data-ref="5buf">buf</a>+<a class="ref" href="user.h.html#strlen" title='strlen' data-ref="strlen">strlen</a>(<a class="local col5 ref" href="#5buf" title='buf' data-ref="5buf">buf</a>);</td></tr>
+<tr><th id="56">56</th><td>    *<a class="local col6 ref" href="#6p" title='p' data-ref="6p">p</a>++ = <kbd>'/'</kbd>;</td></tr>
+<tr><th id="57">57</th><td>    <b>while</b>(<a class="ref" href="user.h.html#read" title='read' data-ref="read">read</a>(<a class="local col7 ref" href="#7fd" title='fd' data-ref="7fd">fd</a>, &amp;<a class="local col8 ref" href="#8de" title='de' data-ref="8de">de</a>, <b>sizeof</b>(<a class="local col8 ref" href="#8de" title='de' data-ref="8de">de</a>)) == <b>sizeof</b>(<a class="local col8 ref" href="#8de" title='de' data-ref="8de">de</a>)){</td></tr>
+<tr><th id="58">58</th><td>      <b>if</b>(<a class="local col8 ref" href="#8de" title='de' data-ref="8de">de</a>.<a class="ref" href="fs.h.html#dirent::inum" title='dirent::inum' data-ref="dirent::inum">inum</a> == <var>0</var>)</td></tr>
+<tr><th id="59">59</th><td>        <b>continue</b>;</td></tr>
+<tr><th id="60">60</th><td>      <a class="ref" href="user.h.html#memmove" title='memmove' data-ref="memmove">memmove</a>(<a class="local col6 ref" href="#6p" title='p' data-ref="6p">p</a>, <a class="local col8 ref" href="#8de" title='de' data-ref="8de">de</a>.<a class="ref" href="fs.h.html#dirent::name" title='dirent::name' data-ref="dirent::name">name</a>, <a class="macro" href="fs.h.html#51" title="14" data-ref="_M/DIRSIZ">DIRSIZ</a>);</td></tr>
+<tr><th id="61">61</th><td>      <a class="local col6 ref" href="#6p" title='p' data-ref="6p">p</a>[<a class="macro" href="fs.h.html#51" title="14" data-ref="_M/DIRSIZ">DIRSIZ</a>] = <var>0</var>;</td></tr>
+<tr><th id="62">62</th><td>      <b>if</b>(<a class="ref" href="user.h.html#stat" title='stat' data-ref="stat">stat</a>(<a class="local col5 ref" href="#5buf" title='buf' data-ref="5buf">buf</a>, &amp;<a class="local col9 ref" href="#9st" title='st' data-ref="9st">st</a>) &lt; <var>0</var>){</td></tr>
+<tr><th id="63">63</th><td>        <a class="ref" href="user.h.html#printf" title='printf' data-ref="printf">printf</a>(<var>1</var>, <q>"ls: cannot stat %s\n"</q>, <a class="local col5 ref" href="#5buf" title='buf' data-ref="5buf">buf</a>);</td></tr>
+<tr><th id="64">64</th><td>        <b>continue</b>;</td></tr>
+<tr><th id="65">65</th><td>      }</td></tr>
+<tr><th id="66">66</th><td>      <a class="ref" href="user.h.html#printf" title='printf' data-ref="printf">printf</a>(<var>1</var>, <q>"%s %d %d %d\n"</q>, <a class="ref" href="#fmtname" title='fmtname' data-ref="fmtname">fmtname</a>(<a class="local col5 ref" href="#5buf" title='buf' data-ref="5buf">buf</a>), <a class="local col9 ref" href="#9st" title='st' data-ref="9st">st</a>.<a class="ref" href="stat.h.html#stat::type" title='stat::type' data-ref="stat::type">type</a>, <a class="local col9 ref" href="#9st" title='st' data-ref="9st">st</a>.<a class="ref" href="stat.h.html#stat::ino" title='stat::ino' data-ref="stat::ino">ino</a>, <a class="local col9 ref" href="#9st" title='st' data-ref="9st">st</a>.<a class="ref" href="stat.h.html#stat::size" title='stat::size' data-ref="stat::size">size</a>);</td></tr>
+<tr><th id="67">67</th><td>    }</td></tr>
+<tr><th id="68">68</th><td>    <b>break</b>;</td></tr>
+<tr><th id="69">69</th><td>  }</td></tr>
+<tr><th id="70">70</th><td>  <a class="ref" href="user.h.html#close" title='close' data-ref="close">close</a>(<a class="local col7 ref" href="#7fd" title='fd' data-ref="7fd">fd</a>);</td></tr>
+<tr><th id="71">71</th><td>}</td></tr>
+<tr><th id="72">72</th><td></td></tr>
+<tr><th id="73">73</th><td><em>int</em></td></tr>
+<tr><th id="74">74</th><td><dfn class="decl def" id="main" title='main' data-ref="main">main</dfn>(<em>int</em> <dfn class="local col0 decl" id="10argc" title='argc' data-type='int' data-ref="10argc">argc</dfn>, <em>char</em> *<dfn class="local col1 decl" id="11argv" title='argv' data-type='char **' data-ref="11argv">argv</dfn>[])</td></tr>
+<tr><th id="75">75</th><td>{</td></tr>
+<tr><th id="76">76</th><td>  <em>int</em> <dfn class="local col2 decl" id="12i" title='i' data-type='int' data-ref="12i">i</dfn>;</td></tr>
+<tr><th id="77">77</th><td></td></tr>
+<tr><th id="78">78</th><td>  <b>if</b>(<a class="local col0 ref" href="#10argc" title='argc' data-ref="10argc">argc</a> &lt; <var>2</var>){</td></tr>
+<tr><th id="79">79</th><td>    <a class="ref" href="#ls" title='ls' data-ref="ls">ls</a>(<q>"."</q>);</td></tr>
+<tr><th id="80">80</th><td>    <a class="ref" href="user.h.html#exit" title='exit' data-ref="exit">exit</a>();</td></tr>
+<tr><th id="81">81</th><td>  }</td></tr>
+<tr><th id="82">82</th><td>  <b>for</b>(<a class="local col2 ref" href="#12i" title='i' data-ref="12i">i</a>=<var>1</var>; <a class="local col2 ref" href="#12i" title='i' data-ref="12i">i</a>&lt;<a class="local col0 ref" href="#10argc" title='argc' data-ref="10argc">argc</a>; <a class="local col2 ref" href="#12i" title='i' data-ref="12i">i</a>++)</td></tr>
+<tr><th id="83">83</th><td>    <a class="ref" href="#ls" title='ls' data-ref="ls">ls</a>(<a class="local col1 ref" href="#11argv" title='argv' data-ref="11argv">argv</a>[<a class="local col2 ref" href="#12i" title='i' data-ref="12i">i</a>]);</td></tr>
+<tr><th id="84">84</th><td>  <a class="ref" href="user.h.html#exit" title='exit' data-ref="exit">exit</a>();</td></tr>
+<tr><th id="85">85</th><td>}</td></tr>
+<tr><th id="86">86</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2019-Jul-19</em> from project xv6 revision <em>xv6-rev11</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 2.1
+<br/>Generator usage only permitted with license.</p>
+</div></body></html>

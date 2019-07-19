@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>_s_ifmt.h source code [include/sys/_types/_s_ifmt.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="https://code.woboq.org/data/qtcreator.css" title="QtCreator"/>
+<link rel="alternate stylesheet" href="https://code.woboq.org/data/kdevelop.css" title="KDevelop"/>
+<script type="text/javascript" src="https://code.woboq.org/data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="https://code.woboq.org/data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/sys/_types/_s_ifmt.h'; var root_path = '../../..'; var data_path = 'https://code.woboq.org/data';</script>
+<script src='https://code.woboq.org/data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Browse the source code of </span><a href='../..'>include</a>/<a href='..'>sys</a>/<a href='./'>_types</a>/<a href='_s_ifmt.h.html'>_s_ifmt.h</a></h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (c) 2003-2012 Apple Inc. All rights reserved.</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * @APPLE_OSREFERENCE_LICENSE_HEADER_START@</i></td></tr>
+<tr><th id="5">5</th><td><i> *</i></td></tr>
+<tr><th id="6">6</th><td><i> * This file contains Original Code and/or Modifications of Original Code</i></td></tr>
+<tr><th id="7">7</th><td><i> * as defined in and that are subject to the Apple Public Source License</i></td></tr>
+<tr><th id="8">8</th><td><i> * Version 2.0 (the 'License'). You may not use this file except in</i></td></tr>
+<tr><th id="9">9</th><td><i> * compliance with the License. The rights granted to you under the License</i></td></tr>
+<tr><th id="10">10</th><td><i> * may not be used to create, or enable the creation or redistribution of,</i></td></tr>
+<tr><th id="11">11</th><td><i> * unlawful or unlicensed copies of an Apple operating system, or to</i></td></tr>
+<tr><th id="12">12</th><td><i> * circumvent, violate, or enable the circumvention or violation of, any</i></td></tr>
+<tr><th id="13">13</th><td><i> * terms of an Apple operating system software license agreement.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * Please obtain a copy of the License at</i></td></tr>
+<tr><th id="16">16</th><td><i> * <a href="http://www.opensource.apple.com/apsl/">http://www.opensource.apple.com/apsl/</a> and read it before using this file.</i></td></tr>
+<tr><th id="17">17</th><td><i> *</i></td></tr>
+<tr><th id="18">18</th><td><i> * The Original Code and all software distributed under the License are</i></td></tr>
+<tr><th id="19">19</th><td><i> * distributed on an 'AS IS' basis, WITHOUT WARRANTY OF ANY KIND, EITHER</i></td></tr>
+<tr><th id="20">20</th><td><i> * EXPRESS OR IMPLIED, AND APPLE HEREBY DISCLAIMS ALL SUCH WARRANTIES,</i></td></tr>
+<tr><th id="21">21</th><td><i> * INCLUDING WITHOUT LIMITATION, ANY WARRANTIES OF MERCHANTABILITY,</i></td></tr>
+<tr><th id="22">22</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE, QUIET ENJOYMENT OR NON-INFRINGEMENT.</i></td></tr>
+<tr><th id="23">23</th><td><i> * Please see the License for the specific language governing rights and</i></td></tr>
+<tr><th id="24">24</th><td><i> * limitations under the License.</i></td></tr>
+<tr><th id="25">25</th><td><i> *</i></td></tr>
+<tr><th id="26">26</th><td><i> * @APPLE_OSREFERENCE_LICENSE_HEADER_END@</i></td></tr>
+<tr><th id="27">27</th><td><i> */</i></td></tr>
+<tr><th id="28">28</th><td></td></tr>
+<tr><th id="29">29</th><td><i>/*</i></td></tr>
+<tr><th id="30">30</th><td><i> * [XSI] The symbolic names for file modes for use as values of mode_t</i></td></tr>
+<tr><th id="31">31</th><td><i> * shall be defined as described in &lt;sys/stat.h&gt;</i></td></tr>
+<tr><th id="32">32</th><td><i> */</i></td></tr>
+<tr><th id="33">33</th><td><u>#<span data-ppcond="33">ifndef</span> <span class="macro" data-ref="_M/S_IFMT">S_IFMT</span></u></td></tr>
+<tr><th id="34">34</th><td><i>/* File type */</i></td></tr>
+<tr><th id="35">35</th><td><u>#define <dfn class="macro" id="_M/S_IFMT" data-ref="_M/S_IFMT">S_IFMT</dfn>          0170000         /* [XSI] type of file mask */</u></td></tr>
+<tr><th id="36">36</th><td><u>#define <dfn class="macro" id="_M/S_IFIFO" data-ref="_M/S_IFIFO">S_IFIFO</dfn>         0010000         /* [XSI] named pipe (fifo) */</u></td></tr>
+<tr><th id="37">37</th><td><u>#define <dfn class="macro" id="_M/S_IFCHR" data-ref="_M/S_IFCHR">S_IFCHR</dfn>         0020000         /* [XSI] character special */</u></td></tr>
+<tr><th id="38">38</th><td><u>#define <dfn class="macro" id="_M/S_IFDIR" data-ref="_M/S_IFDIR">S_IFDIR</dfn>         0040000         /* [XSI] directory */</u></td></tr>
+<tr><th id="39">39</th><td><u>#define <dfn class="macro" id="_M/S_IFBLK" data-ref="_M/S_IFBLK">S_IFBLK</dfn>         0060000         /* [XSI] block special */</u></td></tr>
+<tr><th id="40">40</th><td><u>#define <dfn class="macro" id="_M/S_IFREG" data-ref="_M/S_IFREG">S_IFREG</dfn>         0100000         /* [XSI] regular */</u></td></tr>
+<tr><th id="41">41</th><td><u>#define <dfn class="macro" id="_M/S_IFLNK" data-ref="_M/S_IFLNK">S_IFLNK</dfn>         0120000         /* [XSI] symbolic link */</u></td></tr>
+<tr><th id="42">42</th><td><u>#define <dfn class="macro" id="_M/S_IFSOCK" data-ref="_M/S_IFSOCK">S_IFSOCK</dfn>        0140000         /* [XSI] socket */</u></td></tr>
+<tr><th id="43">43</th><td><u>#<span data-ppcond="43">if</span> !defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>) || defined(<span class="macro" data-ref="_M/_DARWIN_C_SOURCE">_DARWIN_C_SOURCE</span>)</u></td></tr>
+<tr><th id="44">44</th><td><u>#define <dfn class="macro" id="_M/S_IFWHT" data-ref="_M/S_IFWHT">S_IFWHT</dfn>         0160000         /* OBSOLETE: whiteout */</u></td></tr>
+<tr><th id="45">45</th><td><u>#<span data-ppcond="43">endif</span></u></td></tr>
+<tr><th id="46">46</th><td></td></tr>
+<tr><th id="47">47</th><td><i>/* File mode */</i></td></tr>
+<tr><th id="48">48</th><td><i>/* Read, write, execute/search by owner */</i></td></tr>
+<tr><th id="49">49</th><td><u>#define <dfn class="macro" id="_M/S_IRWXU" data-ref="_M/S_IRWXU">S_IRWXU</dfn>         0000700         /* [XSI] RWX mask for owner */</u></td></tr>
+<tr><th id="50">50</th><td><u>#define <dfn class="macro" id="_M/S_IRUSR" data-ref="_M/S_IRUSR">S_IRUSR</dfn>         0000400         /* [XSI] R for owner */</u></td></tr>
+<tr><th id="51">51</th><td><u>#define <dfn class="macro" id="_M/S_IWUSR" data-ref="_M/S_IWUSR">S_IWUSR</dfn>         0000200         /* [XSI] W for owner */</u></td></tr>
+<tr><th id="52">52</th><td><u>#define <dfn class="macro" id="_M/S_IXUSR" data-ref="_M/S_IXUSR">S_IXUSR</dfn>         0000100         /* [XSI] X for owner */</u></td></tr>
+<tr><th id="53">53</th><td><i>/* Read, write, execute/search by group */</i></td></tr>
+<tr><th id="54">54</th><td><u>#define <dfn class="macro" id="_M/S_IRWXG" data-ref="_M/S_IRWXG">S_IRWXG</dfn>         0000070         /* [XSI] RWX mask for group */</u></td></tr>
+<tr><th id="55">55</th><td><u>#define <dfn class="macro" id="_M/S_IRGRP" data-ref="_M/S_IRGRP">S_IRGRP</dfn>         0000040         /* [XSI] R for group */</u></td></tr>
+<tr><th id="56">56</th><td><u>#define <dfn class="macro" id="_M/S_IWGRP" data-ref="_M/S_IWGRP">S_IWGRP</dfn>         0000020         /* [XSI] W for group */</u></td></tr>
+<tr><th id="57">57</th><td><u>#define <dfn class="macro" id="_M/S_IXGRP" data-ref="_M/S_IXGRP">S_IXGRP</dfn>         0000010         /* [XSI] X for group */</u></td></tr>
+<tr><th id="58">58</th><td><i>/* Read, write, execute/search by others */</i></td></tr>
+<tr><th id="59">59</th><td><u>#define <dfn class="macro" id="_M/S_IRWXO" data-ref="_M/S_IRWXO">S_IRWXO</dfn>         0000007         /* [XSI] RWX mask for other */</u></td></tr>
+<tr><th id="60">60</th><td><u>#define <dfn class="macro" id="_M/S_IROTH" data-ref="_M/S_IROTH">S_IROTH</dfn>         0000004         /* [XSI] R for other */</u></td></tr>
+<tr><th id="61">61</th><td><u>#define <dfn class="macro" id="_M/S_IWOTH" data-ref="_M/S_IWOTH">S_IWOTH</dfn>         0000002         /* [XSI] W for other */</u></td></tr>
+<tr><th id="62">62</th><td><u>#define <dfn class="macro" id="_M/S_IXOTH" data-ref="_M/S_IXOTH">S_IXOTH</dfn>         0000001         /* [XSI] X for other */</u></td></tr>
+<tr><th id="63">63</th><td></td></tr>
+<tr><th id="64">64</th><td><u>#define <dfn class="macro" id="_M/S_ISUID" data-ref="_M/S_ISUID">S_ISUID</dfn>         0004000         /* [XSI] set user id on execution */</u></td></tr>
+<tr><th id="65">65</th><td><u>#define <dfn class="macro" id="_M/S_ISGID" data-ref="_M/S_ISGID">S_ISGID</dfn>         0002000         /* [XSI] set group id on execution */</u></td></tr>
+<tr><th id="66">66</th><td><u>#define <dfn class="macro" id="_M/S_ISVTX" data-ref="_M/S_ISVTX">S_ISVTX</dfn>         0001000         /* [XSI] directory restrcted delete */</u></td></tr>
+<tr><th id="67">67</th><td></td></tr>
+<tr><th id="68">68</th><td><u>#<span data-ppcond="68">if</span> !defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>) || defined(<span class="macro" data-ref="_M/_DARWIN_C_SOURCE">_DARWIN_C_SOURCE</span>)</u></td></tr>
+<tr><th id="69">69</th><td><u>#define <dfn class="macro" id="_M/S_ISTXT" data-ref="_M/S_ISTXT">S_ISTXT</dfn>         S_ISVTX         /* sticky bit: not supported */</u></td></tr>
+<tr><th id="70">70</th><td><u>#define <dfn class="macro" id="_M/S_IREAD" data-ref="_M/S_IREAD">S_IREAD</dfn>         S_IRUSR         /* backward compatability */</u></td></tr>
+<tr><th id="71">71</th><td><u>#define <dfn class="macro" id="_M/S_IWRITE" data-ref="_M/S_IWRITE">S_IWRITE</dfn>        S_IWUSR         /* backward compatability */</u></td></tr>
+<tr><th id="72">72</th><td><u>#define <dfn class="macro" id="_M/S_IEXEC" data-ref="_M/S_IEXEC">S_IEXEC</dfn>         S_IXUSR         /* backward compatability */</u></td></tr>
+<tr><th id="73">73</th><td><u>#<span data-ppcond="68">endif</span></u></td></tr>
+<tr><th id="74">74</th><td><u>#<span data-ppcond="33">endif</span>  /* !S_IFMT */</u></td></tr>
+<tr><th id="75">75</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../xv6/mkfs.c.html'>xv6/mkfs.c</a><br/>Generated on <em>2019-Jul-19</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 2.1
+<br/>Generator usage only permitted with license.</p>
+</div></body></html>

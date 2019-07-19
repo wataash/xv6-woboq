@@ -1,0 +1,520 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Availability.h source code [include/Availability.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="https://code.woboq.org/data/qtcreator.css" title="QtCreator"/>
+<link rel="alternate stylesheet" href="https://code.woboq.org/data/kdevelop.css" title="KDevelop"/>
+<script type="text/javascript" src="https://code.woboq.org/data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="https://code.woboq.org/data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/Availability.h'; var root_path = '..'; var data_path = 'https://code.woboq.org/data';</script>
+<script src='https://code.woboq.org/data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Browse the source code of </span><a href='./'>include</a>/<a href='Availability.h.html'>Availability.h</a></h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (c) 2007-2016 by Apple Inc.. All rights reserved.</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * @APPLE_LICENSE_HEADER_START@</i></td></tr>
+<tr><th id="5">5</th><td><i> * </i></td></tr>
+<tr><th id="6">6</th><td><i> * This file contains Original Code and/or Modifications of Original Code</i></td></tr>
+<tr><th id="7">7</th><td><i> * as defined in and that are subject to the Apple Public Source License</i></td></tr>
+<tr><th id="8">8</th><td><i> * Version 2.0 (the 'License'). You may not use this file except in</i></td></tr>
+<tr><th id="9">9</th><td><i> * compliance with the License. Please obtain a copy of the License at</i></td></tr>
+<tr><th id="10">10</th><td><i> * <a href="http://www.opensource.apple.com/apsl/">http://www.opensource.apple.com/apsl/</a> and read it before using this</i></td></tr>
+<tr><th id="11">11</th><td><i> * file.</i></td></tr>
+<tr><th id="12">12</th><td><i> * </i></td></tr>
+<tr><th id="13">13</th><td><i> * The Original Code and all software distributed under the License are</i></td></tr>
+<tr><th id="14">14</th><td><i> * distributed on an 'AS IS' basis, WITHOUT WARRANTY OF ANY KIND, EITHER</i></td></tr>
+<tr><th id="15">15</th><td><i> * EXPRESS OR IMPLIED, AND APPLE HEREBY DISCLAIMS ALL SUCH WARRANTIES,</i></td></tr>
+<tr><th id="16">16</th><td><i> * INCLUDING WITHOUT LIMITATION, ANY WARRANTIES OF MERCHANTABILITY,</i></td></tr>
+<tr><th id="17">17</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE, QUIET ENJOYMENT OR NON-INFRINGEMENT.</i></td></tr>
+<tr><th id="18">18</th><td><i> * Please see the License for the specific language governing rights and</i></td></tr>
+<tr><th id="19">19</th><td><i> * limitations under the License.</i></td></tr>
+<tr><th id="20">20</th><td><i> * </i></td></tr>
+<tr><th id="21">21</th><td><i> * @APPLE_LICENSE_HEADER_END@</i></td></tr>
+<tr><th id="22">22</th><td><i> */</i></td></tr>
+<tr><th id="23">23</th><td> </td></tr>
+<tr><th id="24">24</th><td><u>#<span data-ppcond="24">ifndef</span> <span class="macro" data-ref="_M/__AVAILABILITY__">__AVAILABILITY__</span></u></td></tr>
+<tr><th id="25">25</th><td><u>#define <dfn class="macro" id="_M/__AVAILABILITY__" data-ref="_M/__AVAILABILITY__">__AVAILABILITY__</dfn></u></td></tr>
+<tr><th id="26">26</th><td> <i>/*     </i></td></tr>
+<tr><th id="27">27</th><td><i>    These macros are for use in OS header files. They enable function prototypes</i></td></tr>
+<tr><th id="28">28</th><td><i>    and Objective-C methods to be tagged with the OS version in which they</i></td></tr>
+<tr><th id="29">29</th><td><i>    were first available; and, if applicable, the OS version in which they </i></td></tr>
+<tr><th id="30">30</th><td><i>    became deprecated.  </i></td></tr>
+<tr><th id="31">31</th><td><i>     </i></td></tr>
+<tr><th id="32">32</th><td><i>    The desktop Mac OS X and iOS each have different version numbers.</i></td></tr>
+<tr><th id="33">33</th><td><i>    The __OSX_AVAILABLE_STARTING() macro allows you to specify both the desktop</i></td></tr>
+<tr><th id="34">34</th><td><i>    and iOS version numbers.  For instance:</i></td></tr>
+<tr><th id="35">35</th><td><i>        __OSX_AVAILABLE_STARTING(__MAC_10_2,__IPHONE_2_0)</i></td></tr>
+<tr><th id="36">36</th><td><i>    means the function/method was first available on Mac OS X 10.2 on the desktop</i></td></tr>
+<tr><th id="37">37</th><td><i>    and first available in iOS 2.0 on the iPhone.</i></td></tr>
+<tr><th id="38">38</th><td><i>    </i></td></tr>
+<tr><th id="39">39</th><td><i>    If a function is available on one platform, but not the other a _NA (not</i></td></tr>
+<tr><th id="40">40</th><td><i>    applicable) parameter is used.  For instance:</i></td></tr>
+<tr><th id="41">41</th><td><i>            __OSX_AVAILABLE_STARTING(__MAC_10_3,__IPHONE_NA)</i></td></tr>
+<tr><th id="42">42</th><td><i>    means that the function/method was first available on Mac OS X 10.3, and it</i></td></tr>
+<tr><th id="43">43</th><td><i>    currently not implemented on the iPhone.</i></td></tr>
+<tr><th id="44">44</th><td><i></i></td></tr>
+<tr><th id="45">45</th><td><i>    At some point, a function/method may be deprecated.  That means Apple</i></td></tr>
+<tr><th id="46">46</th><td><i>    recommends applications stop using the function, either because there is a </i></td></tr>
+<tr><th id="47">47</th><td><i>    better replacement or the functionality is being phased out.  Deprecated</i></td></tr>
+<tr><th id="48">48</th><td><i>    functions/methods can be tagged with a __OSX_AVAILABLE_BUT_DEPRECATED()</i></td></tr>
+<tr><th id="49">49</th><td><i>    macro which specifies the OS version where the function became available</i></td></tr>
+<tr><th id="50">50</th><td><i>    as well as the OS version in which it became deprecated.  For instance:</i></td></tr>
+<tr><th id="51">51</th><td><i>        __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_0,__MAC_10_5,__IPHONE_NA,__IPHONE_NA)</i></td></tr>
+<tr><th id="52">52</th><td><i>    means that the function/method was introduced in Mac OS X 10.0, then</i></td></tr>
+<tr><th id="53">53</th><td><i>    became deprecated beginning in Mac OS X 10.5.  On iOS the function </i></td></tr>
+<tr><th id="54">54</th><td><i>    has never been available.  </i></td></tr>
+<tr><th id="55">55</th><td><i>    </i></td></tr>
+<tr><th id="56">56</th><td><i>    For these macros to function properly, a program must specify the OS version range </i></td></tr>
+<tr><th id="57">57</th><td><i>    it is targeting.  The min OS version is specified as an option to the compiler:</i></td></tr>
+<tr><th id="58">58</th><td><i>    -mmacosx-version-min=10.x when building for Mac OS X, and -miphoneos-version-min=y.z</i></td></tr>
+<tr><th id="59">59</th><td><i>    when building for the iPhone.  The upper bound for the OS version is rarely needed,</i></td></tr>
+<tr><th id="60">60</th><td><i>    but it can be set on the command line via: -D__MAC_OS_X_VERSION_MAX_ALLOWED=10x0 for</i></td></tr>
+<tr><th id="61">61</th><td><i>    Mac OS X and __IPHONE_OS_VERSION_MAX_ALLOWED = y0z00 for iOS.  </i></td></tr>
+<tr><th id="62">62</th><td><i>    </i></td></tr>
+<tr><th id="63">63</th><td><i>    Examples:</i></td></tr>
+<tr><th id="64">64</th><td><i></i></td></tr>
+<tr><th id="65">65</th><td><i>        A function available in Mac OS X 10.5 and later, but not on the phone:</i></td></tr>
+<tr><th id="66">66</th><td><i>        </i></td></tr>
+<tr><th id="67">67</th><td><i>            extern void mymacfunc() __OSX_AVAILABLE_STARTING(__MAC_10_5,__IPHONE_NA);</i></td></tr>
+<tr><th id="68">68</th><td><i></i></td></tr>
+<tr><th id="69">69</th><td><i></i></td></tr>
+<tr><th id="70">70</th><td><i>        An Objective-C method in Mac OS X 10.5 and later, but not on the phone:</i></td></tr>
+<tr><th id="71">71</th><td><i>        </i></td></tr>
+<tr><th id="72">72</th><td><i>            @interface MyClass : NSObject</i></td></tr>
+<tr><th id="73">73</th><td><i>            -(void) mymacmethod __OSX_AVAILABLE_STARTING(__MAC_10_5,__IPHONE_NA);</i></td></tr>
+<tr><th id="74">74</th><td><i>            @end</i></td></tr>
+<tr><th id="75">75</th><td><i></i></td></tr>
+<tr><th id="76">76</th><td><i>        </i></td></tr>
+<tr><th id="77">77</th><td><i>        An enum available on the phone, but not available on Mac OS X:</i></td></tr>
+<tr><th id="78">78</th><td><i>        </i></td></tr>
+<tr><th id="79">79</th><td><i>            #if __IPHONE_OS_VERSION_MIN_REQUIRED</i></td></tr>
+<tr><th id="80">80</th><td><i>                enum { myEnum = 1 };</i></td></tr>
+<tr><th id="81">81</th><td><i>            #endif</i></td></tr>
+<tr><th id="82">82</th><td><i>           Note: this works when targeting the Mac OS X platform because </i></td></tr>
+<tr><th id="83">83</th><td><i>           __IPHONE_OS_VERSION_MIN_REQUIRED is undefined which evaluates to zero. </i></td></tr>
+<tr><th id="84">84</th><td><i>        </i></td></tr>
+<tr><th id="85">85</th><td><i></i></td></tr>
+<tr><th id="86">86</th><td><i>        An enum with values added in different iPhoneOS versions:</i></td></tr>
+<tr><th id="87">87</th><td><i>		</i></td></tr>
+<tr><th id="88">88</th><td><i>			enum {</i></td></tr>
+<tr><th id="89">89</th><td><i>			    myX  = 1,	// Usable on iPhoneOS 2.1 and later</i></td></tr>
+<tr><th id="90">90</th><td><i>			    myY  = 2,	// Usable on iPhoneOS 3.0 and later</i></td></tr>
+<tr><th id="91">91</th><td><i>			    myZ  = 3,	// Usable on iPhoneOS 3.0 and later</i></td></tr>
+<tr><th id="92">92</th><td><i>				...</i></td></tr>
+<tr><th id="93">93</th><td><i>		      Note: you do not want to use #if with enumeration values</i></td></tr>
+<tr><th id="94">94</th><td><i>			  when a client needs to see all values at compile time</i></td></tr>
+<tr><th id="95">95</th><td><i>			  and use runtime logic to only use the viable values.</i></td></tr>
+<tr><th id="96">96</th><td><i>			  </i></td></tr>
+<tr><th id="97">97</th><td><i></i></td></tr>
+<tr><th id="98">98</th><td><i>    It is also possible to use the *_VERSION_MIN_REQUIRED in source code to make one</i></td></tr>
+<tr><th id="99">99</th><td><i>    source base that can be compiled to target a range of OS versions.  It is best</i></td></tr>
+<tr><th id="100">100</th><td><i>    to not use the _MAC_* and __IPHONE_* macros for comparisons, but rather their values.</i></td></tr>
+<tr><th id="101">101</th><td><i>    That is because you might get compiled on an old OS that does not define a later</i></td></tr>
+<tr><th id="102">102</th><td><i>    OS version macro, and in the C preprocessor undefined values evaluate to zero</i></td></tr>
+<tr><th id="103">103</th><td><i>    in expresssions, which could cause the #if expression to evaluate in an unexpected</i></td></tr>
+<tr><th id="104">104</th><td><i>    way.</i></td></tr>
+<tr><th id="105">105</th><td><i>    </i></td></tr>
+<tr><th id="106">106</th><td><i>        #ifdef __MAC_OS_X_VERSION_MIN_REQUIRED</i></td></tr>
+<tr><th id="107">107</th><td><i>            // code only compiled when targeting Mac OS X and not iPhone</i></td></tr>
+<tr><th id="108">108</th><td><i>            // note use of 1050 instead of __MAC_10_5</i></td></tr>
+<tr><th id="109">109</th><td><i>            #if __MAC_OS_X_VERSION_MIN_REQUIRED &lt; 1050</i></td></tr>
+<tr><th id="110">110</th><td><i>                // code in here might run on pre-Leopard OS</i></td></tr>
+<tr><th id="111">111</th><td><i>            #else</i></td></tr>
+<tr><th id="112">112</th><td><i>                // code here can assume Leopard or later</i></td></tr>
+<tr><th id="113">113</th><td><i>            #endif</i></td></tr>
+<tr><th id="114">114</th><td><i>        #endif</i></td></tr>
+<tr><th id="115">115</th><td><i></i></td></tr>
+<tr><th id="116">116</th><td><i></i></td></tr>
+<tr><th id="117">117</th><td><i>*/</i></td></tr>
+<tr><th id="118">118</th><td></td></tr>
+<tr><th id="119">119</th><td><i>/* </i></td></tr>
+<tr><th id="120">120</th><td><i> * __API_TO_BE_DEPRECATED is used as a version number in API that will be deprecated </i></td></tr>
+<tr><th id="121">121</th><td><i> * in an upcoming release. This soft deprecation is an intermediate step before formal </i></td></tr>
+<tr><th id="122">122</th><td><i> * deprecation to notify developers about the API before compiler warnings are generated.</i></td></tr>
+<tr><th id="123">123</th><td><i> * You can find all places in your code that use soft deprecated API by redefining the </i></td></tr>
+<tr><th id="124">124</th><td><i> * value of this macro to your current minimum deployment target, for example:</i></td></tr>
+<tr><th id="125">125</th><td><i> * (macOS)</i></td></tr>
+<tr><th id="126">126</th><td><i> *   clang -D__API_TO_BE_DEPRECATED=10.12 &lt;other compiler flags&gt;</i></td></tr>
+<tr><th id="127">127</th><td><i> * (iOS)</i></td></tr>
+<tr><th id="128">128</th><td><i> *   clang -D__API_TO_BE_DEPRECATED=11.0 &lt;other compiler flags&gt;</i></td></tr>
+<tr><th id="129">129</th><td><i> */</i></td></tr>
+<tr><th id="130">130</th><td> </td></tr>
+<tr><th id="131">131</th><td><u>#<span data-ppcond="131">ifndef</span> <span class="macro" data-ref="_M/__API_TO_BE_DEPRECATED">__API_TO_BE_DEPRECATED</span></u></td></tr>
+<tr><th id="132">132</th><td><u>#define <dfn class="macro" id="_M/__API_TO_BE_DEPRECATED" data-ref="_M/__API_TO_BE_DEPRECATED">__API_TO_BE_DEPRECATED</dfn> 100000</u></td></tr>
+<tr><th id="133">133</th><td><u>#<span data-ppcond="131">endif</span></u></td></tr>
+<tr><th id="134">134</th><td></td></tr>
+<tr><th id="135">135</th><td><u>#define <dfn class="macro" id="_M/__MAC_10_0" data-ref="_M/__MAC_10_0">__MAC_10_0</dfn>            1000</u></td></tr>
+<tr><th id="136">136</th><td><u>#define <dfn class="macro" id="_M/__MAC_10_1" data-ref="_M/__MAC_10_1">__MAC_10_1</dfn>            1010</u></td></tr>
+<tr><th id="137">137</th><td><u>#define <dfn class="macro" id="_M/__MAC_10_2" data-ref="_M/__MAC_10_2">__MAC_10_2</dfn>            1020</u></td></tr>
+<tr><th id="138">138</th><td><u>#define <dfn class="macro" id="_M/__MAC_10_3" data-ref="_M/__MAC_10_3">__MAC_10_3</dfn>            1030</u></td></tr>
+<tr><th id="139">139</th><td><u>#define <dfn class="macro" id="_M/__MAC_10_4" data-ref="_M/__MAC_10_4">__MAC_10_4</dfn>            1040</u></td></tr>
+<tr><th id="140">140</th><td><u>#define <dfn class="macro" id="_M/__MAC_10_5" data-ref="_M/__MAC_10_5">__MAC_10_5</dfn>            1050</u></td></tr>
+<tr><th id="141">141</th><td><u>#define <dfn class="macro" id="_M/__MAC_10_6" data-ref="_M/__MAC_10_6">__MAC_10_6</dfn>            1060</u></td></tr>
+<tr><th id="142">142</th><td><u>#define <dfn class="macro" id="_M/__MAC_10_7" data-ref="_M/__MAC_10_7">__MAC_10_7</dfn>            1070</u></td></tr>
+<tr><th id="143">143</th><td><u>#define <dfn class="macro" id="_M/__MAC_10_8" data-ref="_M/__MAC_10_8">__MAC_10_8</dfn>            1080</u></td></tr>
+<tr><th id="144">144</th><td><u>#define <dfn class="macro" id="_M/__MAC_10_9" data-ref="_M/__MAC_10_9">__MAC_10_9</dfn>            1090</u></td></tr>
+<tr><th id="145">145</th><td><u>#define <dfn class="macro" id="_M/__MAC_10_10" data-ref="_M/__MAC_10_10">__MAC_10_10</dfn>         101000</u></td></tr>
+<tr><th id="146">146</th><td><u>#define <dfn class="macro" id="_M/__MAC_10_10_2" data-ref="_M/__MAC_10_10_2">__MAC_10_10_2</dfn>       101002</u></td></tr>
+<tr><th id="147">147</th><td><u>#define <dfn class="macro" id="_M/__MAC_10_10_3" data-ref="_M/__MAC_10_10_3">__MAC_10_10_3</dfn>       101003</u></td></tr>
+<tr><th id="148">148</th><td><u>#define <dfn class="macro" id="_M/__MAC_10_11" data-ref="_M/__MAC_10_11">__MAC_10_11</dfn>         101100</u></td></tr>
+<tr><th id="149">149</th><td><u>#define <dfn class="macro" id="_M/__MAC_10_11_2" data-ref="_M/__MAC_10_11_2">__MAC_10_11_2</dfn>       101102</u></td></tr>
+<tr><th id="150">150</th><td><u>#define <dfn class="macro" id="_M/__MAC_10_11_3" data-ref="_M/__MAC_10_11_3">__MAC_10_11_3</dfn>       101103</u></td></tr>
+<tr><th id="151">151</th><td><u>#define <dfn class="macro" id="_M/__MAC_10_11_4" data-ref="_M/__MAC_10_11_4">__MAC_10_11_4</dfn>       101104</u></td></tr>
+<tr><th id="152">152</th><td><u>#define <dfn class="macro" id="_M/__MAC_10_12" data-ref="_M/__MAC_10_12">__MAC_10_12</dfn>         101200</u></td></tr>
+<tr><th id="153">153</th><td><u>#define <dfn class="macro" id="_M/__MAC_10_12_1" data-ref="_M/__MAC_10_12_1">__MAC_10_12_1</dfn>       101201</u></td></tr>
+<tr><th id="154">154</th><td><u>#define <dfn class="macro" id="_M/__MAC_10_12_2" data-ref="_M/__MAC_10_12_2">__MAC_10_12_2</dfn>       101202</u></td></tr>
+<tr><th id="155">155</th><td><u>#define <dfn class="macro" id="_M/__MAC_10_12_4" data-ref="_M/__MAC_10_12_4">__MAC_10_12_4</dfn>       101204</u></td></tr>
+<tr><th id="156">156</th><td><u>#define <dfn class="macro" id="_M/__MAC_10_13" data-ref="_M/__MAC_10_13">__MAC_10_13</dfn>         101300</u></td></tr>
+<tr><th id="157">157</th><td><u>#define <dfn class="macro" id="_M/__MAC_10_13_1" data-ref="_M/__MAC_10_13_1">__MAC_10_13_1</dfn>       101301</u></td></tr>
+<tr><th id="158">158</th><td><u>#define <dfn class="macro" id="_M/__MAC_10_13_2" data-ref="_M/__MAC_10_13_2">__MAC_10_13_2</dfn>       101302</u></td></tr>
+<tr><th id="159">159</th><td><u>#define <dfn class="macro" id="_M/__MAC_10_13_4" data-ref="_M/__MAC_10_13_4">__MAC_10_13_4</dfn>       101304</u></td></tr>
+<tr><th id="160">160</th><td><u>#define <dfn class="macro" id="_M/__MAC_10_14" data-ref="_M/__MAC_10_14">__MAC_10_14</dfn>         101400</u></td></tr>
+<tr><th id="161">161</th><td><u>#define <dfn class="macro" id="_M/__MAC_10_14_1" data-ref="_M/__MAC_10_14_1">__MAC_10_14_1</dfn>       101401</u></td></tr>
+<tr><th id="162">162</th><td><u>#define <dfn class="macro" id="_M/__MAC_10_14_4" data-ref="_M/__MAC_10_14_4">__MAC_10_14_4</dfn>       101404</u></td></tr>
+<tr><th id="163">163</th><td><i>/* __MAC_NA is not defined to a value but is uses as a token by macros to indicate that the API is unavailable */</i></td></tr>
+<tr><th id="164">164</th><td></td></tr>
+<tr><th id="165">165</th><td><u>#define <dfn class="macro" id="_M/__IPHONE_2_0" data-ref="_M/__IPHONE_2_0">__IPHONE_2_0</dfn>      20000</u></td></tr>
+<tr><th id="166">166</th><td><u>#define <dfn class="macro" id="_M/__IPHONE_2_1" data-ref="_M/__IPHONE_2_1">__IPHONE_2_1</dfn>      20100</u></td></tr>
+<tr><th id="167">167</th><td><u>#define <dfn class="macro" id="_M/__IPHONE_2_2" data-ref="_M/__IPHONE_2_2">__IPHONE_2_2</dfn>      20200</u></td></tr>
+<tr><th id="168">168</th><td><u>#define <dfn class="macro" id="_M/__IPHONE_3_0" data-ref="_M/__IPHONE_3_0">__IPHONE_3_0</dfn>      30000</u></td></tr>
+<tr><th id="169">169</th><td><u>#define <dfn class="macro" id="_M/__IPHONE_3_1" data-ref="_M/__IPHONE_3_1">__IPHONE_3_1</dfn>      30100</u></td></tr>
+<tr><th id="170">170</th><td><u>#define <dfn class="macro" id="_M/__IPHONE_3_2" data-ref="_M/__IPHONE_3_2">__IPHONE_3_2</dfn>      30200</u></td></tr>
+<tr><th id="171">171</th><td><u>#define <dfn class="macro" id="_M/__IPHONE_4_0" data-ref="_M/__IPHONE_4_0">__IPHONE_4_0</dfn>      40000</u></td></tr>
+<tr><th id="172">172</th><td><u>#define <dfn class="macro" id="_M/__IPHONE_4_1" data-ref="_M/__IPHONE_4_1">__IPHONE_4_1</dfn>      40100</u></td></tr>
+<tr><th id="173">173</th><td><u>#define <dfn class="macro" id="_M/__IPHONE_4_2" data-ref="_M/__IPHONE_4_2">__IPHONE_4_2</dfn>      40200</u></td></tr>
+<tr><th id="174">174</th><td><u>#define <dfn class="macro" id="_M/__IPHONE_4_3" data-ref="_M/__IPHONE_4_3">__IPHONE_4_3</dfn>      40300</u></td></tr>
+<tr><th id="175">175</th><td><u>#define <dfn class="macro" id="_M/__IPHONE_5_0" data-ref="_M/__IPHONE_5_0">__IPHONE_5_0</dfn>      50000</u></td></tr>
+<tr><th id="176">176</th><td><u>#define <dfn class="macro" id="_M/__IPHONE_5_1" data-ref="_M/__IPHONE_5_1">__IPHONE_5_1</dfn>      50100</u></td></tr>
+<tr><th id="177">177</th><td><u>#define <dfn class="macro" id="_M/__IPHONE_6_0" data-ref="_M/__IPHONE_6_0">__IPHONE_6_0</dfn>      60000</u></td></tr>
+<tr><th id="178">178</th><td><u>#define <dfn class="macro" id="_M/__IPHONE_6_1" data-ref="_M/__IPHONE_6_1">__IPHONE_6_1</dfn>      60100</u></td></tr>
+<tr><th id="179">179</th><td><u>#define <dfn class="macro" id="_M/__IPHONE_7_0" data-ref="_M/__IPHONE_7_0">__IPHONE_7_0</dfn>      70000</u></td></tr>
+<tr><th id="180">180</th><td><u>#define <dfn class="macro" id="_M/__IPHONE_7_1" data-ref="_M/__IPHONE_7_1">__IPHONE_7_1</dfn>      70100</u></td></tr>
+<tr><th id="181">181</th><td><u>#define <dfn class="macro" id="_M/__IPHONE_8_0" data-ref="_M/__IPHONE_8_0">__IPHONE_8_0</dfn>      80000</u></td></tr>
+<tr><th id="182">182</th><td><u>#define <dfn class="macro" id="_M/__IPHONE_8_1" data-ref="_M/__IPHONE_8_1">__IPHONE_8_1</dfn>      80100</u></td></tr>
+<tr><th id="183">183</th><td><u>#define <dfn class="macro" id="_M/__IPHONE_8_2" data-ref="_M/__IPHONE_8_2">__IPHONE_8_2</dfn>      80200</u></td></tr>
+<tr><th id="184">184</th><td><u>#define <dfn class="macro" id="_M/__IPHONE_8_3" data-ref="_M/__IPHONE_8_3">__IPHONE_8_3</dfn>      80300</u></td></tr>
+<tr><th id="185">185</th><td><u>#define <dfn class="macro" id="_M/__IPHONE_8_4" data-ref="_M/__IPHONE_8_4">__IPHONE_8_4</dfn>      80400</u></td></tr>
+<tr><th id="186">186</th><td><u>#define <dfn class="macro" id="_M/__IPHONE_9_0" data-ref="_M/__IPHONE_9_0">__IPHONE_9_0</dfn>      90000</u></td></tr>
+<tr><th id="187">187</th><td><u>#define <dfn class="macro" id="_M/__IPHONE_9_1" data-ref="_M/__IPHONE_9_1">__IPHONE_9_1</dfn>      90100</u></td></tr>
+<tr><th id="188">188</th><td><u>#define <dfn class="macro" id="_M/__IPHONE_9_2" data-ref="_M/__IPHONE_9_2">__IPHONE_9_2</dfn>      90200</u></td></tr>
+<tr><th id="189">189</th><td><u>#define <dfn class="macro" id="_M/__IPHONE_9_3" data-ref="_M/__IPHONE_9_3">__IPHONE_9_3</dfn>      90300</u></td></tr>
+<tr><th id="190">190</th><td><u>#define <dfn class="macro" id="_M/__IPHONE_10_0" data-ref="_M/__IPHONE_10_0">__IPHONE_10_0</dfn>    100000</u></td></tr>
+<tr><th id="191">191</th><td><u>#define <dfn class="macro" id="_M/__IPHONE_10_1" data-ref="_M/__IPHONE_10_1">__IPHONE_10_1</dfn>    100100</u></td></tr>
+<tr><th id="192">192</th><td><u>#define <dfn class="macro" id="_M/__IPHONE_10_2" data-ref="_M/__IPHONE_10_2">__IPHONE_10_2</dfn>    100200</u></td></tr>
+<tr><th id="193">193</th><td><u>#define <dfn class="macro" id="_M/__IPHONE_10_3" data-ref="_M/__IPHONE_10_3">__IPHONE_10_3</dfn>    100300</u></td></tr>
+<tr><th id="194">194</th><td><u>#define <dfn class="macro" id="_M/__IPHONE_11_0" data-ref="_M/__IPHONE_11_0">__IPHONE_11_0</dfn>    110000</u></td></tr>
+<tr><th id="195">195</th><td><u>#define <dfn class="macro" id="_M/__IPHONE_11_1" data-ref="_M/__IPHONE_11_1">__IPHONE_11_1</dfn>    110100</u></td></tr>
+<tr><th id="196">196</th><td><u>#define <dfn class="macro" id="_M/__IPHONE_11_2" data-ref="_M/__IPHONE_11_2">__IPHONE_11_2</dfn>    110200</u></td></tr>
+<tr><th id="197">197</th><td><u>#define <dfn class="macro" id="_M/__IPHONE_11_3" data-ref="_M/__IPHONE_11_3">__IPHONE_11_3</dfn>    110300</u></td></tr>
+<tr><th id="198">198</th><td><u>#define <dfn class="macro" id="_M/__IPHONE_11_4" data-ref="_M/__IPHONE_11_4">__IPHONE_11_4</dfn>    110400</u></td></tr>
+<tr><th id="199">199</th><td><u>#define <dfn class="macro" id="_M/__IPHONE_12_0" data-ref="_M/__IPHONE_12_0">__IPHONE_12_0</dfn>    120000</u></td></tr>
+<tr><th id="200">200</th><td><u>#define <dfn class="macro" id="_M/__IPHONE_12_1" data-ref="_M/__IPHONE_12_1">__IPHONE_12_1</dfn>    120100</u></td></tr>
+<tr><th id="201">201</th><td><u>#define <dfn class="macro" id="_M/__IPHONE_12_2" data-ref="_M/__IPHONE_12_2">__IPHONE_12_2</dfn>    120200</u></td></tr>
+<tr><th id="202">202</th><td><i>/* __IPHONE_NA is not defined to a value but is uses as a token by macros to indicate that the API is unavailable */</i></td></tr>
+<tr><th id="203">203</th><td></td></tr>
+<tr><th id="204">204</th><td><u>#define <dfn class="macro" id="_M/__TVOS_9_0" data-ref="_M/__TVOS_9_0">__TVOS_9_0</dfn>        90000</u></td></tr>
+<tr><th id="205">205</th><td><u>#define <dfn class="macro" id="_M/__TVOS_9_1" data-ref="_M/__TVOS_9_1">__TVOS_9_1</dfn>        90100</u></td></tr>
+<tr><th id="206">206</th><td><u>#define <dfn class="macro" id="_M/__TVOS_9_2" data-ref="_M/__TVOS_9_2">__TVOS_9_2</dfn>        90200</u></td></tr>
+<tr><th id="207">207</th><td><u>#define <dfn class="macro" id="_M/__TVOS_10_0" data-ref="_M/__TVOS_10_0">__TVOS_10_0</dfn>      100000</u></td></tr>
+<tr><th id="208">208</th><td><u>#define <dfn class="macro" id="_M/__TVOS_10_0_1" data-ref="_M/__TVOS_10_0_1">__TVOS_10_0_1</dfn>    100001</u></td></tr>
+<tr><th id="209">209</th><td><u>#define <dfn class="macro" id="_M/__TVOS_10_1" data-ref="_M/__TVOS_10_1">__TVOS_10_1</dfn>      100100</u></td></tr>
+<tr><th id="210">210</th><td><u>#define <dfn class="macro" id="_M/__TVOS_10_2" data-ref="_M/__TVOS_10_2">__TVOS_10_2</dfn>      100200</u></td></tr>
+<tr><th id="211">211</th><td><u>#define <dfn class="macro" id="_M/__TVOS_11_0" data-ref="_M/__TVOS_11_0">__TVOS_11_0</dfn>      110000</u></td></tr>
+<tr><th id="212">212</th><td><u>#define <dfn class="macro" id="_M/__TVOS_11_1" data-ref="_M/__TVOS_11_1">__TVOS_11_1</dfn>      110100</u></td></tr>
+<tr><th id="213">213</th><td><u>#define <dfn class="macro" id="_M/__TVOS_11_2" data-ref="_M/__TVOS_11_2">__TVOS_11_2</dfn>      110200</u></td></tr>
+<tr><th id="214">214</th><td><u>#define <dfn class="macro" id="_M/__TVOS_11_3" data-ref="_M/__TVOS_11_3">__TVOS_11_3</dfn>      110300</u></td></tr>
+<tr><th id="215">215</th><td><u>#define <dfn class="macro" id="_M/__TVOS_11_4" data-ref="_M/__TVOS_11_4">__TVOS_11_4</dfn>      110400</u></td></tr>
+<tr><th id="216">216</th><td><u>#define <dfn class="macro" id="_M/__TVOS_12_0" data-ref="_M/__TVOS_12_0">__TVOS_12_0</dfn>      120000</u></td></tr>
+<tr><th id="217">217</th><td><u>#define <dfn class="macro" id="_M/__TVOS_12_1" data-ref="_M/__TVOS_12_1">__TVOS_12_1</dfn>      120100</u></td></tr>
+<tr><th id="218">218</th><td><u>#define <dfn class="macro" id="_M/__TVOS_12_2" data-ref="_M/__TVOS_12_2">__TVOS_12_2</dfn>      120200</u></td></tr>
+<tr><th id="219">219</th><td></td></tr>
+<tr><th id="220">220</th><td><u>#define <dfn class="macro" id="_M/__WATCHOS_1_0" data-ref="_M/__WATCHOS_1_0">__WATCHOS_1_0</dfn>     10000</u></td></tr>
+<tr><th id="221">221</th><td><u>#define <dfn class="macro" id="_M/__WATCHOS_2_0" data-ref="_M/__WATCHOS_2_0">__WATCHOS_2_0</dfn>     20000</u></td></tr>
+<tr><th id="222">222</th><td><u>#define <dfn class="macro" id="_M/__WATCHOS_2_1" data-ref="_M/__WATCHOS_2_1">__WATCHOS_2_1</dfn>     20100</u></td></tr>
+<tr><th id="223">223</th><td><u>#define <dfn class="macro" id="_M/__WATCHOS_2_2" data-ref="_M/__WATCHOS_2_2">__WATCHOS_2_2</dfn>     20200</u></td></tr>
+<tr><th id="224">224</th><td><u>#define <dfn class="macro" id="_M/__WATCHOS_3_0" data-ref="_M/__WATCHOS_3_0">__WATCHOS_3_0</dfn>     30000</u></td></tr>
+<tr><th id="225">225</th><td><u>#define <dfn class="macro" id="_M/__WATCHOS_3_1" data-ref="_M/__WATCHOS_3_1">__WATCHOS_3_1</dfn>     30100</u></td></tr>
+<tr><th id="226">226</th><td><u>#define <dfn class="macro" id="_M/__WATCHOS_3_1_1" data-ref="_M/__WATCHOS_3_1_1">__WATCHOS_3_1_1</dfn>   30101</u></td></tr>
+<tr><th id="227">227</th><td><u>#define <dfn class="macro" id="_M/__WATCHOS_3_2" data-ref="_M/__WATCHOS_3_2">__WATCHOS_3_2</dfn>     30200</u></td></tr>
+<tr><th id="228">228</th><td><u>#define <dfn class="macro" id="_M/__WATCHOS_4_0" data-ref="_M/__WATCHOS_4_0">__WATCHOS_4_0</dfn>     40000</u></td></tr>
+<tr><th id="229">229</th><td><u>#define <dfn class="macro" id="_M/__WATCHOS_4_1" data-ref="_M/__WATCHOS_4_1">__WATCHOS_4_1</dfn>     40100</u></td></tr>
+<tr><th id="230">230</th><td><u>#define <dfn class="macro" id="_M/__WATCHOS_4_2" data-ref="_M/__WATCHOS_4_2">__WATCHOS_4_2</dfn>     40200</u></td></tr>
+<tr><th id="231">231</th><td><u>#define <dfn class="macro" id="_M/__WATCHOS_4_3" data-ref="_M/__WATCHOS_4_3">__WATCHOS_4_3</dfn>     40300</u></td></tr>
+<tr><th id="232">232</th><td><u>#define <dfn class="macro" id="_M/__WATCHOS_5_0" data-ref="_M/__WATCHOS_5_0">__WATCHOS_5_0</dfn>     50000</u></td></tr>
+<tr><th id="233">233</th><td><u>#define <dfn class="macro" id="_M/__WATCHOS_5_1" data-ref="_M/__WATCHOS_5_1">__WATCHOS_5_1</dfn>     50100</u></td></tr>
+<tr><th id="234">234</th><td><u>#define <dfn class="macro" id="_M/__WATCHOS_5_2" data-ref="_M/__WATCHOS_5_2">__WATCHOS_5_2</dfn>     50200</u></td></tr>
+<tr><th id="235">235</th><td></td></tr>
+<tr><th id="236">236</th><td><u>#include <a href="AvailabilityInternal.h.html">&lt;AvailabilityInternal.h&gt;</a></u></td></tr>
+<tr><th id="237">237</th><td></td></tr>
+<tr><th id="238">238</th><td><u>#<span data-ppcond="238">ifdef</span> <span class="macro" data-ref="_M/__IPHONE_OS_VERSION_MIN_REQUIRED">__IPHONE_OS_VERSION_MIN_REQUIRED</span></u></td></tr>
+<tr><th id="239">239</th><td>    <u>#define __OSX_AVAILABLE_STARTING(_osx, _ios) __AVAILABILITY_INTERNAL##_ios</u></td></tr>
+<tr><th id="240">240</th><td>    <u>#define __OSX_AVAILABLE_BUT_DEPRECATED(_osxIntro, _osxDep, _iosIntro, _iosDep) \</u></td></tr>
+<tr><th id="241">241</th><td><u>                                                    __AVAILABILITY_INTERNAL##_iosIntro##_DEP##_iosDep</u></td></tr>
+<tr><th id="242">242</th><td>    <u>#define __OSX_AVAILABLE_BUT_DEPRECATED_MSG(_osxIntro, _osxDep, _iosIntro, _iosDep, _msg) \</u></td></tr>
+<tr><th id="243">243</th><td><u>                                                    __AVAILABILITY_INTERNAL##_iosIntro##_DEP##_iosDep##_MSG(_msg)</u></td></tr>
+<tr><th id="244">244</th><td></td></tr>
+<tr><th id="245">245</th><td><u>#<span data-ppcond="238">elif</span> defined(<a class="macro" href="AvailabilityInternal.h.html#40708" data-ref="_M/__MAC_OS_X_VERSION_MIN_REQUIRED">__MAC_OS_X_VERSION_MIN_REQUIRED</a>)</u></td></tr>
+<tr><th id="246">246</th><td>    <u>#define <dfn class="macro" id="_M/__OSX_AVAILABLE_STARTING" data-ref="_M/__OSX_AVAILABLE_STARTING">__OSX_AVAILABLE_STARTING</dfn>(_osx, _ios) __AVAILABILITY_INTERNAL##_osx</u></td></tr>
+<tr><th id="247">247</th><td>    <u>#define <dfn class="macro" id="_M/__OSX_AVAILABLE_BUT_DEPRECATED" data-ref="_M/__OSX_AVAILABLE_BUT_DEPRECATED">__OSX_AVAILABLE_BUT_DEPRECATED</dfn>(_osxIntro, _osxDep, _iosIntro, _iosDep) \</u></td></tr>
+<tr><th id="248">248</th><td><u>                                                    __AVAILABILITY_INTERNAL##_osxIntro##_DEP##_osxDep</u></td></tr>
+<tr><th id="249">249</th><td>    <u>#define <dfn class="macro" id="_M/__OSX_AVAILABLE_BUT_DEPRECATED_MSG" data-ref="_M/__OSX_AVAILABLE_BUT_DEPRECATED_MSG">__OSX_AVAILABLE_BUT_DEPRECATED_MSG</dfn>(_osxIntro, _osxDep, _iosIntro, _iosDep, _msg) \</u></td></tr>
+<tr><th id="250">250</th><td><u>                                                    __AVAILABILITY_INTERNAL##_osxIntro##_DEP##_osxDep##_MSG(_msg)</u></td></tr>
+<tr><th id="251">251</th><td></td></tr>
+<tr><th id="252">252</th><td><u>#<span data-ppcond="238">else</span></u></td></tr>
+<tr><th id="253">253</th><td>    <u>#define __OSX_AVAILABLE_STARTING(_osx, _ios)</u></td></tr>
+<tr><th id="254">254</th><td>    <u>#define __OSX_AVAILABLE_BUT_DEPRECATED(_osxIntro, _osxDep, _iosIntro, _iosDep)</u></td></tr>
+<tr><th id="255">255</th><td>    <u>#define __OSX_AVAILABLE_BUT_DEPRECATED_MSG(_osxIntro, _osxDep, _iosIntro, _iosDep, _msg)</u></td></tr>
+<tr><th id="256">256</th><td><u>#<span data-ppcond="238">endif</span></u></td></tr>
+<tr><th id="257">257</th><td></td></tr>
+<tr><th id="258">258</th><td></td></tr>
+<tr><th id="259">259</th><td><u>#<span data-ppcond="259">if</span> defined(<span class="macro" data-ref="_M/__has_feature">__has_feature</span>)</u></td></tr>
+<tr><th id="260">260</th><td>  <u>#<span data-ppcond="260">if</span> <span class="macro" title="" data-ref="_M/__has_feature">__has_feature</span>(attribute_availability_with_message)</u></td></tr>
+<tr><th id="261">261</th><td>    <u>#define <dfn class="macro" id="_M/__OS_AVAILABILITY" data-ref="_M/__OS_AVAILABILITY">__OS_AVAILABILITY</dfn>(_target, _availability)            __attribute__((availability(_target,_availability)))</u></td></tr>
+<tr><th id="262">262</th><td>    <u>#define <dfn class="macro" id="_M/__OS_AVAILABILITY_MSG" data-ref="_M/__OS_AVAILABILITY_MSG">__OS_AVAILABILITY_MSG</dfn>(_target, _availability, _msg)  __attribute__((availability(_target,_availability,message=_msg)))</u></td></tr>
+<tr><th id="263">263</th><td>  <u>#<span data-ppcond="260">elif</span> __has_feature(attribute_availability)</u></td></tr>
+<tr><th id="264">264</th><td>    <u>#define __OS_AVAILABILITY(_target, _availability)            __attribute__((availability(_target,_availability)))</u></td></tr>
+<tr><th id="265">265</th><td>    <u>#define __OS_AVAILABILITY_MSG(_target, _availability, _msg)  __attribute__((availability(_target,_availability)))</u></td></tr>
+<tr><th id="266">266</th><td>  <u>#else</u></td></tr>
+<tr><th id="267">267</th><td>    <u>#define __OS_AVAILABILITY(_target, _availability)</u></td></tr>
+<tr><th id="268">268</th><td>    <u>#define __OS_AVAILABILITY_MSG(_target, _availability, _msg)</u></td></tr>
+<tr><th id="269">269</th><td>  <u>#<span data-ppcond="260">endif</span></u></td></tr>
+<tr><th id="270">270</th><td><u>#<span data-ppcond="259">else</span></u></td></tr>
+<tr><th id="271">271</th><td>    <u>#define __OS_AVAILABILITY(_target, _availability)</u></td></tr>
+<tr><th id="272">272</th><td>    <u>#define __OS_AVAILABILITY_MSG(_target, _availability, _msg)</u></td></tr>
+<tr><th id="273">273</th><td><u>#<span data-ppcond="259">endif</span></u></td></tr>
+<tr><th id="274">274</th><td></td></tr>
+<tr><th id="275">275</th><td></td></tr>
+<tr><th id="276">276</th><td><i>/* for use to document app extension usage */</i></td></tr>
+<tr><th id="277">277</th><td><u>#<span data-ppcond="277">if</span> defined(<span class="macro" data-ref="_M/__has_feature">__has_feature</span>)</u></td></tr>
+<tr><th id="278">278</th><td>  <u>#<span data-ppcond="278">if</span> <span class="macro" title="" data-ref="_M/__has_feature">__has_feature</span>(attribute_availability_app_extension)</u></td></tr>
+<tr><th id="279">279</th><td>    <u>#define <dfn class="macro" id="_M/__OSX_EXTENSION_UNAVAILABLE" data-ref="_M/__OSX_EXTENSION_UNAVAILABLE">__OSX_EXTENSION_UNAVAILABLE</dfn>(_msg)  __OS_AVAILABILITY_MSG(macosx_app_extension,unavailable,_msg)</u></td></tr>
+<tr><th id="280">280</th><td>    <u>#define <dfn class="macro" id="_M/__IOS_EXTENSION_UNAVAILABLE" data-ref="_M/__IOS_EXTENSION_UNAVAILABLE">__IOS_EXTENSION_UNAVAILABLE</dfn>(_msg)  __OS_AVAILABILITY_MSG(ios_app_extension,unavailable,_msg)</u></td></tr>
+<tr><th id="281">281</th><td>  <u>#<span data-ppcond="278">else</span></u></td></tr>
+<tr><th id="282">282</th><td>    <u>#define __OSX_EXTENSION_UNAVAILABLE(_msg)</u></td></tr>
+<tr><th id="283">283</th><td>    <u>#define __IOS_EXTENSION_UNAVAILABLE(_msg)</u></td></tr>
+<tr><th id="284">284</th><td>  <u>#<span data-ppcond="278">endif</span></u></td></tr>
+<tr><th id="285">285</th><td><u>#<span data-ppcond="277">else</span></u></td></tr>
+<tr><th id="286">286</th><td>    <u>#define __OSX_EXTENSION_UNAVAILABLE(_msg)</u></td></tr>
+<tr><th id="287">287</th><td>    <u>#define __IOS_EXTENSION_UNAVAILABLE(_msg)</u></td></tr>
+<tr><th id="288">288</th><td><u>#<span data-ppcond="277">endif</span></u></td></tr>
+<tr><th id="289">289</th><td></td></tr>
+<tr><th id="290">290</th><td><u>#define <dfn class="macro" id="_M/__OS_EXTENSION_UNAVAILABLE" data-ref="_M/__OS_EXTENSION_UNAVAILABLE">__OS_EXTENSION_UNAVAILABLE</dfn>(_msg)  __OSX_EXTENSION_UNAVAILABLE(_msg) __IOS_EXTENSION_UNAVAILABLE(_msg)</u></td></tr>
+<tr><th id="291">291</th><td></td></tr>
+<tr><th id="292">292</th><td></td></tr>
+<tr><th id="293">293</th><td></td></tr>
+<tr><th id="294">294</th><td><i>/* for use marking APIs available info for Mac OSX */</i></td></tr>
+<tr><th id="295">295</th><td><u>#<span data-ppcond="295">if</span> defined(<span class="macro" data-ref="_M/__has_attribute">__has_attribute</span>)</u></td></tr>
+<tr><th id="296">296</th><td>  <u>#<span data-ppcond="296">if</span> <span class="macro" title="" data-ref="_M/__has_attribute">__has_attribute</span>(availability)</u></td></tr>
+<tr><th id="297">297</th><td>    <u>#define <dfn class="macro" id="_M/__OSX_UNAVAILABLE" data-ref="_M/__OSX_UNAVAILABLE">__OSX_UNAVAILABLE</dfn>                    __OS_AVAILABILITY(macosx,unavailable)</u></td></tr>
+<tr><th id="298">298</th><td>    <u>#define <dfn class="macro" id="_M/__OSX_AVAILABLE" data-ref="_M/__OSX_AVAILABLE">__OSX_AVAILABLE</dfn>(_vers)               __OS_AVAILABILITY(macosx,introduced=_vers)</u></td></tr>
+<tr><th id="299">299</th><td>    <u>#define <dfn class="macro" id="_M/__OSX_DEPRECATED" data-ref="_M/__OSX_DEPRECATED">__OSX_DEPRECATED</dfn>(_start, _dep, _msg) __OSX_AVAILABLE(_start) __OS_AVAILABILITY_MSG(macosx,deprecated=_dep,_msg)</u></td></tr>
+<tr><th id="300">300</th><td>  <u>#<span data-ppcond="296">endif</span></u></td></tr>
+<tr><th id="301">301</th><td><u>#<span data-ppcond="295">endif</span></u></td></tr>
+<tr><th id="302">302</th><td></td></tr>
+<tr><th id="303">303</th><td><u>#<span data-ppcond="303">ifndef</span> <a class="macro" href="#297" data-ref="_M/__OSX_UNAVAILABLE">__OSX_UNAVAILABLE</a></u></td></tr>
+<tr><th id="304">304</th><td>  <u>#define __OSX_UNAVAILABLE</u></td></tr>
+<tr><th id="305">305</th><td><u>#<span data-ppcond="303">endif</span></u></td></tr>
+<tr><th id="306">306</th><td></td></tr>
+<tr><th id="307">307</th><td><u>#<span data-ppcond="307">ifndef</span> <a class="macro" href="#298" data-ref="_M/__OSX_AVAILABLE">__OSX_AVAILABLE</a></u></td></tr>
+<tr><th id="308">308</th><td>  <u>#define __OSX_AVAILABLE(_vers)</u></td></tr>
+<tr><th id="309">309</th><td><u>#<span data-ppcond="307">endif</span></u></td></tr>
+<tr><th id="310">310</th><td></td></tr>
+<tr><th id="311">311</th><td><u>#<span data-ppcond="311">ifndef</span> <a class="macro" href="#299" data-ref="_M/__OSX_DEPRECATED">__OSX_DEPRECATED</a></u></td></tr>
+<tr><th id="312">312</th><td>  <u>#define __OSX_DEPRECATED(_start, _dep, _msg)</u></td></tr>
+<tr><th id="313">313</th><td><u>#<span data-ppcond="311">endif</span></u></td></tr>
+<tr><th id="314">314</th><td></td></tr>
+<tr><th id="315">315</th><td></td></tr>
+<tr><th id="316">316</th><td><i>/* for use marking APIs available info for iOS */</i></td></tr>
+<tr><th id="317">317</th><td><u>#<span data-ppcond="317">if</span> defined(<span class="macro" data-ref="_M/__has_attribute">__has_attribute</span>)</u></td></tr>
+<tr><th id="318">318</th><td>  <u>#<span data-ppcond="318">if</span> <span class="macro" title="" data-ref="_M/__has_attribute">__has_attribute</span>(availability)</u></td></tr>
+<tr><th id="319">319</th><td>    <u>#define <dfn class="macro" id="_M/__IOS_UNAVAILABLE" data-ref="_M/__IOS_UNAVAILABLE">__IOS_UNAVAILABLE</dfn>                    __OS_AVAILABILITY(ios,unavailable)</u></td></tr>
+<tr><th id="320">320</th><td>    <u>#define <dfn class="macro" id="_M/__IOS_PROHIBITED" data-ref="_M/__IOS_PROHIBITED">__IOS_PROHIBITED</dfn>                     __OS_AVAILABILITY(ios,unavailable)</u></td></tr>
+<tr><th id="321">321</th><td>    <u>#define <dfn class="macro" id="_M/__IOS_AVAILABLE" data-ref="_M/__IOS_AVAILABLE">__IOS_AVAILABLE</dfn>(_vers)               __OS_AVAILABILITY(ios,introduced=_vers)</u></td></tr>
+<tr><th id="322">322</th><td>    <u>#define <dfn class="macro" id="_M/__IOS_DEPRECATED" data-ref="_M/__IOS_DEPRECATED">__IOS_DEPRECATED</dfn>(_start, _dep, _msg) __IOS_AVAILABLE(_start) __OS_AVAILABILITY_MSG(ios,deprecated=_dep,_msg)</u></td></tr>
+<tr><th id="323">323</th><td>  <u>#<span data-ppcond="318">endif</span></u></td></tr>
+<tr><th id="324">324</th><td><u>#<span data-ppcond="317">endif</span></u></td></tr>
+<tr><th id="325">325</th><td></td></tr>
+<tr><th id="326">326</th><td><u>#<span data-ppcond="326">ifndef</span> <a class="macro" href="#319" data-ref="_M/__IOS_UNAVAILABLE">__IOS_UNAVAILABLE</a></u></td></tr>
+<tr><th id="327">327</th><td>  <u>#define __IOS_UNAVAILABLE</u></td></tr>
+<tr><th id="328">328</th><td><u>#<span data-ppcond="326">endif</span></u></td></tr>
+<tr><th id="329">329</th><td></td></tr>
+<tr><th id="330">330</th><td><u>#<span data-ppcond="330">ifndef</span> <a class="macro" href="#320" data-ref="_M/__IOS_PROHIBITED">__IOS_PROHIBITED</a></u></td></tr>
+<tr><th id="331">331</th><td>  <u>#define __IOS_PROHIBITED</u></td></tr>
+<tr><th id="332">332</th><td><u>#<span data-ppcond="330">endif</span></u></td></tr>
+<tr><th id="333">333</th><td></td></tr>
+<tr><th id="334">334</th><td><u>#<span data-ppcond="334">ifndef</span> <a class="macro" href="#321" data-ref="_M/__IOS_AVAILABLE">__IOS_AVAILABLE</a></u></td></tr>
+<tr><th id="335">335</th><td>  <u>#define __IOS_AVAILABLE(_vers)</u></td></tr>
+<tr><th id="336">336</th><td><u>#<span data-ppcond="334">endif</span></u></td></tr>
+<tr><th id="337">337</th><td></td></tr>
+<tr><th id="338">338</th><td><u>#<span data-ppcond="338">ifndef</span> <a class="macro" href="#322" data-ref="_M/__IOS_DEPRECATED">__IOS_DEPRECATED</a></u></td></tr>
+<tr><th id="339">339</th><td>  <u>#define __IOS_DEPRECATED(_start, _dep, _msg)</u></td></tr>
+<tr><th id="340">340</th><td><u>#<span data-ppcond="338">endif</span></u></td></tr>
+<tr><th id="341">341</th><td></td></tr>
+<tr><th id="342">342</th><td></td></tr>
+<tr><th id="343">343</th><td><i>/* for use marking APIs available info for tvOS */</i></td></tr>
+<tr><th id="344">344</th><td><u>#<span data-ppcond="344">if</span> defined(<span class="macro" data-ref="_M/__has_feature">__has_feature</span>)</u></td></tr>
+<tr><th id="345">345</th><td>  <u>#<span data-ppcond="345">if</span> <span class="macro" title="" data-ref="_M/__has_feature">__has_feature</span>(attribute_availability_tvos)</u></td></tr>
+<tr><th id="346">346</th><td>    <u>#define <dfn class="macro" id="_M/__TVOS_UNAVAILABLE" data-ref="_M/__TVOS_UNAVAILABLE">__TVOS_UNAVAILABLE</dfn>                    __OS_AVAILABILITY(tvos,unavailable)</u></td></tr>
+<tr><th id="347">347</th><td>    <u>#define <dfn class="macro" id="_M/__TVOS_PROHIBITED" data-ref="_M/__TVOS_PROHIBITED">__TVOS_PROHIBITED</dfn>                     __OS_AVAILABILITY(tvos,unavailable)</u></td></tr>
+<tr><th id="348">348</th><td>    <u>#define <dfn class="macro" id="_M/__TVOS_AVAILABLE" data-ref="_M/__TVOS_AVAILABLE">__TVOS_AVAILABLE</dfn>(_vers)               __OS_AVAILABILITY(tvos,introduced=_vers)</u></td></tr>
+<tr><th id="349">349</th><td>    <u>#define <dfn class="macro" id="_M/__TVOS_DEPRECATED" data-ref="_M/__TVOS_DEPRECATED">__TVOS_DEPRECATED</dfn>(_start, _dep, _msg) __TVOS_AVAILABLE(_start) __OS_AVAILABILITY_MSG(tvos,deprecated=_dep,_msg)</u></td></tr>
+<tr><th id="350">350</th><td>  <u>#<span data-ppcond="345">endif</span></u></td></tr>
+<tr><th id="351">351</th><td><u>#<span data-ppcond="344">endif</span></u></td></tr>
+<tr><th id="352">352</th><td></td></tr>
+<tr><th id="353">353</th><td><u>#<span data-ppcond="353">ifndef</span> <a class="macro" href="#346" data-ref="_M/__TVOS_UNAVAILABLE">__TVOS_UNAVAILABLE</a></u></td></tr>
+<tr><th id="354">354</th><td>  <u>#define __TVOS_UNAVAILABLE</u></td></tr>
+<tr><th id="355">355</th><td><u>#<span data-ppcond="353">endif</span></u></td></tr>
+<tr><th id="356">356</th><td></td></tr>
+<tr><th id="357">357</th><td><u>#<span data-ppcond="357">ifndef</span> <a class="macro" href="#347" data-ref="_M/__TVOS_PROHIBITED">__TVOS_PROHIBITED</a></u></td></tr>
+<tr><th id="358">358</th><td>  <u>#define __TVOS_PROHIBITED</u></td></tr>
+<tr><th id="359">359</th><td><u>#<span data-ppcond="357">endif</span></u></td></tr>
+<tr><th id="360">360</th><td></td></tr>
+<tr><th id="361">361</th><td><u>#<span data-ppcond="361">ifndef</span> <a class="macro" href="#348" data-ref="_M/__TVOS_AVAILABLE">__TVOS_AVAILABLE</a></u></td></tr>
+<tr><th id="362">362</th><td>  <u>#define __TVOS_AVAILABLE(_vers)</u></td></tr>
+<tr><th id="363">363</th><td><u>#<span data-ppcond="361">endif</span></u></td></tr>
+<tr><th id="364">364</th><td></td></tr>
+<tr><th id="365">365</th><td><u>#<span data-ppcond="365">ifndef</span> <a class="macro" href="#349" data-ref="_M/__TVOS_DEPRECATED">__TVOS_DEPRECATED</a></u></td></tr>
+<tr><th id="366">366</th><td>  <u>#define __TVOS_DEPRECATED(_start, _dep, _msg)</u></td></tr>
+<tr><th id="367">367</th><td><u>#<span data-ppcond="365">endif</span></u></td></tr>
+<tr><th id="368">368</th><td></td></tr>
+<tr><th id="369">369</th><td></td></tr>
+<tr><th id="370">370</th><td><i>/* for use marking APIs available info for Watch OS */</i></td></tr>
+<tr><th id="371">371</th><td><u>#<span data-ppcond="371">if</span> defined(<span class="macro" data-ref="_M/__has_feature">__has_feature</span>)</u></td></tr>
+<tr><th id="372">372</th><td>  <u>#<span data-ppcond="372">if</span> <span class="macro" title="" data-ref="_M/__has_feature">__has_feature</span>(attribute_availability_watchos)</u></td></tr>
+<tr><th id="373">373</th><td>    <u>#define <dfn class="macro" id="_M/__WATCHOS_UNAVAILABLE" data-ref="_M/__WATCHOS_UNAVAILABLE">__WATCHOS_UNAVAILABLE</dfn>                    __OS_AVAILABILITY(watchos,unavailable)</u></td></tr>
+<tr><th id="374">374</th><td>    <u>#define <dfn class="macro" id="_M/__WATCHOS_PROHIBITED" data-ref="_M/__WATCHOS_PROHIBITED">__WATCHOS_PROHIBITED</dfn>                     __OS_AVAILABILITY(watchos,unavailable)</u></td></tr>
+<tr><th id="375">375</th><td>    <u>#define <dfn class="macro" id="_M/__WATCHOS_AVAILABLE" data-ref="_M/__WATCHOS_AVAILABLE">__WATCHOS_AVAILABLE</dfn>(_vers)               __OS_AVAILABILITY(watchos,introduced=_vers)</u></td></tr>
+<tr><th id="376">376</th><td>    <u>#define <dfn class="macro" id="_M/__WATCHOS_DEPRECATED" data-ref="_M/__WATCHOS_DEPRECATED">__WATCHOS_DEPRECATED</dfn>(_start, _dep, _msg) __WATCHOS_AVAILABLE(_start) __OS_AVAILABILITY_MSG(watchos,deprecated=_dep,_msg)</u></td></tr>
+<tr><th id="377">377</th><td>  <u>#<span data-ppcond="372">endif</span></u></td></tr>
+<tr><th id="378">378</th><td><u>#<span data-ppcond="371">endif</span></u></td></tr>
+<tr><th id="379">379</th><td></td></tr>
+<tr><th id="380">380</th><td><u>#<span data-ppcond="380">ifndef</span> <a class="macro" href="#373" data-ref="_M/__WATCHOS_UNAVAILABLE">__WATCHOS_UNAVAILABLE</a></u></td></tr>
+<tr><th id="381">381</th><td>  <u>#define __WATCHOS_UNAVAILABLE</u></td></tr>
+<tr><th id="382">382</th><td><u>#<span data-ppcond="380">endif</span></u></td></tr>
+<tr><th id="383">383</th><td></td></tr>
+<tr><th id="384">384</th><td><u>#<span data-ppcond="384">ifndef</span> <a class="macro" href="#374" data-ref="_M/__WATCHOS_PROHIBITED">__WATCHOS_PROHIBITED</a></u></td></tr>
+<tr><th id="385">385</th><td>  <u>#define __WATCHOS_PROHIBITED</u></td></tr>
+<tr><th id="386">386</th><td><u>#<span data-ppcond="384">endif</span></u></td></tr>
+<tr><th id="387">387</th><td></td></tr>
+<tr><th id="388">388</th><td><u>#<span data-ppcond="388">ifndef</span> <a class="macro" href="#375" data-ref="_M/__WATCHOS_AVAILABLE">__WATCHOS_AVAILABLE</a></u></td></tr>
+<tr><th id="389">389</th><td>  <u>#define __WATCHOS_AVAILABLE(_vers)</u></td></tr>
+<tr><th id="390">390</th><td><u>#<span data-ppcond="388">endif</span></u></td></tr>
+<tr><th id="391">391</th><td></td></tr>
+<tr><th id="392">392</th><td><u>#<span data-ppcond="392">ifndef</span> <a class="macro" href="#376" data-ref="_M/__WATCHOS_DEPRECATED">__WATCHOS_DEPRECATED</a></u></td></tr>
+<tr><th id="393">393</th><td>  <u>#define __WATCHOS_DEPRECATED(_start, _dep, _msg)</u></td></tr>
+<tr><th id="394">394</th><td><u>#<span data-ppcond="392">endif</span></u></td></tr>
+<tr><th id="395">395</th><td></td></tr>
+<tr><th id="396">396</th><td></td></tr>
+<tr><th id="397">397</th><td><i>/* for use marking APIs unavailable for swift */</i></td></tr>
+<tr><th id="398">398</th><td><u>#<span data-ppcond="398">if</span> defined(<span class="macro" data-ref="_M/__has_feature">__has_feature</span>)</u></td></tr>
+<tr><th id="399">399</th><td>  <u>#<span data-ppcond="399">if</span> <span class="macro" title="" data-ref="_M/__has_feature">__has_feature</span>(attribute_availability_swift)</u></td></tr>
+<tr><th id="400">400</th><td>    <u>#define __SWIFT_UNAVAILABLE                   __OS_AVAILABILITY(swift,unavailable)</u></td></tr>
+<tr><th id="401">401</th><td>    <u>#define __SWIFT_UNAVAILABLE_MSG(_msg)         __OS_AVAILABILITY_MSG(swift,unavailable,_msg)</u></td></tr>
+<tr><th id="402">402</th><td>  <u>#<span data-ppcond="399">endif</span></u></td></tr>
+<tr><th id="403">403</th><td><u>#<span data-ppcond="398">endif</span></u></td></tr>
+<tr><th id="404">404</th><td></td></tr>
+<tr><th id="405">405</th><td><u>#<span data-ppcond="405">ifndef</span> <span class="macro" data-ref="_M/__SWIFT_UNAVAILABLE">__SWIFT_UNAVAILABLE</span></u></td></tr>
+<tr><th id="406">406</th><td>  <u>#define <dfn class="macro" id="_M/__SWIFT_UNAVAILABLE" data-ref="_M/__SWIFT_UNAVAILABLE">__SWIFT_UNAVAILABLE</dfn></u></td></tr>
+<tr><th id="407">407</th><td><u>#<span data-ppcond="405">endif</span></u></td></tr>
+<tr><th id="408">408</th><td></td></tr>
+<tr><th id="409">409</th><td><u>#<span data-ppcond="409">ifndef</span> <span class="macro" data-ref="_M/__SWIFT_UNAVAILABLE_MSG">__SWIFT_UNAVAILABLE_MSG</span></u></td></tr>
+<tr><th id="410">410</th><td>  <u>#define <dfn class="macro" id="_M/__SWIFT_UNAVAILABLE_MSG" data-ref="_M/__SWIFT_UNAVAILABLE_MSG">__SWIFT_UNAVAILABLE_MSG</dfn>(_msg)</u></td></tr>
+<tr><th id="411">411</th><td><u>#<span data-ppcond="409">endif</span></u></td></tr>
+<tr><th id="412">412</th><td></td></tr>
+<tr><th id="413">413</th><td><i>/*</i></td></tr>
+<tr><th id="414">414</th><td><i> Macros for defining which versions/platform a given symbol can be used.</i></td></tr>
+<tr><th id="415">415</th><td><i> </i></td></tr>
+<tr><th id="416">416</th><td><i> @see <a href="http://clang.llvm.org/docs/AttributeReference.html#availability">http://clang.llvm.org/docs/AttributeReference.html#availability</a></i></td></tr>
+<tr><th id="417">417</th><td><i> </i></td></tr>
+<tr><th id="418">418</th><td><i> * Note that these macros are only compatible with clang compilers that</i></td></tr>
+<tr><th id="419">419</th><td><i> * support the following target selection options:</i></td></tr>
+<tr><th id="420">420</th><td><i> *</i></td></tr>
+<tr><th id="421">421</th><td><i> * -mmacosx-version-min</i></td></tr>
+<tr><th id="422">422</th><td><i> * -miphoneos-version-min</i></td></tr>
+<tr><th id="423">423</th><td><i> * -mwatchos-version-min</i></td></tr>
+<tr><th id="424">424</th><td><i> * -mtvos-version-min</i></td></tr>
+<tr><th id="425">425</th><td><i> */</i></td></tr>
+<tr><th id="426">426</th><td></td></tr>
+<tr><th id="427">427</th><td><u>#<span data-ppcond="427">if</span> defined(<span class="macro" data-ref="_M/__has_feature">__has_feature</span>) &amp;&amp; defined(<span class="macro" data-ref="_M/__has_attribute">__has_attribute</span>)</u></td></tr>
+<tr><th id="428">428</th><td> <u>#<span data-ppcond="428">if</span> <span class="macro" title="" data-ref="_M/__has_attribute">__has_attribute</span>(availability)</u></td></tr>
+<tr><th id="429">429</th><td></td></tr>
+<tr><th id="430">430</th><td>    <i>/*</i></td></tr>
+<tr><th id="431">431</th><td><i>     * API Introductions</i></td></tr>
+<tr><th id="432">432</th><td><i>     *</i></td></tr>
+<tr><th id="433">433</th><td><i>     * Use to specify the release that a particular API became available.</i></td></tr>
+<tr><th id="434">434</th><td><i>     *</i></td></tr>
+<tr><th id="435">435</th><td><i>     * Platform names:</i></td></tr>
+<tr><th id="436">436</th><td><i>     *   macos, ios, tvos, watchos</i></td></tr>
+<tr><th id="437">437</th><td><i>     *</i></td></tr>
+<tr><th id="438">438</th><td><i>     * Examples:</i></td></tr>
+<tr><th id="439">439</th><td><i>     *    __API_AVAILABLE(macos(10.10))</i></td></tr>
+<tr><th id="440">440</th><td><i>     *    __API_AVAILABLE(macos(10.9), ios(10.0))</i></td></tr>
+<tr><th id="441">441</th><td><i>     *    __API_AVAILABLE(macos(10.4), ios(8.0), watchos(2.0), tvos(10.0))</i></td></tr>
+<tr><th id="442">442</th><td><i>     */</i></td></tr>
+<tr><th id="443">443</th><td>    <u>#define <dfn class="macro" id="_M/__API_AVAILABLE" data-ref="_M/__API_AVAILABLE">__API_AVAILABLE</dfn>(...) __API_AVAILABLE_GET_MACRO(__VA_ARGS__,__API_AVAILABLE6, __API_AVAILABLE5, __API_AVAILABLE4, __API_AVAILABLE3, __API_AVAILABLE2, __API_AVAILABLE1, 0)(__VA_ARGS__)</u></td></tr>
+<tr><th id="444">444</th><td></td></tr>
+<tr><th id="445">445</th><td></td></tr>
+<tr><th id="446">446</th><td>    <i>/*</i></td></tr>
+<tr><th id="447">447</th><td><i>     * API Deprecations</i></td></tr>
+<tr><th id="448">448</th><td><i>     *</i></td></tr>
+<tr><th id="449">449</th><td><i>     * Use to specify the release that a particular API became unavailable.</i></td></tr>
+<tr><th id="450">450</th><td><i>     *</i></td></tr>
+<tr><th id="451">451</th><td><i>     * Platform names:</i></td></tr>
+<tr><th id="452">452</th><td><i>     *   macos, ios, tvos, watchos</i></td></tr>
+<tr><th id="453">453</th><td><i>     *</i></td></tr>
+<tr><th id="454">454</th><td><i>     * Examples:</i></td></tr>
+<tr><th id="455">455</th><td><i>     *</i></td></tr>
+<tr><th id="456">456</th><td><i>     *    __API_DEPRECATED("No longer supported", macos(10.4, 10.8))</i></td></tr>
+<tr><th id="457">457</th><td><i>     *    __API_DEPRECATED("No longer supported", macos(10.4, 10.8), ios(2.0, 3.0), watchos(2.0, 3.0), tvos(9.0, 10.0))</i></td></tr>
+<tr><th id="458">458</th><td><i>     *</i></td></tr>
+<tr><th id="459">459</th><td><i>     *    __API_DEPRECATED_WITH_REPLACEMENT("-setName:", tvos(10.0, 10.4), ios(9.0, 10.0))</i></td></tr>
+<tr><th id="460">460</th><td><i>     *    __API_DEPRECATED_WITH_REPLACEMENT("SomeClassName", macos(10.4, 10.6), watchos(2.0, 3.0))</i></td></tr>
+<tr><th id="461">461</th><td><i>     */</i></td></tr>
+<tr><th id="462">462</th><td>    <u>#define <dfn class="macro" id="_M/__API_DEPRECATED" data-ref="_M/__API_DEPRECATED">__API_DEPRECATED</dfn>(...) __API_DEPRECATED_MSG_GET_MACRO(__VA_ARGS__,__API_DEPRECATED_MSG7,__API_DEPRECATED_MSG6,__API_DEPRECATED_MSG5,__API_DEPRECATED_MSG4,__API_DEPRECATED_MSG3,__API_DEPRECATED_MSG2,__API_DEPRECATED_MSG1, 0)(__VA_ARGS__)</u></td></tr>
+<tr><th id="463">463</th><td>    <u>#define <dfn class="macro" id="_M/__API_DEPRECATED_WITH_REPLACEMENT" data-ref="_M/__API_DEPRECATED_WITH_REPLACEMENT">__API_DEPRECATED_WITH_REPLACEMENT</dfn>(...) __API_DEPRECATED_REP_GET_MACRO(__VA_ARGS__,__API_DEPRECATED_REP7,__API_DEPRECATED_REP6,__API_DEPRECATED_REP5,__API_DEPRECATED_REP4,__API_DEPRECATED_REP3,__API_DEPRECATED_REP2,__API_DEPRECATED_REP1, 0)(__VA_ARGS__)</u></td></tr>
+<tr><th id="464">464</th><td></td></tr>
+<tr><th id="465">465</th><td>    <i>/*</i></td></tr>
+<tr><th id="466">466</th><td><i>     * API Unavailability</i></td></tr>
+<tr><th id="467">467</th><td><i>     * Use to specify that an API is unavailable for a particular platform.</i></td></tr>
+<tr><th id="468">468</th><td><i>     *</i></td></tr>
+<tr><th id="469">469</th><td><i>     * Example:</i></td></tr>
+<tr><th id="470">470</th><td><i>     *    __API_UNAVAILABLE(macos)</i></td></tr>
+<tr><th id="471">471</th><td><i>     *    __API_UNAVAILABLE(watchos, tvos)</i></td></tr>
+<tr><th id="472">472</th><td><i>     */</i></td></tr>
+<tr><th id="473">473</th><td>    <u>#define <dfn class="macro" id="_M/__API_UNAVAILABLE" data-ref="_M/__API_UNAVAILABLE">__API_UNAVAILABLE</dfn>(...) __API_UNAVAILABLE_GET_MACRO(__VA_ARGS__,__API_UNAVAILABLE6,__API_UNAVAILABLE5,__API_UNAVAILABLE4,__API_UNAVAILABLE3,__API_UNAVAILABLE2,__API_UNAVAILABLE1, 0)(__VA_ARGS__)</u></td></tr>
+<tr><th id="474">474</th><td> <u>#<span data-ppcond="428">else</span></u> </td></tr>
+<tr><th id="475">475</th><td></td></tr>
+<tr><th id="476">476</th><td>    <i>/* </i></td></tr>
+<tr><th id="477">477</th><td><i>     * Evaluate to nothing for compilers that don't support availability.</i></td></tr>
+<tr><th id="478">478</th><td><i>     */</i></td></tr>
+<tr><th id="479">479</th><td>    </td></tr>
+<tr><th id="480">480</th><td>    <u>#define __API_AVAILABLE(...)</u></td></tr>
+<tr><th id="481">481</th><td>    <u>#define __API_DEPRECATED(...)</u></td></tr>
+<tr><th id="482">482</th><td>    <u>#define __API_DEPRECATED_WITH_REPLACEMENT(...)</u></td></tr>
+<tr><th id="483">483</th><td>    <u>#define __API_UNAVAILABLE(...)</u></td></tr>
+<tr><th id="484">484</th><td> <u>#<span data-ppcond="428">endif</span> /* __has_attribute(availability) */</u></td></tr>
+<tr><th id="485">485</th><td><u>#<span data-ppcond="427">else</span></u></td></tr>
+<tr><th id="486">486</th><td></td></tr>
+<tr><th id="487">487</th><td>    <i>/* </i></td></tr>
+<tr><th id="488">488</th><td><i>     * Evaluate to nothing for compilers that don't support clang language extensions.</i></td></tr>
+<tr><th id="489">489</th><td><i>     */</i></td></tr>
+<tr><th id="490">490</th><td>    </td></tr>
+<tr><th id="491">491</th><td>    <u>#define __API_AVAILABLE(...)</u></td></tr>
+<tr><th id="492">492</th><td>    <u>#define __API_DEPRECATED(...)</u></td></tr>
+<tr><th id="493">493</th><td>    <u>#define __API_DEPRECATED_WITH_REPLACEMENT(...)</u></td></tr>
+<tr><th id="494">494</th><td>    <u>#define __API_UNAVAILABLE(...)</u></td></tr>
+<tr><th id="495">495</th><td><u>#<span data-ppcond="427">endif</span> /*  #if defined(__has_feature) &amp;&amp; defined(__has_attribute) */</u></td></tr>
+<tr><th id="496">496</th><td></td></tr>
+<tr><th id="497">497</th><td><u>#<span data-ppcond="497">if</span> <span class="macro" title="" data-ref="_M/__has_include">__has_include</span>(&lt;AvailabilityProhibitedInternal.h&gt;)</u></td></tr>
+<tr><th id="498">498</th><td>  <u>#include &lt;AvailabilityProhibitedInternal.h&gt;</u></td></tr>
+<tr><th id="499">499</th><td><u>#<span data-ppcond="497">endif</span></u></td></tr>
+<tr><th id="500">500</th><td></td></tr>
+<tr><th id="501">501</th><td><u>#<span data-ppcond="24">endif</span> /* __AVAILABILITY__ */</u></td></tr>
+<tr><th id="502">502</th><td></td></tr>
+<tr><th id="503">503</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../xv6/mkfs.c.html'>xv6/mkfs.c</a><br/>Generated on <em>2019-Jul-19</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 2.1
+<br/>Generator usage only permitted with license.</p>
+</div></body></html>

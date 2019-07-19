@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>swtch.S source code [xv6/swtch.S] - Woboq Code Browser</title>
+<link rel="stylesheet" href="https://code.woboq.org/data/qtcreator.css" title="QtCreator"/>
+<link rel="alternate stylesheet" href="https://code.woboq.org/data/kdevelop.css" title="KDevelop"/>
+<script type="text/javascript" src="https://code.woboq.org/data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="https://code.woboq.org/data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'xv6/swtch.S'; var root_path = '..'; var data_path = 'https://code.woboq.org/data';</script>
+<script src='https://code.woboq.org/data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Browse the source code of </span><a href='./'>xv6</a>/<a href='swtch.S.html'>swtch.S</a></h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><u><span class='error' title="expected identifier or &apos;(&apos;">#</span> Context switch</u></td></tr>
+<tr><th id="2">2</th><td><u>#</u></td></tr>
+<tr><th id="3">3</th><td><u>#   void swtch(struct context **old, struct context *new);</u><span class='error' title="expected identifier or &apos;(&apos;"></span></td></tr>
+<tr><th id="4">4</th><td><u>#</u> </td></tr>
+<tr><th id="5">5</th><td><u># Save the current registers on the stack, creating</u></td></tr>
+<tr><th id="6">6</th><td><u># a struct context, and save its address in *old.</u></td></tr>
+<tr><th id="7">7</th><td><u># Switch stacks to new and pop previously-saved registers.</u></td></tr>
+<tr><th id="8">8</th><td></td></tr>
+<tr><th id="9">9</th><td>.globl swtch</td></tr>
+<tr><th id="10">10</th><td>swtch:</td></tr>
+<tr><th id="11">11</th><td>  movl <var>4</var>(%esp), %eax</td></tr>
+<tr><th id="12">12</th><td>  movl <var>8</var>(%esp), %edx</td></tr>
+<tr><th id="13">13</th><td></td></tr>
+<tr><th id="14">14</th><td>  <u># Save old callee-saved registers</u></td></tr>
+<tr><th id="15">15</th><td>  pushl %ebp</td></tr>
+<tr><th id="16">16</th><td>  pushl %ebx</td></tr>
+<tr><th id="17">17</th><td>  pushl %esi</td></tr>
+<tr><th id="18">18</th><td>  pushl %edi</td></tr>
+<tr><th id="19">19</th><td></td></tr>
+<tr><th id="20">20</th><td>  <u># Switch stacks</u></td></tr>
+<tr><th id="21">21</th><td>  movl %esp, (%eax)</td></tr>
+<tr><th id="22">22</th><td>  movl %edx, %esp</td></tr>
+<tr><th id="23">23</th><td></td></tr>
+<tr><th id="24">24</th><td>  <u># Load new callee-saved registers</u></td></tr>
+<tr><th id="25">25</th><td>  popl %edi</td></tr>
+<tr><th id="26">26</th><td>  popl %esi</td></tr>
+<tr><th id="27">27</th><td>  popl %ebx</td></tr>
+<tr><th id="28">28</th><td>  popl %ebp</td></tr>
+<tr><th id="29">29</th><td>  ret</td></tr>
+<tr><th id="30">30</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2019-Jul-19</em> from project xv6 revision <em>xv6-rev11</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 2.1
+<br/>Generator usage only permitted with license.</p>
+</div></body></html>

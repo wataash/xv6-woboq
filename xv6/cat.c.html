@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>cat.c source code [xv6/cat.c] - Woboq Code Browser</title>
+<meta name="woboq:interestingDefinitions" content="main "/>
+<link rel="stylesheet" href="https://code.woboq.org/data/qtcreator.css" title="QtCreator"/>
+<link rel="alternate stylesheet" href="https://code.woboq.org/data/kdevelop.css" title="KDevelop"/>
+<script type="text/javascript" src="https://code.woboq.org/data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="https://code.woboq.org/data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'xv6/cat.c'; var root_path = '..'; var data_path = 'https://code.woboq.org/data';</script>
+<script src='https://code.woboq.org/data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Browse the source code of </span><a href='./'>xv6</a>/<a href='cat.c.html'>cat.c</a></h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><u>#include <a href="types.h.html">"types.h"</a></u></td></tr>
+<tr><th id="2">2</th><td><u>#include <a href="stat.h.html">"stat.h"</a></u></td></tr>
+<tr><th id="3">3</th><td><u>#include <a href="user.h.html">"user.h"</a></u></td></tr>
+<tr><th id="4">4</th><td></td></tr>
+<tr><th id="5">5</th><td><em>char</em> <dfn class="decl def" id="buf" title='buf' data-ref="buf">buf</dfn>[<var>512</var>];</td></tr>
+<tr><th id="6">6</th><td></td></tr>
+<tr><th id="7">7</th><td><em>void</em></td></tr>
+<tr><th id="8">8</th><td><dfn class="decl def" id="cat" title='cat' data-ref="cat">cat</dfn>(<em>int</em> <dfn class="local col4 decl" id="4fd" title='fd' data-type='int' data-ref="4fd">fd</dfn>)</td></tr>
+<tr><th id="9">9</th><td>{</td></tr>
+<tr><th id="10">10</th><td>  <em>int</em> <dfn class="local col5 decl" id="5n" title='n' data-type='int' data-ref="5n">n</dfn>;</td></tr>
+<tr><th id="11">11</th><td></td></tr>
+<tr><th id="12">12</th><td>  <b>while</b>((<a class="local col5 ref" href="#5n" title='n' data-ref="5n">n</a> = <a class="ref" href="user.h.html#read" title='read' data-ref="read">read</a>(<a class="local col4 ref" href="#4fd" title='fd' data-ref="4fd">fd</a>, <a class="ref" href="#buf" title='buf' data-ref="buf">buf</a>, <b>sizeof</b>(<a class="ref" href="#buf" title='buf' data-ref="buf">buf</a>))) &gt; <var>0</var>) {</td></tr>
+<tr><th id="13">13</th><td>    <b>if</b> (<a class="ref" href="user.h.html#write" title='write' data-ref="write">write</a>(<var>1</var>, <a class="ref" href="#buf" title='buf' data-ref="buf">buf</a>, <a class="local col5 ref" href="#5n" title='n' data-ref="5n">n</a>) != <a class="local col5 ref" href="#5n" title='n' data-ref="5n">n</a>) {</td></tr>
+<tr><th id="14">14</th><td>      <a class="ref" href="user.h.html#printf" title='printf' data-ref="printf">printf</a>(<var>1</var>, <q>"cat: write error\n"</q>);</td></tr>
+<tr><th id="15">15</th><td>      <a class="ref" href="user.h.html#exit" title='exit' data-ref="exit">exit</a>();</td></tr>
+<tr><th id="16">16</th><td>    }</td></tr>
+<tr><th id="17">17</th><td>  }</td></tr>
+<tr><th id="18">18</th><td>  <b>if</b>(<a class="local col5 ref" href="#5n" title='n' data-ref="5n">n</a> &lt; <var>0</var>){</td></tr>
+<tr><th id="19">19</th><td>    <a class="ref" href="user.h.html#printf" title='printf' data-ref="printf">printf</a>(<var>1</var>, <q>"cat: read error\n"</q>);</td></tr>
+<tr><th id="20">20</th><td>    <a class="ref" href="user.h.html#exit" title='exit' data-ref="exit">exit</a>();</td></tr>
+<tr><th id="21">21</th><td>  }</td></tr>
+<tr><th id="22">22</th><td>}</td></tr>
+<tr><th id="23">23</th><td></td></tr>
+<tr><th id="24">24</th><td><em>int</em></td></tr>
+<tr><th id="25">25</th><td><dfn class="decl def" id="main" title='main' data-ref="main">main</dfn>(<em>int</em> <dfn class="local col6 decl" id="6argc" title='argc' data-type='int' data-ref="6argc">argc</dfn>, <em>char</em> *<dfn class="local col7 decl" id="7argv" title='argv' data-type='char **' data-ref="7argv">argv</dfn>[])</td></tr>
+<tr><th id="26">26</th><td>{</td></tr>
+<tr><th id="27">27</th><td>  <em>int</em> <dfn class="local col8 decl" id="8fd" title='fd' data-type='int' data-ref="8fd">fd</dfn>, <dfn class="local col9 decl" id="9i" title='i' data-type='int' data-ref="9i">i</dfn>;</td></tr>
+<tr><th id="28">28</th><td></td></tr>
+<tr><th id="29">29</th><td>  <b>if</b>(<a class="local col6 ref" href="#6argc" title='argc' data-ref="6argc">argc</a> &lt;= <var>1</var>){</td></tr>
+<tr><th id="30">30</th><td>    <a class="ref" href="#cat" title='cat' data-ref="cat">cat</a>(<var>0</var>);</td></tr>
+<tr><th id="31">31</th><td>    <a class="ref" href="user.h.html#exit" title='exit' data-ref="exit">exit</a>();</td></tr>
+<tr><th id="32">32</th><td>  }</td></tr>
+<tr><th id="33">33</th><td></td></tr>
+<tr><th id="34">34</th><td>  <b>for</b>(<a class="local col9 ref" href="#9i" title='i' data-ref="9i">i</a> = <var>1</var>; <a class="local col9 ref" href="#9i" title='i' data-ref="9i">i</a> &lt; <a class="local col6 ref" href="#6argc" title='argc' data-ref="6argc">argc</a>; <a class="local col9 ref" href="#9i" title='i' data-ref="9i">i</a>++){</td></tr>
+<tr><th id="35">35</th><td>    <b>if</b>((<a class="local col8 ref" href="#8fd" title='fd' data-ref="8fd">fd</a> = <a class="ref" href="user.h.html#open" title='open' data-ref="open">open</a>(<a class="local col7 ref" href="#7argv" title='argv' data-ref="7argv">argv</a>[<a class="local col9 ref" href="#9i" title='i' data-ref="9i">i</a>], <var>0</var>)) &lt; <var>0</var>){</td></tr>
+<tr><th id="36">36</th><td>      <a class="ref" href="user.h.html#printf" title='printf' data-ref="printf">printf</a>(<var>1</var>, <q>"cat: cannot open %s\n"</q>, <a class="local col7 ref" href="#7argv" title='argv' data-ref="7argv">argv</a>[<a class="local col9 ref" href="#9i" title='i' data-ref="9i">i</a>]);</td></tr>
+<tr><th id="37">37</th><td>      <a class="ref" href="user.h.html#exit" title='exit' data-ref="exit">exit</a>();</td></tr>
+<tr><th id="38">38</th><td>    }</td></tr>
+<tr><th id="39">39</th><td>    <a class="ref" href="#cat" title='cat' data-ref="cat">cat</a>(<a class="local col8 ref" href="#8fd" title='fd' data-ref="8fd">fd</a>);</td></tr>
+<tr><th id="40">40</th><td>    <a class="ref" href="user.h.html#close" title='close' data-ref="close">close</a>(<a class="local col8 ref" href="#8fd" title='fd' data-ref="8fd">fd</a>);</td></tr>
+<tr><th id="41">41</th><td>  }</td></tr>
+<tr><th id="42">42</th><td>  <a class="ref" href="user.h.html#exit" title='exit' data-ref="exit">exit</a>();</td></tr>
+<tr><th id="43">43</th><td>}</td></tr>
+<tr><th id="44">44</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2019-Jul-19</em> from project xv6 revision <em>xv6-rev11</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 2.1
+<br/>Generator usage only permitted with license.</p>
+</div></body></html>

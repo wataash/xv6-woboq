@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>_OSByteOrder.h source code [include/libkern/i386/_OSByteOrder.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="https://code.woboq.org/data/qtcreator.css" title="QtCreator"/>
+<link rel="alternate stylesheet" href="https://code.woboq.org/data/kdevelop.css" title="KDevelop"/>
+<script type="text/javascript" src="https://code.woboq.org/data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="https://code.woboq.org/data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/libkern/i386/_OSByteOrder.h'; var root_path = '../../..'; var data_path = 'https://code.woboq.org/data';</script>
+<script src='https://code.woboq.org/data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Browse the source code of </span><a href='../..'>include</a>/<a href='..'>libkern</a>/<a href='./'>i386</a>/<a href='_OSByteOrder.h.html'>_OSByteOrder.h</a></h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (c) 2006-2012 Apple Inc. All rights reserved.</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * @APPLE_OSREFERENCE_LICENSE_HEADER_START@</i></td></tr>
+<tr><th id="5">5</th><td><i> *</i></td></tr>
+<tr><th id="6">6</th><td><i> * This file contains Original Code and/or Modifications of Original Code</i></td></tr>
+<tr><th id="7">7</th><td><i> * as defined in and that are subject to the Apple Public Source License</i></td></tr>
+<tr><th id="8">8</th><td><i> * Version 2.0 (the 'License'). You may not use this file except in</i></td></tr>
+<tr><th id="9">9</th><td><i> * compliance with the License. The rights granted to you under the License</i></td></tr>
+<tr><th id="10">10</th><td><i> * may not be used to create, or enable the creation or redistribution of,</i></td></tr>
+<tr><th id="11">11</th><td><i> * unlawful or unlicensed copies of an Apple operating system, or to</i></td></tr>
+<tr><th id="12">12</th><td><i> * circumvent, violate, or enable the circumvention or violation of, any</i></td></tr>
+<tr><th id="13">13</th><td><i> * terms of an Apple operating system software license agreement.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * Please obtain a copy of the License at</i></td></tr>
+<tr><th id="16">16</th><td><i> * <a href="http://www.opensource.apple.com/apsl/">http://www.opensource.apple.com/apsl/</a> and read it before using this file.</i></td></tr>
+<tr><th id="17">17</th><td><i> *</i></td></tr>
+<tr><th id="18">18</th><td><i> * The Original Code and all software distributed under the License are</i></td></tr>
+<tr><th id="19">19</th><td><i> * distributed on an 'AS IS' basis, WITHOUT WARRANTY OF ANY KIND, EITHER</i></td></tr>
+<tr><th id="20">20</th><td><i> * EXPRESS OR IMPLIED, AND APPLE HEREBY DISCLAIMS ALL SUCH WARRANTIES,</i></td></tr>
+<tr><th id="21">21</th><td><i> * INCLUDING WITHOUT LIMITATION, ANY WARRANTIES OF MERCHANTABILITY,</i></td></tr>
+<tr><th id="22">22</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE, QUIET ENJOYMENT OR NON-INFRINGEMENT.</i></td></tr>
+<tr><th id="23">23</th><td><i> * Please see the License for the specific language governing rights and</i></td></tr>
+<tr><th id="24">24</th><td><i> * limitations under the License.</i></td></tr>
+<tr><th id="25">25</th><td><i> *</i></td></tr>
+<tr><th id="26">26</th><td><i> * @APPLE_OSREFERENCE_LICENSE_HEADER_END@</i></td></tr>
+<tr><th id="27">27</th><td><i> */</i></td></tr>
+<tr><th id="28">28</th><td></td></tr>
+<tr><th id="29">29</th><td><u>#<span data-ppcond="29">ifndef</span> <span class="macro" data-ref="_M/_OS__OSBYTEORDERI386_H">_OS__OSBYTEORDERI386_H</span></u></td></tr>
+<tr><th id="30">30</th><td><u>#define <dfn class="macro" id="_M/_OS__OSBYTEORDERI386_H" data-ref="_M/_OS__OSBYTEORDERI386_H">_OS__OSBYTEORDERI386_H</dfn></u></td></tr>
+<tr><th id="31">31</th><td></td></tr>
+<tr><th id="32">32</th><td><u>#<span data-ppcond="32">if</span> !defined(<span class="macro" data-ref="_M/__DARWIN_OS_INLINE">__DARWIN_OS_INLINE</span>)</u></td></tr>
+<tr><th id="33">33</th><td><u># <span data-ppcond="33">if</span> defined(<span class="macro" data-ref="_M/__STDC_VERSION__">__STDC_VERSION__</span>) &amp;&amp; <span class="macro" title="201112L" data-ref="_M/__STDC_VERSION__">__STDC_VERSION__</span> &gt;= 199901L</u></td></tr>
+<tr><th id="34">34</th><td><u>#        define <dfn class="macro" id="_M/__DARWIN_OS_INLINE" data-ref="_M/__DARWIN_OS_INLINE">__DARWIN_OS_INLINE</dfn> static inline</u></td></tr>
+<tr><th id="35">35</th><td><u># <span data-ppcond="33">elif</span> defined(__MWERKS__) || defined(__cplusplus)</u></td></tr>
+<tr><th id="36">36</th><td><u>#        define __DARWIN_OS_INLINE static inline</u></td></tr>
+<tr><th id="37">37</th><td><u># else</u></td></tr>
+<tr><th id="38">38</th><td><u>#        define __DARWIN_OS_INLINE static __inline__</u></td></tr>
+<tr><th id="39">39</th><td><u># <span data-ppcond="33">endif</span></u></td></tr>
+<tr><th id="40">40</th><td><u>#<span data-ppcond="32">endif</span></u></td></tr>
+<tr><th id="41">41</th><td></td></tr>
+<tr><th id="42">42</th><td><i>/* Generic byte swapping functions. */</i></td></tr>
+<tr><th id="43">43</th><td></td></tr>
+<tr><th id="44">44</th><td><a class="macro" href="#34" title="static inline" data-ref="_M/__DARWIN_OS_INLINE">__DARWIN_OS_INLINE</a></td></tr>
+<tr><th id="45">45</th><td><a class="typedef" href="../../i386/_types.h.html#__uint16_t" title='__uint16_t' data-type='unsigned short' data-ref="__uint16_t">__uint16_t</a></td></tr>
+<tr><th id="46">46</th><td><dfn class="decl def" id="_OSSwapInt16" title='_OSSwapInt16' data-ref="_OSSwapInt16">_OSSwapInt16</dfn>(</td></tr>
+<tr><th id="47">47</th><td>	<a class="typedef" href="../../i386/_types.h.html#__uint16_t" title='__uint16_t' data-type='unsigned short' data-ref="__uint16_t">__uint16_t</a>        <dfn class="local col5 decl" id="95_data" title='_data' data-type='__uint16_t' data-ref="95_data">_data</dfn></td></tr>
+<tr><th id="48">48</th><td>	)</td></tr>
+<tr><th id="49">49</th><td>{</td></tr>
+<tr><th id="50">50</th><td>	<b>return</b> (<a class="typedef" href="../../i386/_types.h.html#__uint16_t" title='__uint16_t' data-type='unsigned short' data-ref="__uint16_t">__uint16_t</a>)((<a class="local col5 ref" href="#95_data" title='_data' data-ref="95_data">_data</a> &lt;&lt; <var>8</var>) | (<a class="local col5 ref" href="#95_data" title='_data' data-ref="95_data">_data</a> &gt;&gt; <var>8</var>));</td></tr>
+<tr><th id="51">51</th><td>}</td></tr>
+<tr><th id="52">52</th><td></td></tr>
+<tr><th id="53">53</th><td><a class="macro" href="#34" title="static inline" data-ref="_M/__DARWIN_OS_INLINE">__DARWIN_OS_INLINE</a></td></tr>
+<tr><th id="54">54</th><td><a class="typedef" href="../../i386/_types.h.html#__uint32_t" title='__uint32_t' data-type='unsigned int' data-ref="__uint32_t">__uint32_t</a></td></tr>
+<tr><th id="55">55</th><td><dfn class="decl def" id="_OSSwapInt32" title='_OSSwapInt32' data-ref="_OSSwapInt32">_OSSwapInt32</dfn>(</td></tr>
+<tr><th id="56">56</th><td>	<a class="typedef" href="../../i386/_types.h.html#__uint32_t" title='__uint32_t' data-type='unsigned int' data-ref="__uint32_t">__uint32_t</a>        <dfn class="local col6 decl" id="96_data" title='_data' data-type='__uint32_t' data-ref="96_data">_data</dfn></td></tr>
+<tr><th id="57">57</th><td>	)</td></tr>
+<tr><th id="58">58</th><td>{</td></tr>
+<tr><th id="59">59</th><td><u>#<span data-ppcond="59">if</span> defined(<span class="macro" data-ref="_M/__llvm__">__llvm__</span>)</u></td></tr>
+<tr><th id="60">60</th><td>	<b>return</b> <a class="ref" href="#60" title='__builtin_bswap32' data-ref="__builtin_bswap32">__builtin_bswap32</a>(<a class="local col6 ref" href="#96_data" title='_data' data-ref="96_data">_data</a>);</td></tr>
+<tr><th id="61">61</th><td><u>#<span data-ppcond="59">else</span></u></td></tr>
+<tr><th id="62">62</th><td>	<b>__asm__</b> (<q>"bswap   %0"</q> : <q>"+r"</q> (_data));</td></tr>
+<tr><th id="63">63</th><td>	<b>return</b> _data;</td></tr>
+<tr><th id="64">64</th><td><u>#<span data-ppcond="59">endif</span></u></td></tr>
+<tr><th id="65">65</th><td>}</td></tr>
+<tr><th id="66">66</th><td></td></tr>
+<tr><th id="67">67</th><td><u>#<span data-ppcond="67">if</span> defined(<span class="macro" data-ref="_M/__llvm__">__llvm__</span>)</u></td></tr>
+<tr><th id="68">68</th><td><a class="macro" href="#34" title="static inline" data-ref="_M/__DARWIN_OS_INLINE">__DARWIN_OS_INLINE</a></td></tr>
+<tr><th id="69">69</th><td><a class="typedef" href="../../i386/_types.h.html#__uint64_t" title='__uint64_t' data-type='unsigned long long' data-ref="__uint64_t">__uint64_t</a></td></tr>
+<tr><th id="70">70</th><td><dfn class="decl def" id="_OSSwapInt64" title='_OSSwapInt64' data-ref="_OSSwapInt64">_OSSwapInt64</dfn>(</td></tr>
+<tr><th id="71">71</th><td>	<a class="typedef" href="../../i386/_types.h.html#__uint64_t" title='__uint64_t' data-type='unsigned long long' data-ref="__uint64_t">__uint64_t</a>        <dfn class="local col7 decl" id="97_data" title='_data' data-type='__uint64_t' data-ref="97_data">_data</dfn></td></tr>
+<tr><th id="72">72</th><td>	)</td></tr>
+<tr><th id="73">73</th><td>{</td></tr>
+<tr><th id="74">74</th><td>	<b>return</b> <a class="ref" href="#74" title='__builtin_bswap64' data-ref="__builtin_bswap64">__builtin_bswap64</a>(<a class="local col7 ref" href="#97_data" title='_data' data-ref="97_data">_data</a>);</td></tr>
+<tr><th id="75">75</th><td>}</td></tr>
+<tr><th id="76">76</th><td></td></tr>
+<tr><th id="77">77</th><td><u>#<span data-ppcond="67">elif</span> defined(__i386__)</u></td></tr>
+<tr><th id="78">78</th><td>__DARWIN_OS_INLINE</td></tr>
+<tr><th id="79">79</th><td>__uint64_t</td></tr>
+<tr><th id="80">80</th><td>_OSSwapInt64(</td></tr>
+<tr><th id="81">81</th><td>	__uint64_t        _data</td></tr>
+<tr><th id="82">82</th><td>	)</td></tr>
+<tr><th id="83">83</th><td>{</td></tr>
+<tr><th id="84">84</th><td>	<b>__asm__</b> (<q>"bswap   %%eax\n\t"</q></td></tr>
+<tr><th id="85">85</th><td>                 <q>"bswap   %%edx\n\t"</q></td></tr>
+<tr><th id="86">86</th><td>                 <q>"xchgl   %%eax, %%edx"</q></td></tr>
+<tr><th id="87">87</th><td>                 : <q>"+A"</q> (_data));</td></tr>
+<tr><th id="88">88</th><td>	<b>return</b> _data;</td></tr>
+<tr><th id="89">89</th><td>}</td></tr>
+<tr><th id="90">90</th><td><u>#elif defined(__x86_64__)</u></td></tr>
+<tr><th id="91">91</th><td>__DARWIN_OS_INLINE</td></tr>
+<tr><th id="92">92</th><td>__uint64_t</td></tr>
+<tr><th id="93">93</th><td>_OSSwapInt64(</td></tr>
+<tr><th id="94">94</th><td>	__uint64_t        _data</td></tr>
+<tr><th id="95">95</th><td>	)</td></tr>
+<tr><th id="96">96</th><td>{</td></tr>
+<tr><th id="97">97</th><td>	<b>__asm__</b> (<q>"bswap   %0"</q> : <q>"+r"</q> (_data));</td></tr>
+<tr><th id="98">98</th><td>	<b>return</b> _data;</td></tr>
+<tr><th id="99">99</th><td>}</td></tr>
+<tr><th id="100">100</th><td><u>#else</u></td></tr>
+<tr><th id="101">101</th><td><u>#error Unknown architecture</u></td></tr>
+<tr><th id="102">102</th><td><u>#<span data-ppcond="67">endif</span></u></td></tr>
+<tr><th id="103">103</th><td></td></tr>
+<tr><th id="104">104</th><td><u>#<span data-ppcond="29">endif</span> /* ! _OS__OSBYTEORDERI386_H */</u></td></tr>
+<tr><th id="105">105</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../xv6/mkfs.c.html'>xv6/mkfs.c</a><br/>Generated on <em>2019-Jul-19</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 2.1
+<br/>Generator usage only permitted with license.</p>
+</div></body></html>

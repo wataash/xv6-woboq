@@ -1,0 +1,432 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>stdio.h source code [include/stdio.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="https://code.woboq.org/data/qtcreator.css" title="QtCreator"/>
+<link rel="alternate stylesheet" href="https://code.woboq.org/data/kdevelop.css" title="KDevelop"/>
+<script type="text/javascript" src="https://code.woboq.org/data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="https://code.woboq.org/data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/stdio.h'; var root_path = '..'; var data_path = 'https://code.woboq.org/data';</script>
+<script src='https://code.woboq.org/data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Browse the source code of </span><a href='./'>include</a>/<a href='stdio.h.html'>stdio.h</a></h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (c) 2000, 2005, 2007, 2009, 2010 Apple Inc. All rights reserved.</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * @APPLE_LICENSE_HEADER_START@</i></td></tr>
+<tr><th id="5">5</th><td><i> *</i></td></tr>
+<tr><th id="6">6</th><td><i> * This file contains Original Code and/or Modifications of Original Code</i></td></tr>
+<tr><th id="7">7</th><td><i> * as defined in and that are subject to the Apple Public Source License</i></td></tr>
+<tr><th id="8">8</th><td><i> * Version 2.0 (the 'License'). You may not use this file except in</i></td></tr>
+<tr><th id="9">9</th><td><i> * compliance with the License. Please obtain a copy of the License at</i></td></tr>
+<tr><th id="10">10</th><td><i> * <a href="http://www.opensource.apple.com/apsl/">http://www.opensource.apple.com/apsl/</a> and read it before using this</i></td></tr>
+<tr><th id="11">11</th><td><i> * file.</i></td></tr>
+<tr><th id="12">12</th><td><i> *</i></td></tr>
+<tr><th id="13">13</th><td><i> * The Original Code and all software distributed under the License are</i></td></tr>
+<tr><th id="14">14</th><td><i> * distributed on an 'AS IS' basis, WITHOUT WARRANTY OF ANY KIND, EITHER</i></td></tr>
+<tr><th id="15">15</th><td><i> * EXPRESS OR IMPLIED, AND APPLE HEREBY DISCLAIMS ALL SUCH WARRANTIES,</i></td></tr>
+<tr><th id="16">16</th><td><i> * INCLUDING WITHOUT LIMITATION, ANY WARRANTIES OF MERCHANTABILITY,</i></td></tr>
+<tr><th id="17">17</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE, QUIET ENJOYMENT OR NON-INFRINGEMENT.</i></td></tr>
+<tr><th id="18">18</th><td><i> * Please see the License for the specific language governing rights and</i></td></tr>
+<tr><th id="19">19</th><td><i> * limitations under the License.</i></td></tr>
+<tr><th id="20">20</th><td><i> *</i></td></tr>
+<tr><th id="21">21</th><td><i> * @APPLE_LICENSE_HEADER_END@</i></td></tr>
+<tr><th id="22">22</th><td><i> */</i></td></tr>
+<tr><th id="23">23</th><td><i>/*-</i></td></tr>
+<tr><th id="24">24</th><td><i> * Copyright (c) 1990, 1993</i></td></tr>
+<tr><th id="25">25</th><td><i> *	The Regents of the University of California.  All rights reserved.</i></td></tr>
+<tr><th id="26">26</th><td><i> *</i></td></tr>
+<tr><th id="27">27</th><td><i> * This code is derived from software contributed to Berkeley by</i></td></tr>
+<tr><th id="28">28</th><td><i> * Chris Torek.</i></td></tr>
+<tr><th id="29">29</th><td><i> *</i></td></tr>
+<tr><th id="30">30</th><td><i> * Redistribution and use in source and binary forms, with or without</i></td></tr>
+<tr><th id="31">31</th><td><i> * modification, are permitted provided that the following conditions</i></td></tr>
+<tr><th id="32">32</th><td><i> * are met:</i></td></tr>
+<tr><th id="33">33</th><td><i> * 1. Redistributions of source code must retain the above copyright</i></td></tr>
+<tr><th id="34">34</th><td><i> *    notice, this list of conditions and the following disclaimer.</i></td></tr>
+<tr><th id="35">35</th><td><i> * 2. Redistributions in binary form must reproduce the above copyright</i></td></tr>
+<tr><th id="36">36</th><td><i> *    notice, this list of conditions and the following disclaimer in the</i></td></tr>
+<tr><th id="37">37</th><td><i> *    documentation and/or other materials provided with the distribution.</i></td></tr>
+<tr><th id="38">38</th><td><i> * 3. All advertising materials mentioning features or use of this software</i></td></tr>
+<tr><th id="39">39</th><td><i> *    must display the following acknowledgement:</i></td></tr>
+<tr><th id="40">40</th><td><i> *	This product includes software developed by the University of</i></td></tr>
+<tr><th id="41">41</th><td><i> *	California, Berkeley and its contributors.</i></td></tr>
+<tr><th id="42">42</th><td><i> * 4. Neither the name of the University nor the names of its contributors</i></td></tr>
+<tr><th id="43">43</th><td><i> *    may be used to endorse or promote products derived from this software</i></td></tr>
+<tr><th id="44">44</th><td><i> *    without specific prior written permission.</i></td></tr>
+<tr><th id="45">45</th><td><i> *</i></td></tr>
+<tr><th id="46">46</th><td><i> * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND</i></td></tr>
+<tr><th id="47">47</th><td><i> * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE</i></td></tr>
+<tr><th id="48">48</th><td><i> * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE</i></td></tr>
+<tr><th id="49">49</th><td><i> * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE</i></td></tr>
+<tr><th id="50">50</th><td><i> * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL</i></td></tr>
+<tr><th id="51">51</th><td><i> * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS</i></td></tr>
+<tr><th id="52">52</th><td><i> * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)</i></td></tr>
+<tr><th id="53">53</th><td><i> * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT</i></td></tr>
+<tr><th id="54">54</th><td><i> * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY</i></td></tr>
+<tr><th id="55">55</th><td><i> * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF</i></td></tr>
+<tr><th id="56">56</th><td><i> * SUCH DAMAGE.</i></td></tr>
+<tr><th id="57">57</th><td><i> *</i></td></tr>
+<tr><th id="58">58</th><td><i> *	@(#)stdio.h	8.5 (Berkeley) 4/29/95</i></td></tr>
+<tr><th id="59">59</th><td><i> */</i></td></tr>
+<tr><th id="60">60</th><td></td></tr>
+<tr><th id="61">61</th><td><u>#<span data-ppcond="61">ifndef</span>	<span class="macro" data-ref="_M/_STDIO_H_">_STDIO_H_</span></u></td></tr>
+<tr><th id="62">62</th><td><u>#define	<dfn class="macro" id="_M/_STDIO_H_" data-ref="_M/_STDIO_H_">_STDIO_H_</dfn></u></td></tr>
+<tr><th id="63">63</th><td></td></tr>
+<tr><th id="64">64</th><td><u>#include <a href="_stdio.h.html">&lt;_stdio.h&gt;</a></u></td></tr>
+<tr><th id="65">65</th><td></td></tr>
+<tr><th id="66">66</th><td><a class="macro" href="sys/cdefs.h.html#74" title="" data-ref="_M/__BEGIN_DECLS">__BEGIN_DECLS</a></td></tr>
+<tr><th id="67">67</th><td><b>extern</b> <a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> *<dfn class="decl" id="__stdinp" title='__stdinp' data-ref="__stdinp">__stdinp</dfn>;</td></tr>
+<tr><th id="68">68</th><td><b>extern</b> <a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> *<dfn class="decl" id="__stdoutp" title='__stdoutp' data-ref="__stdoutp">__stdoutp</dfn>;</td></tr>
+<tr><th id="69">69</th><td><b>extern</b> <a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> *<dfn class="decl" id="__stderrp" title='__stderrp' data-ref="__stderrp">__stderrp</dfn>;</td></tr>
+<tr><th id="70">70</th><td><a class="macro" href="sys/cdefs.h.html#75" title="" data-ref="_M/__END_DECLS">__END_DECLS</a></td></tr>
+<tr><th id="71">71</th><td></td></tr>
+<tr><th id="72">72</th><td><u>#define	<dfn class="macro" id="_M/__SLBF" data-ref="_M/__SLBF">__SLBF</dfn>	0x0001		/* line buffered */</u></td></tr>
+<tr><th id="73">73</th><td><u>#define	<dfn class="macro" id="_M/__SNBF" data-ref="_M/__SNBF">__SNBF</dfn>	0x0002		/* unbuffered */</u></td></tr>
+<tr><th id="74">74</th><td><u>#define	<dfn class="macro" id="_M/__SRD" data-ref="_M/__SRD">__SRD</dfn>	0x0004		/* OK to read */</u></td></tr>
+<tr><th id="75">75</th><td><u>#define	<dfn class="macro" id="_M/__SWR" data-ref="_M/__SWR">__SWR</dfn>	0x0008		/* OK to write */</u></td></tr>
+<tr><th id="76">76</th><td>	<i>/* RD and WR are never simultaneously asserted */</i></td></tr>
+<tr><th id="77">77</th><td><u>#define	<dfn class="macro" id="_M/__SRW" data-ref="_M/__SRW">__SRW</dfn>	0x0010		/* open for reading &amp; writing */</u></td></tr>
+<tr><th id="78">78</th><td><u>#define	<dfn class="macro" id="_M/__SEOF" data-ref="_M/__SEOF">__SEOF</dfn>	0x0020		/* found EOF */</u></td></tr>
+<tr><th id="79">79</th><td><u>#define	<dfn class="macro" id="_M/__SERR" data-ref="_M/__SERR">__SERR</dfn>	0x0040		/* found error */</u></td></tr>
+<tr><th id="80">80</th><td><u>#define	<dfn class="macro" id="_M/__SMBF" data-ref="_M/__SMBF">__SMBF</dfn>	0x0080		/* _buf is from malloc */</u></td></tr>
+<tr><th id="81">81</th><td><u>#define	<dfn class="macro" id="_M/__SAPP" data-ref="_M/__SAPP">__SAPP</dfn>	0x0100		/* fdopen()ed in append mode */</u></td></tr>
+<tr><th id="82">82</th><td><u>#define	<dfn class="macro" id="_M/__SSTR" data-ref="_M/__SSTR">__SSTR</dfn>	0x0200		/* this is an sprintf/snprintf string */</u></td></tr>
+<tr><th id="83">83</th><td><u>#define	<dfn class="macro" id="_M/__SOPT" data-ref="_M/__SOPT">__SOPT</dfn>	0x0400		/* do fseek() optimisation */</u></td></tr>
+<tr><th id="84">84</th><td><u>#define	<dfn class="macro" id="_M/__SNPT" data-ref="_M/__SNPT">__SNPT</dfn>	0x0800		/* do not do fseek() optimisation */</u></td></tr>
+<tr><th id="85">85</th><td><u>#define	<dfn class="macro" id="_M/__SOFF" data-ref="_M/__SOFF">__SOFF</dfn>	0x1000		/* set iff _offset is in fact correct */</u></td></tr>
+<tr><th id="86">86</th><td><u>#define	<dfn class="macro" id="_M/__SMOD" data-ref="_M/__SMOD">__SMOD</dfn>	0x2000		/* true =&gt; fgetln modified _p text */</u></td></tr>
+<tr><th id="87">87</th><td><u>#define <dfn class="macro" id="_M/__SALC" data-ref="_M/__SALC">__SALC</dfn>  0x4000		/* allocate string space dynamically */</u></td></tr>
+<tr><th id="88">88</th><td><u>#define <dfn class="macro" id="_M/__SIGN" data-ref="_M/__SIGN">__SIGN</dfn>  0x8000		/* ignore this file in _fwalk */</u></td></tr>
+<tr><th id="89">89</th><td></td></tr>
+<tr><th id="90">90</th><td><i>/*</i></td></tr>
+<tr><th id="91">91</th><td><i> * The following three definitions are for ANSI C, which took them</i></td></tr>
+<tr><th id="92">92</th><td><i> * from System V, which brilliantly took internal interface macros and</i></td></tr>
+<tr><th id="93">93</th><td><i> * made them official arguments to setvbuf(), without renaming them.</i></td></tr>
+<tr><th id="94">94</th><td><i> * Hence, these ugly _IOxxx names are *supposed* to appear in user code.</i></td></tr>
+<tr><th id="95">95</th><td><i> *</i></td></tr>
+<tr><th id="96">96</th><td><i> * Although numbered as their counterparts above, the implementation</i></td></tr>
+<tr><th id="97">97</th><td><i> * does not rely on this.</i></td></tr>
+<tr><th id="98">98</th><td><i> */</i></td></tr>
+<tr><th id="99">99</th><td><u>#define	<dfn class="macro" id="_M/_IOFBF" data-ref="_M/_IOFBF">_IOFBF</dfn>	0		/* setvbuf should set fully buffered */</u></td></tr>
+<tr><th id="100">100</th><td><u>#define	<dfn class="macro" id="_M/_IOLBF" data-ref="_M/_IOLBF">_IOLBF</dfn>	1		/* setvbuf should set line buffered */</u></td></tr>
+<tr><th id="101">101</th><td><u>#define	<dfn class="macro" id="_M/_IONBF" data-ref="_M/_IONBF">_IONBF</dfn>	2		/* setvbuf should set unbuffered */</u></td></tr>
+<tr><th id="102">102</th><td></td></tr>
+<tr><th id="103">103</th><td><u>#define	<dfn class="macro" id="_M/BUFSIZ" data-ref="_M/BUFSIZ">BUFSIZ</dfn>	1024		/* size of buffer used by setbuf */</u></td></tr>
+<tr><th id="104">104</th><td><u>#define	<dfn class="macro" id="_M/EOF" data-ref="_M/EOF">EOF</dfn>	(-1)</u></td></tr>
+<tr><th id="105">105</th><td></td></tr>
+<tr><th id="106">106</th><td>				<i>/* must be == _POSIX_STREAM_MAX &lt;limits.h&gt; */</i></td></tr>
+<tr><th id="107">107</th><td><u>#define	<dfn class="macro" id="_M/FOPEN_MAX" data-ref="_M/FOPEN_MAX">FOPEN_MAX</dfn>	20	/* must be &lt;= OPEN_MAX &lt;sys/syslimits.h&gt; */</u></td></tr>
+<tr><th id="108">108</th><td><u>#define	<dfn class="macro" id="_M/FILENAME_MAX" data-ref="_M/FILENAME_MAX">FILENAME_MAX</dfn>	1024	/* must be &lt;= PATH_MAX &lt;sys/syslimits.h&gt; */</u></td></tr>
+<tr><th id="109">109</th><td></td></tr>
+<tr><th id="110">110</th><td><i>/* System V/ANSI C; this is the wrong way to do this, do *not* use these. */</i></td></tr>
+<tr><th id="111">111</th><td><u>#<span data-ppcond="111">ifndef</span> <span class="macro" data-ref="_M/_ANSI_SOURCE">_ANSI_SOURCE</span></u></td></tr>
+<tr><th id="112">112</th><td><u>#define	<dfn class="macro" id="_M/P_tmpdir" data-ref="_M/P_tmpdir">P_tmpdir</dfn>	"/var/tmp/"</u></td></tr>
+<tr><th id="113">113</th><td><u>#<span data-ppcond="111">endif</span></u></td></tr>
+<tr><th id="114">114</th><td><u>#define	<dfn class="macro" id="_M/L_tmpnam" data-ref="_M/L_tmpnam">L_tmpnam</dfn>	1024	/* XXX must be == PATH_MAX */</u></td></tr>
+<tr><th id="115">115</th><td><u>#define	<dfn class="macro" id="_M/TMP_MAX" data-ref="_M/TMP_MAX">TMP_MAX</dfn>		308915776</u></td></tr>
+<tr><th id="116">116</th><td></td></tr>
+<tr><th id="117">117</th><td><u>#<span data-ppcond="117">ifndef</span> <span class="macro" data-ref="_M/SEEK_SET">SEEK_SET</span></u></td></tr>
+<tr><th id="118">118</th><td><u>#define	<dfn class="macro" id="_M/SEEK_SET" data-ref="_M/SEEK_SET">SEEK_SET</dfn>	0	/* set file offset to offset */</u></td></tr>
+<tr><th id="119">119</th><td><u>#<span data-ppcond="117">endif</span></u></td></tr>
+<tr><th id="120">120</th><td><u>#<span data-ppcond="120">ifndef</span> <span class="macro" data-ref="_M/SEEK_CUR">SEEK_CUR</span></u></td></tr>
+<tr><th id="121">121</th><td><u>#define	<dfn class="macro" id="_M/SEEK_CUR" data-ref="_M/SEEK_CUR">SEEK_CUR</dfn>	1	/* set file offset to current plus offset */</u></td></tr>
+<tr><th id="122">122</th><td><u>#<span data-ppcond="120">endif</span></u></td></tr>
+<tr><th id="123">123</th><td><u>#<span data-ppcond="123">ifndef</span> <span class="macro" data-ref="_M/SEEK_END">SEEK_END</span></u></td></tr>
+<tr><th id="124">124</th><td><u>#define	<dfn class="macro" id="_M/SEEK_END" data-ref="_M/SEEK_END">SEEK_END</dfn>	2	/* set file offset to EOF plus offset */</u></td></tr>
+<tr><th id="125">125</th><td><u>#<span data-ppcond="123">endif</span></u></td></tr>
+<tr><th id="126">126</th><td></td></tr>
+<tr><th id="127">127</th><td><u>#define	<dfn class="macro" id="_M/stdin" data-ref="_M/stdin">stdin</dfn>	__stdinp</u></td></tr>
+<tr><th id="128">128</th><td><u>#define	<dfn class="macro" id="_M/stdout" data-ref="_M/stdout">stdout</dfn>	__stdoutp</u></td></tr>
+<tr><th id="129">129</th><td><u>#define	<dfn class="macro" id="_M/stderr" data-ref="_M/stderr">stderr</dfn>	__stderrp</u></td></tr>
+<tr><th id="130">130</th><td></td></tr>
+<tr><th id="131">131</th><td><u>#<span data-ppcond="131">ifdef</span> <span class="macro" data-ref="_M/_DARWIN_UNLIMITED_STREAMS">_DARWIN_UNLIMITED_STREAMS</span></u></td></tr>
+<tr><th id="132">132</th><td><u>#if defined(__IPHONE_OS_VERSION_MIN_REQUIRED) &amp;&amp; __IPHONE_OS_VERSION_MIN_REQUIRED &lt; __IPHONE_3_2</u></td></tr>
+<tr><th id="133">133</th><td><u>#error "_DARWIN_UNLIMITED_STREAMS specified, but -miphoneos-version-min version does not support it."</u></td></tr>
+<tr><th id="134">134</th><td><u>#elif defined(__MAC_OS_X_VERSION_MIN_REQUIRED) &amp;&amp; __MAC_OS_X_VERSION_MIN_REQUIRED &lt; __MAC_10_6</u></td></tr>
+<tr><th id="135">135</th><td><u>#error "_DARWIN_UNLIMITED_STREAMS specified, but -mmacosx-version-min version does not support it."</u></td></tr>
+<tr><th id="136">136</th><td><u>#endif</u></td></tr>
+<tr><th id="137">137</th><td><u>#<span data-ppcond="131">endif</span></u></td></tr>
+<tr><th id="138">138</th><td></td></tr>
+<tr><th id="139">139</th><td><i>/* ANSI-C */</i></td></tr>
+<tr><th id="140">140</th><td></td></tr>
+<tr><th id="141">141</th><td><a class="macro" href="sys/cdefs.h.html#74" title="" data-ref="_M/__BEGIN_DECLS">__BEGIN_DECLS</a></td></tr>
+<tr><th id="142">142</th><td><em>void</em>	 <dfn class="decl" id="clearerr" title='clearerr' data-ref="clearerr">clearerr</dfn>(<a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> *);</td></tr>
+<tr><th id="143">143</th><td><em>int</em>	 <dfn class="decl" id="fclose" title='fclose' data-ref="fclose">fclose</dfn>(<a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> *);</td></tr>
+<tr><th id="144">144</th><td><em>int</em>	 <dfn class="decl" id="feof" title='feof' data-ref="feof">feof</dfn>(<a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> *);</td></tr>
+<tr><th id="145">145</th><td><em>int</em>	 <dfn class="decl" id="ferror" title='ferror' data-ref="ferror">ferror</dfn>(<a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> *);</td></tr>
+<tr><th id="146">146</th><td><em>int</em>	 <dfn class="decl" id="fflush" title='fflush' data-ref="fflush">fflush</dfn>(<a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> *);</td></tr>
+<tr><th id="147">147</th><td><em>int</em>	 <dfn class="decl" id="fgetc" title='fgetc' data-ref="fgetc">fgetc</dfn>(<a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> *);</td></tr>
+<tr><th id="148">148</th><td><em>int</em>	 <dfn class="decl" id="fgetpos" title='fgetpos' data-ref="fgetpos">fgetpos</dfn>(<a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a>, <a class="typedef" href="_stdio.h.html#fpos_t" title='fpos_t' data-type='__darwin_off_t' data-ref="fpos_t">fpos_t</a> *);</td></tr>
+<tr><th id="149">149</th><td><em>char</em>	*<dfn class="decl" id="fgets" title='fgets' data-ref="fgets">fgets</dfn>(<em>char</em> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a>, <em>int</em>, <a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> *);</td></tr>
+<tr><th id="150">150</th><td><u>#<span data-ppcond="150">if</span> defined(<span class="macro" data-ref="_M/_DARWIN_UNLIMITED_STREAMS">_DARWIN_UNLIMITED_STREAMS</span>) || defined(<span class="macro" data-ref="_M/_DARWIN_C_SOURCE">_DARWIN_C_SOURCE</span>)</u></td></tr>
+<tr><th id="151">151</th><td>FILE	*fopen(<em>const</em> <em>char</em> * <b>__restrict</b> __filename, <em>const</em> <em>char</em> * <b>__restrict</b> __mode) __DARWIN_ALIAS_STARTING(__MAC_10_6, __IPHONE_3_2, __DARWIN_EXTSN(fopen));</td></tr>
+<tr><th id="152">152</th><td><u>#<span data-ppcond="150">else</span> /* !_DARWIN_UNLIMITED_STREAMS &amp;&amp; !_DARWIN_C_SOURCE */</u></td></tr>
+<tr><th id="153">153</th><td><a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a>	*<dfn class="decl" id="_fopen" title='fopen' data-ref="_fopen">fopen</dfn>(<em>const</em> <em>char</em> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a> <dfn class="local col1 decl" id="1__filename" title='__filename' data-type='const char *restrict' data-ref="1__filename">__filename</dfn>, <em>const</em> <em>char</em> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a> <dfn class="local col2 decl" id="2__mode" title='__mode' data-type='const char *restrict' data-ref="2__mode">__mode</dfn>) <a class="macro" href="sys/cdefs.h.html#613" title="__asm(&quot;_&quot; &quot;fopen&quot; )" data-ref="_M/__DARWIN_ALIAS_STARTING">__DARWIN_ALIAS_STARTING</a>(__MAC_10_6, __IPHONE_2_0, <a class="macro" href="sys/cdefs.h.html#590" title="__asm(&quot;_&quot; &quot;fopen&quot; )" data-ref="_M/__DARWIN_ALIAS">__DARWIN_ALIAS</a>(fopen));</td></tr>
+<tr><th id="154">154</th><td><u>#<span data-ppcond="150">endif</span> /* (DARWIN_UNLIMITED_STREAMS || _DARWIN_C_SOURCE) */</u></td></tr>
+<tr><th id="155">155</th><td><em>int</em>	 <a class="decl" href="#fprintf" title='fprintf' data-ref="fprintf">fprintf</a>(<a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a>, <em>const</em> <em>char</em> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a>, ...) <a class="macro" href="sys/cdefs.h.html#350" title="__attribute__((__format__ (__printf__, 2, 3)))" data-ref="_M/__printflike">__printflike</a>(<var>2</var>, <var>3</var>);</td></tr>
+<tr><th id="156">156</th><td><em>int</em>	 <dfn class="decl" id="fputc" title='fputc' data-ref="fputc">fputc</dfn>(<em>int</em>, <a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> *);</td></tr>
+<tr><th id="157">157</th><td><em>int</em>	 <dfn class="decl" id="_fputs" title='fputs' data-ref="_fputs">fputs</dfn>(<em>const</em> <em>char</em> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a>, <a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a>) <a class="macro" href="sys/cdefs.h.html#590" title="__asm(&quot;_&quot; &quot;fputs&quot; )" data-ref="_M/__DARWIN_ALIAS">__DARWIN_ALIAS</a>(fputs);</td></tr>
+<tr><th id="158">158</th><td><a class="typedef" href="sys/_types/_size_t.h.html#size_t" title='size_t' data-type='__darwin_size_t' data-ref="size_t">size_t</a>	 <dfn class="decl" id="fread" title='fread' data-ref="fread">fread</dfn>(<em>void</em> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a> <dfn class="local col3 decl" id="3__ptr" title='__ptr' data-type='void *restrict' data-ref="3__ptr">__ptr</dfn>, <a class="typedef" href="sys/_types/_size_t.h.html#size_t" title='size_t' data-type='__darwin_size_t' data-ref="size_t">size_t</a> <dfn class="local col4 decl" id="4__size" title='__size' data-type='size_t' data-ref="4__size">__size</dfn>, <a class="typedef" href="sys/_types/_size_t.h.html#size_t" title='size_t' data-type='__darwin_size_t' data-ref="size_t">size_t</a> <dfn class="local col5 decl" id="5__nitems" title='__nitems' data-type='size_t' data-ref="5__nitems">__nitems</dfn>, <a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a> <dfn class="local col6 decl" id="6__stream" title='__stream' data-type='FILE *restrict' data-ref="6__stream">__stream</dfn>);</td></tr>
+<tr><th id="159">159</th><td><a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a>	*<dfn class="decl" id="_freopen" title='freopen' data-ref="_freopen">freopen</dfn>(<em>const</em> <em>char</em> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a>, <em>const</em> <em>char</em> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a>,</td></tr>
+<tr><th id="160">160</th><td>                 <a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a>) <a class="macro" href="sys/cdefs.h.html#590" title="__asm(&quot;_&quot; &quot;freopen&quot; )" data-ref="_M/__DARWIN_ALIAS">__DARWIN_ALIAS</a>(freopen);</td></tr>
+<tr><th id="161">161</th><td><em>int</em>	 <a class="decl" href="#fscanf" title='fscanf' data-ref="fscanf">fscanf</a>(<a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a>, <em>const</em> <em>char</em> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a>, ...) <a class="macro" href="sys/cdefs.h.html#354" title="__attribute__((__format__ (__scanf__, 2, 3)))" data-ref="_M/__scanflike">__scanflike</a>(<var>2</var>, <var>3</var>);</td></tr>
+<tr><th id="162">162</th><td><em>int</em>	 <dfn class="decl" id="fseek" title='fseek' data-ref="fseek">fseek</dfn>(<a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> *, <em>long</em>, <em>int</em>);</td></tr>
+<tr><th id="163">163</th><td><em>int</em>	 <dfn class="decl" id="fsetpos" title='fsetpos' data-ref="fsetpos">fsetpos</dfn>(<a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> *, <em>const</em> <a class="typedef" href="_stdio.h.html#fpos_t" title='fpos_t' data-type='__darwin_off_t' data-ref="fpos_t">fpos_t</a> *);</td></tr>
+<tr><th id="164">164</th><td><em>long</em>	 <dfn class="decl" id="ftell" title='ftell' data-ref="ftell">ftell</dfn>(<a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> *);</td></tr>
+<tr><th id="165">165</th><td><a class="typedef" href="sys/_types/_size_t.h.html#size_t" title='size_t' data-type='__darwin_size_t' data-ref="size_t">size_t</a>	 <dfn class="decl" id="_fwrite" title='fwrite' data-ref="_fwrite">fwrite</dfn>(<em>const</em> <em>void</em> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a> <dfn class="local col7 decl" id="7__ptr" title='__ptr' data-type='const void *restrict' data-ref="7__ptr">__ptr</dfn>, <a class="typedef" href="sys/_types/_size_t.h.html#size_t" title='size_t' data-type='__darwin_size_t' data-ref="size_t">size_t</a> <dfn class="local col8 decl" id="8__size" title='__size' data-type='size_t' data-ref="8__size">__size</dfn>, <a class="typedef" href="sys/_types/_size_t.h.html#size_t" title='size_t' data-type='__darwin_size_t' data-ref="size_t">size_t</a> <dfn class="local col9 decl" id="9__nitems" title='__nitems' data-type='size_t' data-ref="9__nitems">__nitems</dfn>, <a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a> <dfn class="local col0 decl" id="10__stream" title='__stream' data-type='FILE *restrict' data-ref="10__stream">__stream</dfn>) <a class="macro" href="sys/cdefs.h.html#590" title="__asm(&quot;_&quot; &quot;fwrite&quot; )" data-ref="_M/__DARWIN_ALIAS">__DARWIN_ALIAS</a>(fwrite);</td></tr>
+<tr><th id="166">166</th><td><em>int</em>	 <dfn class="decl" id="getc" title='getc' data-ref="getc">getc</dfn>(<a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> *);</td></tr>
+<tr><th id="167">167</th><td><em>int</em>	 <dfn class="decl" id="getchar" title='getchar' data-ref="getchar">getchar</dfn>(<em>void</em>);</td></tr>
+<tr><th id="168">168</th><td><em>char</em>	*<dfn class="decl" id="gets" title='gets' data-ref="gets">gets</dfn>(<em>char</em> *);</td></tr>
+<tr><th id="169">169</th><td><em>void</em>	 <dfn class="decl" id="perror" title='perror' data-ref="perror">perror</dfn>(<em>const</em> <em>char</em> *);</td></tr>
+<tr><th id="170">170</th><td><em>int</em>	 <a class="decl" href="#printf" title='printf' data-ref="printf">printf</a>(<em>const</em> <em>char</em> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a>, ...) <a class="macro" href="sys/cdefs.h.html#350" title="__attribute__((__format__ (__printf__, 1, 2)))" data-ref="_M/__printflike">__printflike</a>(<var>1</var>, <var>2</var>);</td></tr>
+<tr><th id="171">171</th><td><em>int</em>	 <dfn class="decl" id="putc" title='putc' data-ref="putc">putc</dfn>(<em>int</em>, <a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> *);</td></tr>
+<tr><th id="172">172</th><td><em>int</em>	 <dfn class="decl" id="putchar" title='putchar' data-ref="putchar">putchar</dfn>(<em>int</em>);</td></tr>
+<tr><th id="173">173</th><td><em>int</em>	 <dfn class="decl" id="puts" title='puts' data-ref="puts">puts</dfn>(<em>const</em> <em>char</em> *);</td></tr>
+<tr><th id="174">174</th><td><em>int</em>	 <dfn class="decl" id="remove" title='remove' data-ref="remove">remove</dfn>(<em>const</em> <em>char</em> *);</td></tr>
+<tr><th id="175">175</th><td><em>int</em>	 <dfn class="decl" id="rename" title='rename' data-ref="rename">rename</dfn> (<em>const</em> <em>char</em> *<dfn class="local col1 decl" id="11__old" title='__old' data-type='const char *' data-ref="11__old">__old</dfn>, <em>const</em> <em>char</em> *<dfn class="local col2 decl" id="12__new" title='__new' data-type='const char *' data-ref="12__new">__new</dfn>);</td></tr>
+<tr><th id="176">176</th><td><em>void</em>	 <dfn class="decl" id="rewind" title='rewind' data-ref="rewind">rewind</dfn>(<a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> *);</td></tr>
+<tr><th id="177">177</th><td><em>int</em>	 <a class="decl" href="#scanf" title='scanf' data-ref="scanf">scanf</a>(<em>const</em> <em>char</em> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a>, ...) <a class="macro" href="sys/cdefs.h.html#354" title="__attribute__((__format__ (__scanf__, 1, 2)))" data-ref="_M/__scanflike">__scanflike</a>(<var>1</var>, <var>2</var>);</td></tr>
+<tr><th id="178">178</th><td><em>void</em>	 <dfn class="decl" id="setbuf" title='setbuf' data-ref="setbuf">setbuf</dfn>(<a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a>, <em>char</em> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a>);</td></tr>
+<tr><th id="179">179</th><td><em>int</em>	 <dfn class="decl" id="setvbuf" title='setvbuf' data-ref="setvbuf">setvbuf</dfn>(<a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a>, <em>char</em> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a>, <em>int</em>, <a class="typedef" href="sys/_types/_size_t.h.html#size_t" title='size_t' data-type='__darwin_size_t' data-ref="size_t">size_t</a>);</td></tr>
+<tr><th id="180">180</th><td><em>int</em>	 <a class="decl" href="#sprintf" title='sprintf' data-ref="sprintf">sprintf</a>(<em>char</em> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a>, <em>const</em> <em>char</em> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a>, ...) <a class="macro" href="sys/cdefs.h.html#350" title="__attribute__((__format__ (__printf__, 2, 3)))" data-ref="_M/__printflike">__printflike</a>(<var>2</var>, <var>3</var>) <a class="macro" href="sys/cdefs.h.html#277" title="" data-ref="_M/__swift_unavailable">__swift_unavailable</a>(<q>"Use snprintf instead."</q>);</td></tr>
+<tr><th id="181">181</th><td><em>int</em>	 <a class="decl" href="#sscanf" title='sscanf' data-ref="sscanf">sscanf</a>(<em>const</em> <em>char</em> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a>, <em>const</em> <em>char</em> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a>, ...) <a class="macro" href="sys/cdefs.h.html#354" title="__attribute__((__format__ (__scanf__, 2, 3)))" data-ref="_M/__scanflike">__scanflike</a>(<var>2</var>, <var>3</var>);</td></tr>
+<tr><th id="182">182</th><td><a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a>	*<dfn class="decl" id="tmpfile" title='tmpfile' data-ref="tmpfile">tmpfile</dfn>(<em>void</em>);</td></tr>
+<tr><th id="183">183</th><td></td></tr>
+<tr><th id="184">184</th><td><a class="macro" href="sys/cdefs.h.html#277" title="" data-ref="_M/__swift_unavailable">__swift_unavailable</a>(<q>"Use mkstemp(3) instead."</q>)</td></tr>
+<tr><th id="185">185</th><td><u>#<span data-ppcond="185">if</span> !defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>)</u></td></tr>
+<tr><th id="186">186</th><td><a class="macro" href="sys/cdefs.h.html#180" title="__attribute__((deprecated(&quot;This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of tmpnam(3), it is highly recommended that you use mkstemp(3) instead.&quot;)))" data-ref="_M/__deprecated_msg">__deprecated_msg</a>(<q>"This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of tmpnam(3), it is highly recommended that you use mkstemp(3) instead."</q>)</td></tr>
+<tr><th id="187">187</th><td><u>#<span data-ppcond="185">endif</span></u></td></tr>
+<tr><th id="188">188</th><td><em>char</em>	*<dfn class="decl" id="tmpnam" title='tmpnam' data-ref="tmpnam">tmpnam</dfn>(<em>char</em> *);</td></tr>
+<tr><th id="189">189</th><td><em>int</em>	 <dfn class="decl" id="ungetc" title='ungetc' data-ref="ungetc">ungetc</dfn>(<em>int</em>, <a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> *);</td></tr>
+<tr><th id="190">190</th><td><em>int</em>	 <a class="decl" href="#vfprintf" title='vfprintf' data-ref="vfprintf">vfprintf</a>(<a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a>, <em>const</em> <em>char</em> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a>, <a class="typedef" href="sys/_types/_va_list.h.html#va_list" title='va_list' data-type='__darwin_va_list' data-ref="va_list">va_list</a>) <a class="macro" href="sys/cdefs.h.html#350" title="__attribute__((__format__ (__printf__, 2, 0)))" data-ref="_M/__printflike">__printflike</a>(<var>2</var>, <var>0</var>);</td></tr>
+<tr><th id="191">191</th><td><em>int</em>	 <a class="decl" href="#vprintf" title='vprintf' data-ref="vprintf">vprintf</a>(<em>const</em> <em>char</em> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a>, <a class="typedef" href="sys/_types/_va_list.h.html#va_list" title='va_list' data-type='__darwin_va_list' data-ref="va_list">va_list</a>) <a class="macro" href="sys/cdefs.h.html#350" title="__attribute__((__format__ (__printf__, 1, 0)))" data-ref="_M/__printflike">__printflike</a>(<var>1</var>, <var>0</var>);</td></tr>
+<tr><th id="192">192</th><td><em>int</em>	 <a class="decl" href="#vsprintf" title='vsprintf' data-ref="vsprintf">vsprintf</a>(<em>char</em> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a>, <em>const</em> <em>char</em> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a>, <a class="typedef" href="sys/_types/_va_list.h.html#va_list" title='va_list' data-type='__darwin_va_list' data-ref="va_list">va_list</a>) <a class="macro" href="sys/cdefs.h.html#350" title="__attribute__((__format__ (__printf__, 2, 0)))" data-ref="_M/__printflike">__printflike</a>(<var>2</var>, <var>0</var>) <a class="macro" href="sys/cdefs.h.html#277" title="" data-ref="_M/__swift_unavailable">__swift_unavailable</a>(<q>"Use vsnprintf instead."</q>);</td></tr>
+<tr><th id="193">193</th><td><a class="macro" href="sys/cdefs.h.html#75" title="" data-ref="_M/__END_DECLS">__END_DECLS</a></td></tr>
+<tr><th id="194">194</th><td></td></tr>
+<tr><th id="195">195</th><td></td></tr>
+<tr><th id="196">196</th><td></td></tr>
+<tr><th id="197">197</th><td><i>/* Additional functionality provided by:</i></td></tr>
+<tr><th id="198">198</th><td><i> * POSIX.1-1988</i></td></tr>
+<tr><th id="199">199</th><td><i> */</i></td></tr>
+<tr><th id="200">200</th><td></td></tr>
+<tr><th id="201">201</th><td><u>#<span data-ppcond="201">if</span> <a class="macro" href="sys/cdefs.h.html#692" title="900000L" data-ref="_M/__DARWIN_C_LEVEL">__DARWIN_C_LEVEL</a> &gt;= 198808L</u></td></tr>
+<tr><th id="202">202</th><td><u>#define	<dfn class="macro" id="_M/L_ctermid" data-ref="_M/L_ctermid">L_ctermid</dfn>	1024	/* size for ctermid(); PATH_MAX */</u></td></tr>
+<tr><th id="203">203</th><td></td></tr>
+<tr><th id="204">204</th><td><a class="macro" href="sys/cdefs.h.html#74" title="" data-ref="_M/__BEGIN_DECLS">__BEGIN_DECLS</a></td></tr>
+<tr><th id="205">205</th><td><u>#<span data-ppcond="205">ifndef</span> <span class="macro" data-ref="_M/__CTERMID_DEFINED">__CTERMID_DEFINED</span></u></td></tr>
+<tr><th id="206">206</th><td><i>/* Multiply defined in stdio.h and unistd.h by SUS */</i></td></tr>
+<tr><th id="207">207</th><td><u>#define <dfn class="macro" id="_M/__CTERMID_DEFINED" data-ref="_M/__CTERMID_DEFINED">__CTERMID_DEFINED</dfn> 1</u></td></tr>
+<tr><th id="208">208</th><td><em>char</em>	*<dfn class="decl" id="ctermid" title='ctermid' data-ref="ctermid">ctermid</dfn>(<em>char</em> *);</td></tr>
+<tr><th id="209">209</th><td><u>#<span data-ppcond="205">endif</span></u></td></tr>
+<tr><th id="210">210</th><td></td></tr>
+<tr><th id="211">211</th><td><u>#<span data-ppcond="211">if</span> defined(<span class="macro" data-ref="_M/_DARWIN_UNLIMITED_STREAMS">_DARWIN_UNLIMITED_STREAMS</span>) || defined(<span class="macro" data-ref="_M/_DARWIN_C_SOURCE">_DARWIN_C_SOURCE</span>)</u></td></tr>
+<tr><th id="212">212</th><td>FILE	*fdopen(<em>int</em>, <em>const</em> <em>char</em> *) __DARWIN_ALIAS_STARTING(__MAC_10_6, __IPHONE_3_2, __DARWIN_EXTSN(fdopen));</td></tr>
+<tr><th id="213">213</th><td><u>#<span data-ppcond="211">else</span> /* !_DARWIN_UNLIMITED_STREAMS &amp;&amp; !_DARWIN_C_SOURCE */</u></td></tr>
+<tr><th id="214">214</th><td><a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a>	*<dfn class="decl" id="_fdopen" title='fdopen' data-ref="_fdopen">fdopen</dfn>(<em>int</em>, <em>const</em> <em>char</em> *) <a class="macro" href="sys/cdefs.h.html#613" title="__asm(&quot;_&quot; &quot;fdopen&quot; )" data-ref="_M/__DARWIN_ALIAS_STARTING">__DARWIN_ALIAS_STARTING</a>(__MAC_10_6, __IPHONE_2_0, <a class="macro" href="sys/cdefs.h.html#590" title="__asm(&quot;_&quot; &quot;fdopen&quot; )" data-ref="_M/__DARWIN_ALIAS">__DARWIN_ALIAS</a>(fdopen));</td></tr>
+<tr><th id="215">215</th><td><u>#<span data-ppcond="211">endif</span> /* (DARWIN_UNLIMITED_STREAMS || _DARWIN_C_SOURCE) */</u></td></tr>
+<tr><th id="216">216</th><td><em>int</em>	 <dfn class="decl" id="fileno" title='fileno' data-ref="fileno">fileno</dfn>(<a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> *);</td></tr>
+<tr><th id="217">217</th><td><a class="macro" href="sys/cdefs.h.html#75" title="" data-ref="_M/__END_DECLS">__END_DECLS</a></td></tr>
+<tr><th id="218">218</th><td><u>#<span data-ppcond="201">endif</span> /* __DARWIN_C_LEVEL &gt;= 198808L */</u></td></tr>
+<tr><th id="219">219</th><td></td></tr>
+<tr><th id="220">220</th><td></td></tr>
+<tr><th id="221">221</th><td><i>/* Additional functionality provided by:</i></td></tr>
+<tr><th id="222">222</th><td><i> * POSIX.2-1992 C Language Binding Option</i></td></tr>
+<tr><th id="223">223</th><td><i> */</i></td></tr>
+<tr><th id="224">224</th><td><u>#<span data-ppcond="224">if</span> TARGET_OS_EMBEDDED</u></td></tr>
+<tr><th id="225">225</th><td><u>#define __swift_unavailable_on(osx_msg, ios_msg) __swift_unavailable(ios_msg)</u></td></tr>
+<tr><th id="226">226</th><td><u>#<span data-ppcond="224">else</span></u></td></tr>
+<tr><th id="227">227</th><td><u>#define <dfn class="macro" id="_M/__swift_unavailable_on" data-ref="_M/__swift_unavailable_on">__swift_unavailable_on</dfn>(osx_msg, ios_msg) __swift_unavailable(osx_msg)</u></td></tr>
+<tr><th id="228">228</th><td><u>#<span data-ppcond="224">endif</span></u></td></tr>
+<tr><th id="229">229</th><td></td></tr>
+<tr><th id="230">230</th><td><u>#<span data-ppcond="230">if</span> <a class="macro" href="sys/cdefs.h.html#692" title="900000L" data-ref="_M/__DARWIN_C_LEVEL">__DARWIN_C_LEVEL</a> &gt;= 199209L</u></td></tr>
+<tr><th id="231">231</th><td><a class="macro" href="sys/cdefs.h.html#74" title="" data-ref="_M/__BEGIN_DECLS">__BEGIN_DECLS</a></td></tr>
+<tr><th id="232">232</th><td><em>int</em>	 <dfn class="decl" id="pclose" title='pclose' data-ref="pclose">pclose</dfn>(<a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> *) <a class="macro" href="#227" title="" data-ref="_M/__swift_unavailable_on">__swift_unavailable_on</a>(<q>"Use posix_spawn APIs or NSTask instead."</q>, <q>"Process spawning is unavailable."</q>);</td></tr>
+<tr><th id="233">233</th><td><u>#<span data-ppcond="233">if</span> defined(<span class="macro" data-ref="_M/_DARWIN_UNLIMITED_STREAMS">_DARWIN_UNLIMITED_STREAMS</span>) || defined(<span class="macro" data-ref="_M/_DARWIN_C_SOURCE">_DARWIN_C_SOURCE</span>)</u></td></tr>
+<tr><th id="234">234</th><td>FILE	*popen(<em>const</em> <em>char</em> *, <em>const</em> <em>char</em> *) __DARWIN_ALIAS_STARTING(__MAC_10_6, __IPHONE_3_2, __DARWIN_EXTSN(popen)) __swift_unavailable_on(<q>"Use posix_spawn APIs or NSTask instead."</q>, <q>"Process spawning is unavailable."</q>);</td></tr>
+<tr><th id="235">235</th><td><u>#<span data-ppcond="233">else</span> /* !_DARWIN_UNLIMITED_STREAMS &amp;&amp; !_DARWIN_C_SOURCE */</u></td></tr>
+<tr><th id="236">236</th><td><a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a>	*<dfn class="decl" id="_popen" title='popen' data-ref="_popen">popen</dfn>(<em>const</em> <em>char</em> *, <em>const</em> <em>char</em> *) <a class="macro" href="sys/cdefs.h.html#613" title="__asm(&quot;_&quot; &quot;popen&quot; )" data-ref="_M/__DARWIN_ALIAS_STARTING">__DARWIN_ALIAS_STARTING</a>(__MAC_10_6, __IPHONE_2_0, <a class="macro" href="sys/cdefs.h.html#590" title="__asm(&quot;_&quot; &quot;popen&quot; )" data-ref="_M/__DARWIN_ALIAS">__DARWIN_ALIAS</a>(popen)) <a class="macro" href="#227" title="" data-ref="_M/__swift_unavailable_on">__swift_unavailable_on</a>(<q>"Use posix_spawn APIs or NSTask instead."</q>, <q>"Process spawning is unavailable."</q>);</td></tr>
+<tr><th id="237">237</th><td><u>#<span data-ppcond="233">endif</span> /* (DARWIN_UNLIMITED_STREAMS || _DARWIN_C_SOURCE) */</u></td></tr>
+<tr><th id="238">238</th><td><a class="macro" href="sys/cdefs.h.html#75" title="" data-ref="_M/__END_DECLS">__END_DECLS</a></td></tr>
+<tr><th id="239">239</th><td><u>#<span data-ppcond="230">endif</span> /* __DARWIN_C_LEVEL &gt;= 199209L */</u></td></tr>
+<tr><th id="240">240</th><td></td></tr>
+<tr><th id="241">241</th><td><u>#undef <a class="macro" href="#227" data-ref="_M/__swift_unavailable_on">__swift_unavailable_on</a></u></td></tr>
+<tr><th id="242">242</th><td></td></tr>
+<tr><th id="243">243</th><td><i>/* Additional functionality provided by:</i></td></tr>
+<tr><th id="244">244</th><td><i> * POSIX.1c-1995,</i></td></tr>
+<tr><th id="245">245</th><td><i> * POSIX.1i-1995,</i></td></tr>
+<tr><th id="246">246</th><td><i> * and the omnibus ISO/IEC 9945-1: 1996</i></td></tr>
+<tr><th id="247">247</th><td><i> */</i></td></tr>
+<tr><th id="248">248</th><td></td></tr>
+<tr><th id="249">249</th><td><u>#<span data-ppcond="249">if</span> <a class="macro" href="sys/cdefs.h.html#692" title="900000L" data-ref="_M/__DARWIN_C_LEVEL">__DARWIN_C_LEVEL</a> &gt;= 199506L</u></td></tr>
+<tr><th id="250">250</th><td></td></tr>
+<tr><th id="251">251</th><td><i>/* Functions internal to the implementation. */</i></td></tr>
+<tr><th id="252">252</th><td><a class="macro" href="sys/cdefs.h.html#74" title="" data-ref="_M/__BEGIN_DECLS">__BEGIN_DECLS</a></td></tr>
+<tr><th id="253">253</th><td><em>int</em>	<dfn class="decl" id="__srget" title='__srget' data-ref="__srget">__srget</dfn>(<a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> *);</td></tr>
+<tr><th id="254">254</th><td><em>int</em>	<dfn class="decl" id="__svfscanf" title='__svfscanf' data-ref="__svfscanf">__svfscanf</dfn>(<a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> *, <em>const</em> <em>char</em> *, <a class="typedef" href="sys/_types/_va_list.h.html#va_list" title='va_list' data-type='__darwin_va_list' data-ref="va_list">va_list</a>) <a class="macro" href="sys/cdefs.h.html#354" title="__attribute__((__format__ (__scanf__, 2, 0)))" data-ref="_M/__scanflike">__scanflike</a>(<var>2</var>, <var>0</var>);</td></tr>
+<tr><th id="255">255</th><td><em>int</em>	<dfn class="decl" id="__swbuf" title='__swbuf' data-ref="__swbuf">__swbuf</dfn>(<em>int</em>, <a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> *);</td></tr>
+<tr><th id="256">256</th><td><a class="macro" href="sys/cdefs.h.html#75" title="" data-ref="_M/__END_DECLS">__END_DECLS</a></td></tr>
+<tr><th id="257">257</th><td></td></tr>
+<tr><th id="258">258</th><td><i>/*</i></td></tr>
+<tr><th id="259">259</th><td><i> * The __sfoo macros are here so that we can</i></td></tr>
+<tr><th id="260">260</th><td><i> * define function versions in the C library.</i></td></tr>
+<tr><th id="261">261</th><td><i> */</i></td></tr>
+<tr><th id="262">262</th><td><u>#define	<dfn class="macro" id="_M/__sgetc" data-ref="_M/__sgetc">__sgetc</dfn>(p) (--(p)-&gt;_r &lt; 0 ? __srget(p) : (int)(*(p)-&gt;_p++))</u></td></tr>
+<tr><th id="263">263</th><td><u>#<span data-ppcond="263">if</span> defined(<span class="macro" data-ref="_M/__GNUC__">__GNUC__</span>) &amp;&amp; defined(<span class="macro" data-ref="_M/__STDC__">__STDC__</span>)</u></td></tr>
+<tr><th id="264">264</th><td><a class="macro" href="sys/cdefs.h.html#313" title="inline __attribute__ ((__always_inline__))" data-ref="_M/__header_always_inline">__header_always_inline</a> <em>int</em> <dfn class="decl def" id="__sputc" title='__sputc' data-ref="__sputc">__sputc</dfn>(<em>int</em> <dfn class="local col3 decl" id="13_c" title='_c' data-type='int' data-ref="13_c">_c</dfn>, <a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> *<dfn class="local col4 decl" id="14_p" title='_p' data-type='FILE *' data-ref="14_p">_p</dfn>) {</td></tr>
+<tr><th id="265">265</th><td>	<b>if</b> (--<a class="local col4 ref" href="#14_p" title='_p' data-ref="14_p">_p</a>-&gt;<a class="ref" href="_stdio.h.html#__sFILE::_w" title='__sFILE::_w' data-ref="__sFILE::_w">_w</a> &gt;= <var>0</var> || (<a class="local col4 ref" href="#14_p" title='_p' data-ref="14_p">_p</a>-&gt;<a class="ref" href="_stdio.h.html#__sFILE::_w" title='__sFILE::_w' data-ref="__sFILE::_w">_w</a> &gt;= <a class="local col4 ref" href="#14_p" title='_p' data-ref="14_p">_p</a>-&gt;<a class="ref" href="_stdio.h.html#__sFILE::_lbfsize" title='__sFILE::_lbfsize' data-ref="__sFILE::_lbfsize">_lbfsize</a> &amp;&amp; (<em>char</em>)<a class="local col3 ref" href="#13_c" title='_c' data-ref="13_c">_c</a> != <kbd>'\n'</kbd>))</td></tr>
+<tr><th id="266">266</th><td>		<b>return</b> (*<a class="local col4 ref" href="#14_p" title='_p' data-ref="14_p">_p</a>-&gt;<a class="ref" href="_stdio.h.html#__sFILE::_p" title='__sFILE::_p' data-ref="__sFILE::_p">_p</a>++ = <a class="local col3 ref" href="#13_c" title='_c' data-ref="13_c">_c</a>);</td></tr>
+<tr><th id="267">267</th><td>	<b>else</b></td></tr>
+<tr><th id="268">268</th><td>		<b>return</b> (<a class="ref" href="#__swbuf" title='__swbuf' data-ref="__swbuf">__swbuf</a>(<a class="local col3 ref" href="#13_c" title='_c' data-ref="13_c">_c</a>, <a class="local col4 ref" href="#14_p" title='_p' data-ref="14_p">_p</a>));</td></tr>
+<tr><th id="269">269</th><td>}</td></tr>
+<tr><th id="270">270</th><td><u>#<span data-ppcond="263">else</span></u></td></tr>
+<tr><th id="271">271</th><td><i>/*</i></td></tr>
+<tr><th id="272">272</th><td><i> * This has been tuned to generate reasonable code on the vax using pcc.</i></td></tr>
+<tr><th id="273">273</th><td><i> */</i></td></tr>
+<tr><th id="274">274</th><td><u>#define	__sputc(c, p) \</u></td></tr>
+<tr><th id="275">275</th><td><u>	(--(p)-&gt;_w &lt; 0 ? \</u></td></tr>
+<tr><th id="276">276</th><td><u>		(p)-&gt;_w &gt;= (p)-&gt;_lbfsize ? \</u></td></tr>
+<tr><th id="277">277</th><td><u>			(*(p)-&gt;_p = (c)), *(p)-&gt;_p != '\n' ? \</u></td></tr>
+<tr><th id="278">278</th><td><u>				(int)*(p)-&gt;_p++ : \</u></td></tr>
+<tr><th id="279">279</th><td><u>				__swbuf('\n', p) : \</u></td></tr>
+<tr><th id="280">280</th><td><u>			__swbuf((int)(c), p) : \</u></td></tr>
+<tr><th id="281">281</th><td><u>		(*(p)-&gt;_p = (c), (int)*(p)-&gt;_p++))</u></td></tr>
+<tr><th id="282">282</th><td><u>#<span data-ppcond="263">endif</span></u></td></tr>
+<tr><th id="283">283</th><td></td></tr>
+<tr><th id="284">284</th><td><u>#define	<dfn class="macro" id="_M/__sfeof" data-ref="_M/__sfeof">__sfeof</dfn>(p)	(((p)-&gt;_flags &amp; __SEOF) != 0)</u></td></tr>
+<tr><th id="285">285</th><td><u>#define	<dfn class="macro" id="_M/__sferror" data-ref="_M/__sferror">__sferror</dfn>(p)	(((p)-&gt;_flags &amp; __SERR) != 0)</u></td></tr>
+<tr><th id="286">286</th><td><u>#define	<dfn class="macro" id="_M/__sclearerr" data-ref="_M/__sclearerr">__sclearerr</dfn>(p)	((void)((p)-&gt;_flags &amp;= ~(__SERR|__SEOF)))</u></td></tr>
+<tr><th id="287">287</th><td><u>#define	<dfn class="macro" id="_M/__sfileno" data-ref="_M/__sfileno">__sfileno</dfn>(p)	((p)-&gt;_file)</u></td></tr>
+<tr><th id="288">288</th><td></td></tr>
+<tr><th id="289">289</th><td><a class="macro" href="sys/cdefs.h.html#74" title="" data-ref="_M/__BEGIN_DECLS">__BEGIN_DECLS</a></td></tr>
+<tr><th id="290">290</th><td><em>void</em>	 <dfn class="decl" id="flockfile" title='flockfile' data-ref="flockfile">flockfile</dfn>(<a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> *);</td></tr>
+<tr><th id="291">291</th><td><em>int</em>	 <dfn class="decl" id="ftrylockfile" title='ftrylockfile' data-ref="ftrylockfile">ftrylockfile</dfn>(<a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> *);</td></tr>
+<tr><th id="292">292</th><td><em>void</em>	 <dfn class="decl" id="funlockfile" title='funlockfile' data-ref="funlockfile">funlockfile</dfn>(<a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> *);</td></tr>
+<tr><th id="293">293</th><td><em>int</em>	 <dfn class="decl" id="getc_unlocked" title='getc_unlocked' data-ref="getc_unlocked">getc_unlocked</dfn>(<a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> *);</td></tr>
+<tr><th id="294">294</th><td><em>int</em>	 <dfn class="decl" id="getchar_unlocked" title='getchar_unlocked' data-ref="getchar_unlocked">getchar_unlocked</dfn>(<em>void</em>);</td></tr>
+<tr><th id="295">295</th><td><em>int</em>	 <dfn class="decl" id="putc_unlocked" title='putc_unlocked' data-ref="putc_unlocked">putc_unlocked</dfn>(<em>int</em>, <a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> *);</td></tr>
+<tr><th id="296">296</th><td><em>int</em>	 <dfn class="decl" id="putchar_unlocked" title='putchar_unlocked' data-ref="putchar_unlocked">putchar_unlocked</dfn>(<em>int</em>);</td></tr>
+<tr><th id="297">297</th><td></td></tr>
+<tr><th id="298">298</th><td><i>/* Removed in Issue 6 */</i></td></tr>
+<tr><th id="299">299</th><td><u>#<span data-ppcond="299">if</span> !defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>) || _POSIX_C_SOURCE &lt; 200112L</u></td></tr>
+<tr><th id="300">300</th><td><em>int</em>	 <dfn class="decl" id="getw" title='getw' data-ref="getw">getw</dfn>(<a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> *);</td></tr>
+<tr><th id="301">301</th><td><em>int</em>	 <dfn class="decl" id="putw" title='putw' data-ref="putw">putw</dfn>(<em>int</em>, <a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> *);</td></tr>
+<tr><th id="302">302</th><td><u>#<span data-ppcond="299">endif</span></u></td></tr>
+<tr><th id="303">303</th><td></td></tr>
+<tr><th id="304">304</th><td><a class="macro" href="sys/cdefs.h.html#277" title="" data-ref="_M/__swift_unavailable">__swift_unavailable</a>(<q>"Use mkstemp(3) instead."</q>)</td></tr>
+<tr><th id="305">305</th><td><u>#<span data-ppcond="305">if</span> !defined(<span class="macro" data-ref="_M/_POSIX_C_SOURCE">_POSIX_C_SOURCE</span>)</u></td></tr>
+<tr><th id="306">306</th><td><a class="macro" href="sys/cdefs.h.html#180" title="__attribute__((deprecated(&quot;This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of tempnam(3), it is highly recommended that you use mkstemp(3) instead.&quot;)))" data-ref="_M/__deprecated_msg">__deprecated_msg</a>(<q>"This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of tempnam(3), it is highly recommended that you use mkstemp(3) instead."</q>)</td></tr>
+<tr><th id="307">307</th><td><u>#<span data-ppcond="305">endif</span></u></td></tr>
+<tr><th id="308">308</th><td><em>char</em>	*<dfn class="decl" id="_tempnam" title='tempnam' data-ref="_tempnam">tempnam</dfn>(<em>const</em> <em>char</em> *<dfn class="local col5 decl" id="15__dir" title='__dir' data-type='const char *' data-ref="15__dir">__dir</dfn>, <em>const</em> <em>char</em> *<dfn class="local col6 decl" id="16__prefix" title='__prefix' data-type='const char *' data-ref="16__prefix">__prefix</dfn>) <a class="macro" href="sys/cdefs.h.html#590" title="__asm(&quot;_&quot; &quot;tempnam&quot; )" data-ref="_M/__DARWIN_ALIAS">__DARWIN_ALIAS</a>(tempnam);</td></tr>
+<tr><th id="309">309</th><td><a class="macro" href="sys/cdefs.h.html#75" title="" data-ref="_M/__END_DECLS">__END_DECLS</a></td></tr>
+<tr><th id="310">310</th><td></td></tr>
+<tr><th id="311">311</th><td><u>#<span data-ppcond="311">ifndef</span> <span class="macro" data-ref="_M/lint">lint</span></u></td></tr>
+<tr><th id="312">312</th><td><u>#define	<dfn class="macro" id="_M/getc_unlocked" data-ref="_M/getc_unlocked">getc_unlocked</dfn>(fp)	__sgetc(fp)</u></td></tr>
+<tr><th id="313">313</th><td><u>#define <dfn class="macro" id="_M/putc_unlocked" data-ref="_M/putc_unlocked">putc_unlocked</dfn>(x, fp)	__sputc(x, fp)</u></td></tr>
+<tr><th id="314">314</th><td><u>#<span data-ppcond="311">endif</span> /* lint */</u></td></tr>
+<tr><th id="315">315</th><td></td></tr>
+<tr><th id="316">316</th><td><u>#define	<dfn class="macro" id="_M/getchar_unlocked" data-ref="_M/getchar_unlocked">getchar_unlocked</dfn>()	getc_unlocked(stdin)</u></td></tr>
+<tr><th id="317">317</th><td><u>#define	<dfn class="macro" id="_M/putchar_unlocked" data-ref="_M/putchar_unlocked">putchar_unlocked</dfn>(x)	putc_unlocked(x, stdout)</u></td></tr>
+<tr><th id="318">318</th><td><u>#<span data-ppcond="249">endif</span> /* __DARWIN_C_LEVEL &gt;= 199506L */</u></td></tr>
+<tr><th id="319">319</th><td></td></tr>
+<tr><th id="320">320</th><td></td></tr>
+<tr><th id="321">321</th><td></td></tr>
+<tr><th id="322">322</th><td><i>/* Additional functionality provided by:</i></td></tr>
+<tr><th id="323">323</th><td><i> * POSIX.1-2001</i></td></tr>
+<tr><th id="324">324</th><td><i> * ISO C99</i></td></tr>
+<tr><th id="325">325</th><td><i> */</i></td></tr>
+<tr><th id="326">326</th><td></td></tr>
+<tr><th id="327">327</th><td><u>#<span data-ppcond="327">if</span> <a class="macro" href="sys/cdefs.h.html#692" title="900000L" data-ref="_M/__DARWIN_C_LEVEL">__DARWIN_C_LEVEL</a> &gt;= 200112L</u></td></tr>
+<tr><th id="328">328</th><td><u>#include <a href="sys/_types/_off_t.h.html">&lt;sys/_types/_off_t.h&gt;</a></u></td></tr>
+<tr><th id="329">329</th><td></td></tr>
+<tr><th id="330">330</th><td><a class="macro" href="sys/cdefs.h.html#74" title="" data-ref="_M/__BEGIN_DECLS">__BEGIN_DECLS</a></td></tr>
+<tr><th id="331">331</th><td><em>int</em>	 <dfn class="decl" id="fseeko" title='fseeko' data-ref="fseeko">fseeko</dfn>(<a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> * <dfn class="local col7 decl" id="17__stream" title='__stream' data-type='FILE *' data-ref="17__stream">__stream</dfn>, <a class="typedef" href="sys/_types/_off_t.h.html#off_t" title='off_t' data-type='__darwin_off_t' data-ref="off_t">off_t</a> <dfn class="local col8 decl" id="18__offset" title='__offset' data-type='off_t' data-ref="18__offset">__offset</dfn>, <em>int</em> <dfn class="local col9 decl" id="19__whence" title='__whence' data-type='int' data-ref="19__whence">__whence</dfn>);</td></tr>
+<tr><th id="332">332</th><td><a class="typedef" href="sys/_types/_off_t.h.html#off_t" title='off_t' data-type='__darwin_off_t' data-ref="off_t">off_t</a>	 <dfn class="decl" id="ftello" title='ftello' data-ref="ftello">ftello</dfn>(<a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> * <dfn class="local col0 decl" id="20__stream" title='__stream' data-type='FILE *' data-ref="20__stream">__stream</dfn>);</td></tr>
+<tr><th id="333">333</th><td><a class="macro" href="sys/cdefs.h.html#75" title="" data-ref="_M/__END_DECLS">__END_DECLS</a></td></tr>
+<tr><th id="334">334</th><td><u>#<span data-ppcond="327">endif</span> /* __DARWIN_C_LEVEL &gt;= 200112L */</u></td></tr>
+<tr><th id="335">335</th><td></td></tr>
+<tr><th id="336">336</th><td><u>#<span data-ppcond="336">if</span> <a class="macro" href="sys/cdefs.h.html#692" title="900000L" data-ref="_M/__DARWIN_C_LEVEL">__DARWIN_C_LEVEL</a> &gt;= 200112L || defined(<span class="macro" data-ref="_M/_C99_SOURCE">_C99_SOURCE</span>) || defined(<span class="macro" data-ref="_M/__cplusplus">__cplusplus</span>)</u></td></tr>
+<tr><th id="337">337</th><td><a class="macro" href="sys/cdefs.h.html#74" title="" data-ref="_M/__BEGIN_DECLS">__BEGIN_DECLS</a></td></tr>
+<tr><th id="338">338</th><td><em>int</em>	 <a class="decl" href="#snprintf" title='snprintf' data-ref="snprintf">snprintf</a>(<em>char</em> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a> <dfn class="local col1 decl" id="21__str" title='__str' data-type='char *restrict' data-ref="21__str">__str</dfn>, <a class="typedef" href="sys/_types/_size_t.h.html#size_t" title='size_t' data-type='__darwin_size_t' data-ref="size_t">size_t</a> <dfn class="local col2 decl" id="22__size" title='__size' data-type='size_t' data-ref="22__size">__size</dfn>, <em>const</em> <em>char</em> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a> <dfn class="local col3 decl" id="23__format" title='__format' data-type='const char *restrict' data-ref="23__format">__format</dfn>, ...) <a class="macro" href="sys/cdefs.h.html#350" title="__attribute__((__format__ (__printf__, 3, 4)))" data-ref="_M/__printflike">__printflike</a>(<var>3</var>, <var>4</var>);</td></tr>
+<tr><th id="339">339</th><td><em>int</em>	 <a class="decl" href="#vfscanf" title='vfscanf' data-ref="vfscanf">vfscanf</a>(<a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a> <dfn class="local col4 decl" id="24__stream" title='__stream' data-type='FILE *restrict' data-ref="24__stream">__stream</dfn>, <em>const</em> <em>char</em> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a> <dfn class="local col5 decl" id="25__format" title='__format' data-type='const char *restrict' data-ref="25__format">__format</dfn>, <a class="typedef" href="sys/_types/_va_list.h.html#va_list" title='va_list' data-type='__darwin_va_list' data-ref="va_list">va_list</a>) <a class="macro" href="sys/cdefs.h.html#354" title="__attribute__((__format__ (__scanf__, 2, 0)))" data-ref="_M/__scanflike">__scanflike</a>(<var>2</var>, <var>0</var>);</td></tr>
+<tr><th id="340">340</th><td><em>int</em>	 <a class="decl" href="#vscanf" title='vscanf' data-ref="vscanf">vscanf</a>(<em>const</em> <em>char</em> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a> <dfn class="local col6 decl" id="26__format" title='__format' data-type='const char *restrict' data-ref="26__format">__format</dfn>, <a class="typedef" href="sys/_types/_va_list.h.html#va_list" title='va_list' data-type='__darwin_va_list' data-ref="va_list">va_list</a>) <a class="macro" href="sys/cdefs.h.html#354" title="__attribute__((__format__ (__scanf__, 1, 0)))" data-ref="_M/__scanflike">__scanflike</a>(<var>1</var>, <var>0</var>);</td></tr>
+<tr><th id="341">341</th><td><em>int</em>	 <a class="decl" href="#vsnprintf" title='vsnprintf' data-ref="vsnprintf">vsnprintf</a>(<em>char</em> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a> <dfn class="local col7 decl" id="27__str" title='__str' data-type='char *restrict' data-ref="27__str">__str</dfn>, <a class="typedef" href="sys/_types/_size_t.h.html#size_t" title='size_t' data-type='__darwin_size_t' data-ref="size_t">size_t</a> <dfn class="local col8 decl" id="28__size" title='__size' data-type='size_t' data-ref="28__size">__size</dfn>, <em>const</em> <em>char</em> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a> <dfn class="local col9 decl" id="29__format" title='__format' data-type='const char *restrict' data-ref="29__format">__format</dfn>, <a class="typedef" href="sys/_types/_va_list.h.html#va_list" title='va_list' data-type='__darwin_va_list' data-ref="va_list">va_list</a>) <a class="macro" href="sys/cdefs.h.html#350" title="__attribute__((__format__ (__printf__, 3, 0)))" data-ref="_M/__printflike">__printflike</a>(<var>3</var>, <var>0</var>);</td></tr>
+<tr><th id="342">342</th><td><em>int</em>	 <a class="decl" href="#vsscanf" title='vsscanf' data-ref="vsscanf">vsscanf</a>(<em>const</em> <em>char</em> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a> <dfn class="local col0 decl" id="30__str" title='__str' data-type='const char *restrict' data-ref="30__str">__str</dfn>, <em>const</em> <em>char</em> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a> <dfn class="local col1 decl" id="31__format" title='__format' data-type='const char *restrict' data-ref="31__format">__format</dfn>, <a class="typedef" href="sys/_types/_va_list.h.html#va_list" title='va_list' data-type='__darwin_va_list' data-ref="va_list">va_list</a>) <a class="macro" href="sys/cdefs.h.html#354" title="__attribute__((__format__ (__scanf__, 2, 0)))" data-ref="_M/__scanflike">__scanflike</a>(<var>2</var>, <var>0</var>);</td></tr>
+<tr><th id="343">343</th><td><a class="macro" href="sys/cdefs.h.html#75" title="" data-ref="_M/__END_DECLS">__END_DECLS</a></td></tr>
+<tr><th id="344">344</th><td><u>#<span data-ppcond="336">endif</span> /* __DARWIN_C_LEVEL &gt;= 200112L || defined(_C99_SOURCE) || defined(__cplusplus) */</u></td></tr>
+<tr><th id="345">345</th><td></td></tr>
+<tr><th id="346">346</th><td></td></tr>
+<tr><th id="347">347</th><td></td></tr>
+<tr><th id="348">348</th><td><i>/* Additional functionality provided by:</i></td></tr>
+<tr><th id="349">349</th><td><i> * POSIX.1-2008</i></td></tr>
+<tr><th id="350">350</th><td><i> */</i></td></tr>
+<tr><th id="351">351</th><td></td></tr>
+<tr><th id="352">352</th><td><u>#<span data-ppcond="352">if</span> <a class="macro" href="sys/cdefs.h.html#692" title="900000L" data-ref="_M/__DARWIN_C_LEVEL">__DARWIN_C_LEVEL</a> &gt;= 200809L</u></td></tr>
+<tr><th id="353">353</th><td><u>#include <a href="sys/_types/_ssize_t.h.html">&lt;sys/_types/_ssize_t.h&gt;</a></u></td></tr>
+<tr><th id="354">354</th><td></td></tr>
+<tr><th id="355">355</th><td><a class="macro" href="sys/cdefs.h.html#74" title="" data-ref="_M/__BEGIN_DECLS">__BEGIN_DECLS</a></td></tr>
+<tr><th id="356">356</th><td><em>int</em>	<dfn class="decl" id="dprintf" title='dprintf' data-ref="dprintf">dprintf</dfn>(<em>int</em>, <em>const</em> <em>char</em> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a>, ...) <a class="macro" href="sys/cdefs.h.html#350" title="__attribute__((__format__ (__printf__, 2, 3)))" data-ref="_M/__printflike">__printflike</a>(<var>2</var>, <var>3</var>) <a class="macro" href="Availability.h.html#246" title="__attribute__((availability(macosx,introduced=10.7)))" data-ref="_M/__OSX_AVAILABLE_STARTING">__OSX_AVAILABLE_STARTING</a>(__MAC_10_7, __IPHONE_4_3);</td></tr>
+<tr><th id="357">357</th><td><em>int</em>	<dfn class="decl" id="vdprintf" title='vdprintf' data-ref="vdprintf">vdprintf</dfn>(<em>int</em>, <em>const</em> <em>char</em> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a>, <a class="typedef" href="sys/_types/_va_list.h.html#va_list" title='va_list' data-type='__darwin_va_list' data-ref="va_list">va_list</a>) <a class="macro" href="sys/cdefs.h.html#350" title="__attribute__((__format__ (__printf__, 2, 0)))" data-ref="_M/__printflike">__printflike</a>(<var>2</var>, <var>0</var>) <a class="macro" href="Availability.h.html#246" title="__attribute__((availability(macosx,introduced=10.7)))" data-ref="_M/__OSX_AVAILABLE_STARTING">__OSX_AVAILABLE_STARTING</a>(__MAC_10_7, __IPHONE_4_3);</td></tr>
+<tr><th id="358">358</th><td><a class="typedef" href="sys/_types/_ssize_t.h.html#ssize_t" title='ssize_t' data-type='__darwin_ssize_t' data-ref="ssize_t">ssize_t</a> <dfn class="decl" id="getdelim" title='getdelim' data-ref="getdelim">getdelim</dfn>(<em>char</em> ** <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a> <dfn class="local col2 decl" id="32__linep" title='__linep' data-type='char **restrict' data-ref="32__linep">__linep</dfn>, <a class="typedef" href="sys/_types/_size_t.h.html#size_t" title='size_t' data-type='__darwin_size_t' data-ref="size_t">size_t</a> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a> <dfn class="local col3 decl" id="33__linecapp" title='__linecapp' data-type='size_t *restrict' data-ref="33__linecapp">__linecapp</dfn>, <em>int</em> <dfn class="local col4 decl" id="34__delimiter" title='__delimiter' data-type='int' data-ref="34__delimiter">__delimiter</dfn>, <a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a> <dfn class="local col5 decl" id="35__stream" title='__stream' data-type='FILE *restrict' data-ref="35__stream">__stream</dfn>) <a class="macro" href="Availability.h.html#246" title="__attribute__((availability(macosx,introduced=10.7)))" data-ref="_M/__OSX_AVAILABLE_STARTING">__OSX_AVAILABLE_STARTING</a>(__MAC_10_7, __IPHONE_4_3);</td></tr>
+<tr><th id="359">359</th><td><a class="typedef" href="sys/_types/_ssize_t.h.html#ssize_t" title='ssize_t' data-type='__darwin_ssize_t' data-ref="ssize_t">ssize_t</a> <dfn class="decl" id="getline" title='getline' data-ref="getline">getline</dfn>(<em>char</em> ** <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a> <dfn class="local col6 decl" id="36__linep" title='__linep' data-type='char **restrict' data-ref="36__linep">__linep</dfn>, <a class="typedef" href="sys/_types/_size_t.h.html#size_t" title='size_t' data-type='__darwin_size_t' data-ref="size_t">size_t</a> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a> <dfn class="local col7 decl" id="37__linecapp" title='__linecapp' data-type='size_t *restrict' data-ref="37__linecapp">__linecapp</dfn>, <a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a> <dfn class="local col8 decl" id="38__stream" title='__stream' data-type='FILE *restrict' data-ref="38__stream">__stream</dfn>) <a class="macro" href="Availability.h.html#246" title="__attribute__((availability(macosx,introduced=10.7)))" data-ref="_M/__OSX_AVAILABLE_STARTING">__OSX_AVAILABLE_STARTING</a>(__MAC_10_7, __IPHONE_4_3);</td></tr>
+<tr><th id="360">360</th><td><a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> *<dfn class="decl" id="fmemopen" title='fmemopen' data-ref="fmemopen">fmemopen</dfn>(<em>void</em> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a> <dfn class="local col9 decl" id="39__buf" title='__buf' data-type='void *restrict' data-ref="39__buf">__buf</dfn>, <a class="typedef" href="sys/_types/_size_t.h.html#size_t" title='size_t' data-type='__darwin_size_t' data-ref="size_t">size_t</a> <dfn class="local col0 decl" id="40__size" title='__size' data-type='size_t' data-ref="40__size">__size</dfn>, <em>const</em> <em>char</em> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a> <dfn class="local col1 decl" id="41__mode" title='__mode' data-type='const char *restrict' data-ref="41__mode">__mode</dfn>) <a class="macro" href="Availability.h.html#443" title="__attribute__((availability(macos,introduced=10.13))) __attribute__((availability(ios,introduced=11.0))) __attribute__((availability(tvos,introduced=11.0))) __attribute__((availability(watchos,introduced=4.0)))" data-ref="_M/__API_AVAILABLE">__API_AVAILABLE</a>(macos(<var>10.13</var>), ios(<var>11.0</var>), tvos(<var>11.0</var>), watchos(<var>4.0</var>));</td></tr>
+<tr><th id="361">361</th><td><a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> *<dfn class="decl" id="open_memstream" title='open_memstream' data-ref="open_memstream">open_memstream</dfn>(<em>char</em> **<dfn class="local col2 decl" id="42__bufp" title='__bufp' data-type='char **' data-ref="42__bufp">__bufp</dfn>, <a class="typedef" href="sys/_types/_size_t.h.html#size_t" title='size_t' data-type='__darwin_size_t' data-ref="size_t">size_t</a> *<dfn class="local col3 decl" id="43__sizep" title='__sizep' data-type='size_t *' data-ref="43__sizep">__sizep</dfn>) <a class="macro" href="Availability.h.html#443" title="__attribute__((availability(macos,introduced=10.13))) __attribute__((availability(ios,introduced=11.0))) __attribute__((availability(tvos,introduced=11.0))) __attribute__((availability(watchos,introduced=4.0)))" data-ref="_M/__API_AVAILABLE">__API_AVAILABLE</a>(macos(<var>10.13</var>), ios(<var>11.0</var>), tvos(<var>11.0</var>), watchos(<var>4.0</var>));</td></tr>
+<tr><th id="362">362</th><td><a class="macro" href="sys/cdefs.h.html#75" title="" data-ref="_M/__END_DECLS">__END_DECLS</a></td></tr>
+<tr><th id="363">363</th><td><u>#<span data-ppcond="352">endif</span> /* __DARWIN_C_LEVEL &gt;= 200809L */</u></td></tr>
+<tr><th id="364">364</th><td></td></tr>
+<tr><th id="365">365</th><td></td></tr>
+<tr><th id="366">366</th><td></td></tr>
+<tr><th id="367">367</th><td><i>/* Darwin extensions */</i></td></tr>
+<tr><th id="368">368</th><td></td></tr>
+<tr><th id="369">369</th><td><u>#<span data-ppcond="369">if</span> <a class="macro" href="sys/cdefs.h.html#692" title="900000L" data-ref="_M/__DARWIN_C_LEVEL">__DARWIN_C_LEVEL</a> &gt;= <a class="macro" href="sys/cdefs.h.html#685" title="900000L" data-ref="_M/__DARWIN_C_FULL">__DARWIN_C_FULL</a></u></td></tr>
+<tr><th id="370">370</th><td><a class="macro" href="sys/cdefs.h.html#74" title="" data-ref="_M/__BEGIN_DECLS">__BEGIN_DECLS</a></td></tr>
+<tr><th id="371">371</th><td><b>extern</b> <a class="macro" href="sys/cdefs.h.html#116" title="const" data-ref="_M/__const"><em>__const</em></a> <em>int</em> <dfn class="decl" id="sys_nerr" title='sys_nerr' data-ref="sys_nerr">sys_nerr</dfn>;		<i>/* perror(3) external variables */</i></td></tr>
+<tr><th id="372">372</th><td><b>extern</b> <a class="macro" href="sys/cdefs.h.html#116" title="const" data-ref="_M/__const"><em>__const</em></a> <em>char</em> *<a class="macro" href="sys/cdefs.h.html#116" title="const" data-ref="_M/__const"><em>__const</em></a> <dfn class="decl" id="sys_errlist" title='sys_errlist' data-ref="sys_errlist">sys_errlist</dfn>[];</td></tr>
+<tr><th id="373">373</th><td></td></tr>
+<tr><th id="374">374</th><td><em>int</em>	 <dfn class="decl" id="asprintf" title='asprintf' data-ref="asprintf">asprintf</dfn>(<em>char</em> ** <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a>, <em>const</em> <em>char</em> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a>, ...) <a class="macro" href="sys/cdefs.h.html#350" title="__attribute__((__format__ (__printf__, 2, 3)))" data-ref="_M/__printflike">__printflike</a>(<var>2</var>, <var>3</var>);</td></tr>
+<tr><th id="375">375</th><td><em>char</em>	*<dfn class="decl" id="ctermid_r" title='ctermid_r' data-ref="ctermid_r">ctermid_r</dfn>(<em>char</em> *);</td></tr>
+<tr><th id="376">376</th><td><em>char</em>	*<dfn class="decl" id="fgetln" title='fgetln' data-ref="fgetln">fgetln</dfn>(<a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> *, <a class="typedef" href="sys/_types/_size_t.h.html#size_t" title='size_t' data-type='__darwin_size_t' data-ref="size_t">size_t</a> *);</td></tr>
+<tr><th id="377">377</th><td><a class="macro" href="sys/cdefs.h.html#116" title="const" data-ref="_M/__const"><em>__const</em></a> <em>char</em> *<dfn class="decl" id="fmtcheck" title='fmtcheck' data-ref="fmtcheck">fmtcheck</dfn>(<em>const</em> <em>char</em> *, <em>const</em> <em>char</em> *);</td></tr>
+<tr><th id="378">378</th><td><em>int</em>	 <dfn class="decl" id="fpurge" title='fpurge' data-ref="fpurge">fpurge</dfn>(<a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> *);</td></tr>
+<tr><th id="379">379</th><td><em>void</em>	 <dfn class="decl" id="setbuffer" title='setbuffer' data-ref="setbuffer">setbuffer</dfn>(<a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> *, <em>char</em> *, <em>int</em>);</td></tr>
+<tr><th id="380">380</th><td><em>int</em>	 <dfn class="decl" id="setlinebuf" title='setlinebuf' data-ref="setlinebuf">setlinebuf</dfn>(<a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a> *);</td></tr>
+<tr><th id="381">381</th><td><em>int</em>	 <dfn class="decl" id="vasprintf" title='vasprintf' data-ref="vasprintf">vasprintf</dfn>(<em>char</em> ** <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a>, <em>const</em> <em>char</em> * <a class="macro" href="sys/cdefs.h.html#209" title="restrict" data-ref="_M/__restrict"><b>__restrict</b></a>, <a class="typedef" href="sys/_types/_va_list.h.html#va_list" title='va_list' data-type='__darwin_va_list' data-ref="va_list">va_list</a>) <a class="macro" href="sys/cdefs.h.html#350" title="__attribute__((__format__ (__printf__, 2, 0)))" data-ref="_M/__printflike">__printflike</a>(<var>2</var>, <var>0</var>);</td></tr>
+<tr><th id="382">382</th><td><a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a>	*<dfn class="decl" id="zopen" title='zopen' data-ref="zopen">zopen</dfn>(<em>const</em> <em>char</em> *, <em>const</em> <em>char</em> *, <em>int</em>);</td></tr>
+<tr><th id="383">383</th><td></td></tr>
+<tr><th id="384">384</th><td></td></tr>
+<tr><th id="385">385</th><td><i>/*</i></td></tr>
+<tr><th id="386">386</th><td><i> * Stdio function-access interface.</i></td></tr>
+<tr><th id="387">387</th><td><i> */</i></td></tr>
+<tr><th id="388">388</th><td><a class="typedef" href="_stdio.h.html#FILE" title='FILE' data-type='struct __sFILE' data-ref="FILE">FILE</a>	*<dfn class="decl" id="funopen" title='funopen' data-ref="funopen">funopen</dfn>(<em>const</em> <em>void</em> *,</td></tr>
+<tr><th id="389">389</th><td>                 <em>int</em> (* <b>_Nullable</b>)(<em>void</em> *, <em>char</em> *, <em>int</em>),</td></tr>
+<tr><th id="390">390</th><td>                 <em>int</em> (* <b>_Nullable</b>)(<em>void</em> *, <em>const</em> <em>char</em> *, <em>int</em>),</td></tr>
+<tr><th id="391">391</th><td>                 <a class="typedef" href="_stdio.h.html#fpos_t" title='fpos_t' data-type='__darwin_off_t' data-ref="fpos_t">fpos_t</a> (* <b>_Nullable</b>)(<em>void</em> *, <a class="typedef" href="_stdio.h.html#fpos_t" title='fpos_t' data-type='__darwin_off_t' data-ref="fpos_t">fpos_t</a>, <em>int</em>),</td></tr>
+<tr><th id="392">392</th><td>                 <em>int</em> (* <b>_Nullable</b>)(<em>void</em> *));</td></tr>
+<tr><th id="393">393</th><td><a class="macro" href="sys/cdefs.h.html#75" title="" data-ref="_M/__END_DECLS">__END_DECLS</a></td></tr>
+<tr><th id="394">394</th><td><u>#define	<dfn class="macro" id="_M/fropen" data-ref="_M/fropen">fropen</dfn>(cookie, fn) funopen(cookie, fn, 0, 0, 0)</u></td></tr>
+<tr><th id="395">395</th><td><u>#define	<dfn class="macro" id="_M/fwopen" data-ref="_M/fwopen">fwopen</dfn>(cookie, fn) funopen(cookie, 0, fn, 0, 0)</u></td></tr>
+<tr><th id="396">396</th><td></td></tr>
+<tr><th id="397">397</th><td><u>#define	<dfn class="macro" id="_M/feof_unlocked" data-ref="_M/feof_unlocked">feof_unlocked</dfn>(p)	__sfeof(p)</u></td></tr>
+<tr><th id="398">398</th><td><u>#define	<dfn class="macro" id="_M/ferror_unlocked" data-ref="_M/ferror_unlocked">ferror_unlocked</dfn>(p)	__sferror(p)</u></td></tr>
+<tr><th id="399">399</th><td><u>#define	<dfn class="macro" id="_M/clearerr_unlocked" data-ref="_M/clearerr_unlocked">clearerr_unlocked</dfn>(p)	__sclearerr(p)</u></td></tr>
+<tr><th id="400">400</th><td><u>#define	<dfn class="macro" id="_M/fileno_unlocked" data-ref="_M/fileno_unlocked">fileno_unlocked</dfn>(p)	__sfileno(p)</u></td></tr>
+<tr><th id="401">401</th><td></td></tr>
+<tr><th id="402">402</th><td><u>#<span data-ppcond="369">endif</span> /* __DARWIN_C_LEVEL &gt;= __DARWIN_C_FULL */</u></td></tr>
+<tr><th id="403">403</th><td></td></tr>
+<tr><th id="404">404</th><td></td></tr>
+<tr><th id="405">405</th><td><u>#<span data-ppcond="405">ifdef</span> <span class="macro" data-ref="_M/_USE_EXTENDED_LOCALES_">_USE_EXTENDED_LOCALES_</span></u></td></tr>
+<tr><th id="406">406</th><td><u>#include &lt;xlocale/_stdio.h&gt;</u></td></tr>
+<tr><th id="407">407</th><td><u>#<span data-ppcond="405">endif</span> /* _USE_EXTENDED_LOCALES_ */</u></td></tr>
+<tr><th id="408">408</th><td></td></tr>
+<tr><th id="409">409</th><td><u>#<span data-ppcond="409">if</span> defined (<span class="macro" data-ref="_M/__GNUC__">__GNUC__</span>) &amp;&amp; <a class="macro" href="_types.h.html#65" title="2" data-ref="_M/_FORTIFY_SOURCE">_FORTIFY_SOURCE</a> &gt; 0 &amp;&amp; !defined (<span class="macro" data-ref="_M/__cplusplus">__cplusplus</span>)</u></td></tr>
+<tr><th id="410">410</th><td><i>/* Security checking functions.  */</i></td></tr>
+<tr><th id="411">411</th><td><u>#include <a href="secure/_stdio.h.html">&lt;secure/_stdio.h&gt;</a></u></td></tr>
+<tr><th id="412">412</th><td><u>#<span data-ppcond="409">endif</span></u></td></tr>
+<tr><th id="413">413</th><td></td></tr>
+<tr><th id="414">414</th><td><u>#<span data-ppcond="61">endif</span> /* _STDIO_H_ */</u></td></tr>
+<tr><th id="415">415</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../xv6/mkfs.c.html'>xv6/mkfs.c</a><br/>Generated on <em>2019-Jul-19</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 2.1
+<br/>Generator usage only permitted with license.</p>
+</div></body></html>

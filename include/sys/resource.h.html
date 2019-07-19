@@ -1,0 +1,469 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>resource.h source code [include/sys/resource.h] - Woboq Code Browser</title>
+<meta name="woboq:interestingDefinitions" content="proc_rlimit_control_wakeupmon,rlimit,rusage,rusage_info_v0,rusage_info_v1,rusage_info_v2,rusage_info_v3,rusage_info_v4 "/>
+<link rel="stylesheet" href="https://code.woboq.org/data/qtcreator.css" title="QtCreator"/>
+<link rel="alternate stylesheet" href="https://code.woboq.org/data/kdevelop.css" title="KDevelop"/>
+<script type="text/javascript" src="https://code.woboq.org/data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="https://code.woboq.org/data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/sys/resource.h'; var root_path = '../..'; var data_path = 'https://code.woboq.org/data';</script>
+<script src='https://code.woboq.org/data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Browse the source code of </span><a href='..'>include</a>/<a href='./'>sys</a>/<a href='resource.h.html'>resource.h</a></h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (c) 2000-2018 Apple Inc. All rights reserved.</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * @APPLE_OSREFERENCE_LICENSE_HEADER_START@</i></td></tr>
+<tr><th id="5">5</th><td><i> *</i></td></tr>
+<tr><th id="6">6</th><td><i> * This file contains Original Code and/or Modifications of Original Code</i></td></tr>
+<tr><th id="7">7</th><td><i> * as defined in and that are subject to the Apple Public Source License</i></td></tr>
+<tr><th id="8">8</th><td><i> * Version 2.0 (the 'License'). You may not use this file except in</i></td></tr>
+<tr><th id="9">9</th><td><i> * compliance with the License. The rights granted to you under the License</i></td></tr>
+<tr><th id="10">10</th><td><i> * may not be used to create, or enable the creation or redistribution of,</i></td></tr>
+<tr><th id="11">11</th><td><i> * unlawful or unlicensed copies of an Apple operating system, or to</i></td></tr>
+<tr><th id="12">12</th><td><i> * circumvent, violate, or enable the circumvention or violation of, any</i></td></tr>
+<tr><th id="13">13</th><td><i> * terms of an Apple operating system software license agreement.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * Please obtain a copy of the License at</i></td></tr>
+<tr><th id="16">16</th><td><i> * <a href="http://www.opensource.apple.com/apsl/">http://www.opensource.apple.com/apsl/</a> and read it before using this file.</i></td></tr>
+<tr><th id="17">17</th><td><i> *</i></td></tr>
+<tr><th id="18">18</th><td><i> * The Original Code and all software distributed under the License are</i></td></tr>
+<tr><th id="19">19</th><td><i> * distributed on an 'AS IS' basis, WITHOUT WARRANTY OF ANY KIND, EITHER</i></td></tr>
+<tr><th id="20">20</th><td><i> * EXPRESS OR IMPLIED, AND APPLE HEREBY DISCLAIMS ALL SUCH WARRANTIES,</i></td></tr>
+<tr><th id="21">21</th><td><i> * INCLUDING WITHOUT LIMITATION, ANY WARRANTIES OF MERCHANTABILITY,</i></td></tr>
+<tr><th id="22">22</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE, QUIET ENJOYMENT OR NON-INFRINGEMENT.</i></td></tr>
+<tr><th id="23">23</th><td><i> * Please see the License for the specific language governing rights and</i></td></tr>
+<tr><th id="24">24</th><td><i> * limitations under the License.</i></td></tr>
+<tr><th id="25">25</th><td><i> *</i></td></tr>
+<tr><th id="26">26</th><td><i> * @APPLE_OSREFERENCE_LICENSE_HEADER_END@</i></td></tr>
+<tr><th id="27">27</th><td><i> */</i></td></tr>
+<tr><th id="28">28</th><td><i>/* Copyright (c) 1995 NeXT Computer, Inc. All Rights Reserved */</i></td></tr>
+<tr><th id="29">29</th><td><i>/*</i></td></tr>
+<tr><th id="30">30</th><td><i> * Copyright (c) 1982, 1986, 1993</i></td></tr>
+<tr><th id="31">31</th><td><i> *	The Regents of the University of California.  All rights reserved.</i></td></tr>
+<tr><th id="32">32</th><td><i> *</i></td></tr>
+<tr><th id="33">33</th><td><i> * Redistribution and use in source and binary forms, with or without</i></td></tr>
+<tr><th id="34">34</th><td><i> * modification, are permitted provided that the following conditions</i></td></tr>
+<tr><th id="35">35</th><td><i> * are met:</i></td></tr>
+<tr><th id="36">36</th><td><i> * 1. Redistributions of source code must retain the above copyright</i></td></tr>
+<tr><th id="37">37</th><td><i> *    notice, this list of conditions and the following disclaimer.</i></td></tr>
+<tr><th id="38">38</th><td><i> * 2. Redistributions in binary form must reproduce the above copyright</i></td></tr>
+<tr><th id="39">39</th><td><i> *    notice, this list of conditions and the following disclaimer in the</i></td></tr>
+<tr><th id="40">40</th><td><i> *    documentation and/or other materials provided with the distribution.</i></td></tr>
+<tr><th id="41">41</th><td><i> * 3. All advertising materials mentioning features or use of this software</i></td></tr>
+<tr><th id="42">42</th><td><i> *    must display the following acknowledgement:</i></td></tr>
+<tr><th id="43">43</th><td><i> *	This product includes software developed by the University of</i></td></tr>
+<tr><th id="44">44</th><td><i> *	California, Berkeley and its contributors.</i></td></tr>
+<tr><th id="45">45</th><td><i> * 4. Neither the name of the University nor the names of its contributors</i></td></tr>
+<tr><th id="46">46</th><td><i> *    may be used to endorse or promote products derived from this software</i></td></tr>
+<tr><th id="47">47</th><td><i> *    without specific prior written permission.</i></td></tr>
+<tr><th id="48">48</th><td><i> *</i></td></tr>
+<tr><th id="49">49</th><td><i> * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND</i></td></tr>
+<tr><th id="50">50</th><td><i> * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE</i></td></tr>
+<tr><th id="51">51</th><td><i> * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE</i></td></tr>
+<tr><th id="52">52</th><td><i> * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE</i></td></tr>
+<tr><th id="53">53</th><td><i> * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL</i></td></tr>
+<tr><th id="54">54</th><td><i> * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS</i></td></tr>
+<tr><th id="55">55</th><td><i> * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)</i></td></tr>
+<tr><th id="56">56</th><td><i> * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT</i></td></tr>
+<tr><th id="57">57</th><td><i> * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY</i></td></tr>
+<tr><th id="58">58</th><td><i> * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF</i></td></tr>
+<tr><th id="59">59</th><td><i> * SUCH DAMAGE.</i></td></tr>
+<tr><th id="60">60</th><td><i> *</i></td></tr>
+<tr><th id="61">61</th><td><i> *	@(#)resource.h	8.2 (Berkeley) 1/4/94</i></td></tr>
+<tr><th id="62">62</th><td><i> */</i></td></tr>
+<tr><th id="63">63</th><td></td></tr>
+<tr><th id="64">64</th><td><u>#<span data-ppcond="64">ifndef</span> <span class="macro" data-ref="_M/_SYS_RESOURCE_H_">_SYS_RESOURCE_H_</span></u></td></tr>
+<tr><th id="65">65</th><td><u>#define <dfn class="macro" id="_M/_SYS_RESOURCE_H_" data-ref="_M/_SYS_RESOURCE_H_">_SYS_RESOURCE_H_</dfn></u></td></tr>
+<tr><th id="66">66</th><td></td></tr>
+<tr><th id="67">67</th><td><u>#include <a href="appleapiopts.h.html">&lt;sys/appleapiopts.h&gt;</a></u></td></tr>
+<tr><th id="68">68</th><td><u>#include <a href="cdefs.h.html">&lt;sys/cdefs.h&gt;</a></u></td></tr>
+<tr><th id="69">69</th><td><u>#include <a href="_types.h.html">&lt;sys/_types.h&gt;</a></u></td></tr>
+<tr><th id="70">70</th><td></td></tr>
+<tr><th id="71">71</th><td><u>#<span data-ppcond="71">if</span> <a class="macro" href="cdefs.h.html#692" title="900000L" data-ref="_M/__DARWIN_C_LEVEL">__DARWIN_C_LEVEL</a> &gt;= <a class="macro" href="cdefs.h.html#685" title="900000L" data-ref="_M/__DARWIN_C_FULL">__DARWIN_C_FULL</a></u></td></tr>
+<tr><th id="72">72</th><td><u>#include &lt;stdint.h&gt;</u></td></tr>
+<tr><th id="73">73</th><td><u>#<span data-ppcond="71">endif</span> /* __DARWIN_C_LEVEL &gt;= __DARWIN_C_FULL */</u></td></tr>
+<tr><th id="74">74</th><td></td></tr>
+<tr><th id="75">75</th><td><u>#include <a href="../Availability.h.html">&lt;Availability.h&gt;</a></u></td></tr>
+<tr><th id="76">76</th><td></td></tr>
+<tr><th id="77">77</th><td><i>/* [XSI] The timeval structure shall be defined as described in</i></td></tr>
+<tr><th id="78">78</th><td><i> * &lt;sys/time.h&gt;</i></td></tr>
+<tr><th id="79">79</th><td><i> */</i></td></tr>
+<tr><th id="80">80</th><td><u>#include <a href="_types/_timeval.h.html">&lt;sys/_types/_timeval.h&gt;</a></u></td></tr>
+<tr><th id="81">81</th><td></td></tr>
+<tr><th id="82">82</th><td><i>/* The id_t type shall be defined as described in &lt;sys/types.h&gt; */</i></td></tr>
+<tr><th id="83">83</th><td><u>#include <a href="_types/_id_t.h.html">&lt;sys/_types/_id_t.h&gt;</a></u></td></tr>
+<tr><th id="84">84</th><td></td></tr>
+<tr><th id="85">85</th><td></td></tr>
+<tr><th id="86">86</th><td><i>/*</i></td></tr>
+<tr><th id="87">87</th><td><i> * Resource limit type (low 63 bits, excluding the sign bit)</i></td></tr>
+<tr><th id="88">88</th><td><i> */</i></td></tr>
+<tr><th id="89">89</th><td><b>typedef</b> <a class="typedef" href="../i386/_types.h.html#__uint64_t" title='__uint64_t' data-type='unsigned long long' data-ref="__uint64_t">__uint64_t</a>      <dfn class="typedef" id="rlim_t" title='rlim_t' data-type='__uint64_t' data-ref="rlim_t">rlim_t</dfn>;</td></tr>
+<tr><th id="90">90</th><td></td></tr>
+<tr><th id="91">91</th><td></td></tr>
+<tr><th id="92">92</th><td><i>/*****</i></td></tr>
+<tr><th id="93">93</th><td><i> * PRIORITY</i></td></tr>
+<tr><th id="94">94</th><td><i> */</i></td></tr>
+<tr><th id="95">95</th><td></td></tr>
+<tr><th id="96">96</th><td><i>/*</i></td></tr>
+<tr><th id="97">97</th><td><i> * Possible values of the first parameter to getpriority()/setpriority(),</i></td></tr>
+<tr><th id="98">98</th><td><i> * used to indicate the type of the second parameter.</i></td></tr>
+<tr><th id="99">99</th><td><i> */</i></td></tr>
+<tr><th id="100">100</th><td><u>#define <dfn class="macro" id="_M/PRIO_PROCESS" data-ref="_M/PRIO_PROCESS">PRIO_PROCESS</dfn>    0               /* Second argument is a PID */</u></td></tr>
+<tr><th id="101">101</th><td><u>#define <dfn class="macro" id="_M/PRIO_PGRP" data-ref="_M/PRIO_PGRP">PRIO_PGRP</dfn>       1               /* Second argument is a GID */</u></td></tr>
+<tr><th id="102">102</th><td><u>#define <dfn class="macro" id="_M/PRIO_USER" data-ref="_M/PRIO_USER">PRIO_USER</dfn>       2               /* Second argument is a UID */</u></td></tr>
+<tr><th id="103">103</th><td></td></tr>
+<tr><th id="104">104</th><td><u>#<span data-ppcond="104">if</span> <a class="macro" href="cdefs.h.html#692" title="900000L" data-ref="_M/__DARWIN_C_LEVEL">__DARWIN_C_LEVEL</a> &gt;= <a class="macro" href="cdefs.h.html#685" title="900000L" data-ref="_M/__DARWIN_C_FULL">__DARWIN_C_FULL</a></u></td></tr>
+<tr><th id="105">105</th><td><u>#define <dfn class="macro" id="_M/PRIO_DARWIN_THREAD" data-ref="_M/PRIO_DARWIN_THREAD">PRIO_DARWIN_THREAD</dfn>      3               /* Second argument is always 0 (current thread) */</u></td></tr>
+<tr><th id="106">106</th><td><u>#define <dfn class="macro" id="_M/PRIO_DARWIN_PROCESS" data-ref="_M/PRIO_DARWIN_PROCESS">PRIO_DARWIN_PROCESS</dfn>     4               /* Second argument is a PID */</u></td></tr>
+<tr><th id="107">107</th><td></td></tr>
+<tr><th id="108">108</th><td></td></tr>
+<tr><th id="109">109</th><td><i>/*</i></td></tr>
+<tr><th id="110">110</th><td><i> * Range limitations for the value of the third parameter to setpriority().</i></td></tr>
+<tr><th id="111">111</th><td><i> */</i></td></tr>
+<tr><th id="112">112</th><td><u>#define <dfn class="macro" id="_M/PRIO_MIN" data-ref="_M/PRIO_MIN">PRIO_MIN</dfn>        -20</u></td></tr>
+<tr><th id="113">113</th><td><u>#define <dfn class="macro" id="_M/PRIO_MAX" data-ref="_M/PRIO_MAX">PRIO_MAX</dfn>        20</u></td></tr>
+<tr><th id="114">114</th><td></td></tr>
+<tr><th id="115">115</th><td><i>/*</i></td></tr>
+<tr><th id="116">116</th><td><i> * use PRIO_DARWIN_BG to set the current thread into "background" state</i></td></tr>
+<tr><th id="117">117</th><td><i> * which lowers CPU, disk IO, and networking priorites until thread terminates</i></td></tr>
+<tr><th id="118">118</th><td><i> * or "background" state is revoked</i></td></tr>
+<tr><th id="119">119</th><td><i> */</i></td></tr>
+<tr><th id="120">120</th><td><u>#define <dfn class="macro" id="_M/PRIO_DARWIN_BG" data-ref="_M/PRIO_DARWIN_BG">PRIO_DARWIN_BG</dfn> 0x1000</u></td></tr>
+<tr><th id="121">121</th><td></td></tr>
+<tr><th id="122">122</th><td><i>/*</i></td></tr>
+<tr><th id="123">123</th><td><i> * use PRIO_DARWIN_NONUI to restrict a process's ability to make calls to</i></td></tr>
+<tr><th id="124">124</th><td><i> * the GPU. (deprecated)</i></td></tr>
+<tr><th id="125">125</th><td><i> */</i></td></tr>
+<tr><th id="126">126</th><td><u>#define <dfn class="macro" id="_M/PRIO_DARWIN_NONUI" data-ref="_M/PRIO_DARWIN_NONUI">PRIO_DARWIN_NONUI</dfn> 0x1001</u></td></tr>
+<tr><th id="127">127</th><td></td></tr>
+<tr><th id="128">128</th><td><u>#<span data-ppcond="104">endif</span>  /* __DARWIN_C_LEVEL &gt;= __DARWIN_C_FULL */</u></td></tr>
+<tr><th id="129">129</th><td></td></tr>
+<tr><th id="130">130</th><td></td></tr>
+<tr><th id="131">131</th><td></td></tr>
+<tr><th id="132">132</th><td><i>/*****</i></td></tr>
+<tr><th id="133">133</th><td><i> * RESOURCE USAGE</i></td></tr>
+<tr><th id="134">134</th><td><i> */</i></td></tr>
+<tr><th id="135">135</th><td></td></tr>
+<tr><th id="136">136</th><td><i>/*</i></td></tr>
+<tr><th id="137">137</th><td><i> * Possible values of the first parameter to getrusage(), used to indicate</i></td></tr>
+<tr><th id="138">138</th><td><i> * the scope of the information to be returned.</i></td></tr>
+<tr><th id="139">139</th><td><i> */</i></td></tr>
+<tr><th id="140">140</th><td><u>#define <dfn class="macro" id="_M/RUSAGE_SELF" data-ref="_M/RUSAGE_SELF">RUSAGE_SELF</dfn>     0               /* Current process information */</u></td></tr>
+<tr><th id="141">141</th><td><u>#define <dfn class="macro" id="_M/RUSAGE_CHILDREN" data-ref="_M/RUSAGE_CHILDREN">RUSAGE_CHILDREN</dfn> -1              /* Current process' children */</u></td></tr>
+<tr><th id="142">142</th><td></td></tr>
+<tr><th id="143">143</th><td><i>/*</i></td></tr>
+<tr><th id="144">144</th><td><i> * A structure representing an accounting of resource utilization.  The</i></td></tr>
+<tr><th id="145">145</th><td><i> * address of an instance of this structure is the second parameter to</i></td></tr>
+<tr><th id="146">146</th><td><i> * getrusage().</i></td></tr>
+<tr><th id="147">147</th><td><i> *</i></td></tr>
+<tr><th id="148">148</th><td><i> * Note: All values other than ru_utime and ru_stime are implementaiton</i></td></tr>
+<tr><th id="149">149</th><td><i> *       defined and subject to change in a future release.  Their use</i></td></tr>
+<tr><th id="150">150</th><td><i> *       is discouraged for standards compliant programs.</i></td></tr>
+<tr><th id="151">151</th><td><i> */</i></td></tr>
+<tr><th id="152">152</th><td><b>struct</b>  <dfn class="type def" id="rusage" title='rusage' data-ref="rusage">rusage</dfn> {</td></tr>
+<tr><th id="153">153</th><td>	<b>struct</b> <a class="type" href="_types/_timeval.h.html#34" title='timeval' data-ref="timeval">timeval</a> <dfn class="decl" id="rusage::ru_utime" title='rusage::ru_utime' data-ref="rusage::ru_utime">ru_utime</dfn>;        <i>/* user time used (PL) */</i></td></tr>
+<tr><th id="154">154</th><td>	<b>struct</b> <a class="type" href="_types/_timeval.h.html#34" title='timeval' data-ref="timeval">timeval</a> <dfn class="decl" id="rusage::ru_stime" title='rusage::ru_stime' data-ref="rusage::ru_stime">ru_stime</dfn>;        <i>/* system time used (PL) */</i></td></tr>
+<tr><th id="155">155</th><td><u>#<span data-ppcond="155">if</span> <a class="macro" href="cdefs.h.html#692" title="900000L" data-ref="_M/__DARWIN_C_LEVEL">__DARWIN_C_LEVEL</a> &lt; <a class="macro" href="cdefs.h.html#685" title="900000L" data-ref="_M/__DARWIN_C_FULL">__DARWIN_C_FULL</a></u></td></tr>
+<tr><th id="156">156</th><td>	<em>long</em>    ru_opaque[<var>14</var>];          <i>/* implementation defined */</i></td></tr>
+<tr><th id="157">157</th><td><u>#<span data-ppcond="155">else</span></u></td></tr>
+<tr><th id="158">158</th><td>	<i>/*</i></td></tr>
+<tr><th id="159">159</th><td><i>	 * Informational aliases for source compatibility with programs</i></td></tr>
+<tr><th id="160">160</th><td><i>	 * that need more information than that provided by standards,</i></td></tr>
+<tr><th id="161">161</th><td><i>	 * and which do not mind being OS-dependent.</i></td></tr>
+<tr><th id="162">162</th><td><i>	 */</i></td></tr>
+<tr><th id="163">163</th><td>	<em>long</em>    <dfn class="decl" id="rusage::ru_maxrss" title='rusage::ru_maxrss' data-ref="rusage::ru_maxrss">ru_maxrss</dfn>;              <i>/* max resident set size (PL) */</i></td></tr>
+<tr><th id="164">164</th><td><u>#define <dfn class="macro" id="_M/ru_first" data-ref="_M/ru_first">ru_first</dfn>        ru_ixrss        /* internal: ruadd() range start */</u></td></tr>
+<tr><th id="165">165</th><td>	<em>long</em>    <dfn class="decl" id="rusage::ru_ixrss" title='rusage::ru_ixrss' data-ref="rusage::ru_ixrss">ru_ixrss</dfn>;               <i>/* integral shared memory size (NU) */</i></td></tr>
+<tr><th id="166">166</th><td>	<em>long</em>    <dfn class="decl" id="rusage::ru_idrss" title='rusage::ru_idrss' data-ref="rusage::ru_idrss">ru_idrss</dfn>;               <i>/* integral unshared data (NU)  */</i></td></tr>
+<tr><th id="167">167</th><td>	<em>long</em>    <dfn class="decl" id="rusage::ru_isrss" title='rusage::ru_isrss' data-ref="rusage::ru_isrss">ru_isrss</dfn>;               <i>/* integral unshared stack (NU) */</i></td></tr>
+<tr><th id="168">168</th><td>	<em>long</em>    <dfn class="decl" id="rusage::ru_minflt" title='rusage::ru_minflt' data-ref="rusage::ru_minflt">ru_minflt</dfn>;              <i>/* page reclaims (NU) */</i></td></tr>
+<tr><th id="169">169</th><td>	<em>long</em>    <dfn class="decl" id="rusage::ru_majflt" title='rusage::ru_majflt' data-ref="rusage::ru_majflt">ru_majflt</dfn>;              <i>/* page faults (NU) */</i></td></tr>
+<tr><th id="170">170</th><td>	<em>long</em>    <dfn class="decl" id="rusage::ru_nswap" title='rusage::ru_nswap' data-ref="rusage::ru_nswap">ru_nswap</dfn>;               <i>/* swaps (NU) */</i></td></tr>
+<tr><th id="171">171</th><td>	<em>long</em>    <dfn class="decl" id="rusage::ru_inblock" title='rusage::ru_inblock' data-ref="rusage::ru_inblock">ru_inblock</dfn>;             <i>/* block input operations (atomic) */</i></td></tr>
+<tr><th id="172">172</th><td>	<em>long</em>    <dfn class="decl" id="rusage::ru_oublock" title='rusage::ru_oublock' data-ref="rusage::ru_oublock">ru_oublock</dfn>;             <i>/* block output operations (atomic) */</i></td></tr>
+<tr><th id="173">173</th><td>	<em>long</em>    <dfn class="decl" id="rusage::ru_msgsnd" title='rusage::ru_msgsnd' data-ref="rusage::ru_msgsnd">ru_msgsnd</dfn>;              <i>/* messages sent (atomic) */</i></td></tr>
+<tr><th id="174">174</th><td>	<em>long</em>    <dfn class="decl" id="rusage::ru_msgrcv" title='rusage::ru_msgrcv' data-ref="rusage::ru_msgrcv">ru_msgrcv</dfn>;              <i>/* messages received (atomic) */</i></td></tr>
+<tr><th id="175">175</th><td>	<em>long</em>    <dfn class="decl" id="rusage::ru_nsignals" title='rusage::ru_nsignals' data-ref="rusage::ru_nsignals">ru_nsignals</dfn>;            <i>/* signals received (atomic) */</i></td></tr>
+<tr><th id="176">176</th><td>	<em>long</em>    <dfn class="decl" id="rusage::ru_nvcsw" title='rusage::ru_nvcsw' data-ref="rusage::ru_nvcsw">ru_nvcsw</dfn>;               <i>/* voluntary context switches (atomic) */</i></td></tr>
+<tr><th id="177">177</th><td>	<em>long</em>    <dfn class="decl" id="rusage::ru_nivcsw" title='rusage::ru_nivcsw' data-ref="rusage::ru_nivcsw">ru_nivcsw</dfn>;              <i>/* involuntary " */</i></td></tr>
+<tr><th id="178">178</th><td><u>#define <dfn class="macro" id="_M/ru_last" data-ref="_M/ru_last">ru_last</dfn>         ru_nivcsw       /* internal: ruadd() range end */</u></td></tr>
+<tr><th id="179">179</th><td><u>#<span data-ppcond="155">endif</span>  /* __DARWIN_C_LEVEL &gt;= __DARWIN_C_FULL */</u></td></tr>
+<tr><th id="180">180</th><td>};</td></tr>
+<tr><th id="181">181</th><td></td></tr>
+<tr><th id="182">182</th><td><u>#<span data-ppcond="182">if</span> <a class="macro" href="cdefs.h.html#692" title="900000L" data-ref="_M/__DARWIN_C_LEVEL">__DARWIN_C_LEVEL</a> &gt;= <a class="macro" href="cdefs.h.html#685" title="900000L" data-ref="_M/__DARWIN_C_FULL">__DARWIN_C_FULL</a></u></td></tr>
+<tr><th id="183">183</th><td><i>/*</i></td></tr>
+<tr><th id="184">184</th><td><i> * Flavors for proc_pid_rusage().</i></td></tr>
+<tr><th id="185">185</th><td><i> */</i></td></tr>
+<tr><th id="186">186</th><td><u>#define <dfn class="macro" id="_M/RUSAGE_INFO_V0" data-ref="_M/RUSAGE_INFO_V0">RUSAGE_INFO_V0</dfn>  0</u></td></tr>
+<tr><th id="187">187</th><td><u>#define <dfn class="macro" id="_M/RUSAGE_INFO_V1" data-ref="_M/RUSAGE_INFO_V1">RUSAGE_INFO_V1</dfn>  1</u></td></tr>
+<tr><th id="188">188</th><td><u>#define <dfn class="macro" id="_M/RUSAGE_INFO_V2" data-ref="_M/RUSAGE_INFO_V2">RUSAGE_INFO_V2</dfn>  2</u></td></tr>
+<tr><th id="189">189</th><td><u>#define <dfn class="macro" id="_M/RUSAGE_INFO_V3" data-ref="_M/RUSAGE_INFO_V3">RUSAGE_INFO_V3</dfn>  3</u></td></tr>
+<tr><th id="190">190</th><td><u>#define <dfn class="macro" id="_M/RUSAGE_INFO_V4" data-ref="_M/RUSAGE_INFO_V4">RUSAGE_INFO_V4</dfn>  4</u></td></tr>
+<tr><th id="191">191</th><td><u>#define <dfn class="macro" id="_M/RUSAGE_INFO_CURRENT" data-ref="_M/RUSAGE_INFO_CURRENT">RUSAGE_INFO_CURRENT</dfn>     RUSAGE_INFO_V4</u></td></tr>
+<tr><th id="192">192</th><td></td></tr>
+<tr><th id="193">193</th><td><b>typedef</b> <em>void</em> *<dfn class="typedef" id="rusage_info_t" title='rusage_info_t' data-type='void *' data-ref="rusage_info_t">rusage_info_t</dfn>;</td></tr>
+<tr><th id="194">194</th><td></td></tr>
+<tr><th id="195">195</th><td><b>struct</b> <dfn class="type def" id="rusage_info_v0" title='rusage_info_v0' data-ref="rusage_info_v0">rusage_info_v0</dfn> {</td></tr>
+<tr><th id="196">196</th><td>	<a class="typedef" href="../_types/_uint8_t.h.html#uint8_t" title='uint8_t' data-type='unsigned char' data-ref="uint8_t">uint8_t</a>  <dfn class="decl" id="rusage_info_v0::ri_uuid" title='rusage_info_v0::ri_uuid' data-ref="rusage_info_v0::ri_uuid">ri_uuid</dfn>[<var>16</var>];</td></tr>
+<tr><th id="197">197</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v0::ri_user_time" title='rusage_info_v0::ri_user_time' data-ref="rusage_info_v0::ri_user_time">ri_user_time</dfn>;</td></tr>
+<tr><th id="198">198</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v0::ri_system_time" title='rusage_info_v0::ri_system_time' data-ref="rusage_info_v0::ri_system_time">ri_system_time</dfn>;</td></tr>
+<tr><th id="199">199</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v0::ri_pkg_idle_wkups" title='rusage_info_v0::ri_pkg_idle_wkups' data-ref="rusage_info_v0::ri_pkg_idle_wkups">ri_pkg_idle_wkups</dfn>;</td></tr>
+<tr><th id="200">200</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v0::ri_interrupt_wkups" title='rusage_info_v0::ri_interrupt_wkups' data-ref="rusage_info_v0::ri_interrupt_wkups">ri_interrupt_wkups</dfn>;</td></tr>
+<tr><th id="201">201</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v0::ri_pageins" title='rusage_info_v0::ri_pageins' data-ref="rusage_info_v0::ri_pageins">ri_pageins</dfn>;</td></tr>
+<tr><th id="202">202</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v0::ri_wired_size" title='rusage_info_v0::ri_wired_size' data-ref="rusage_info_v0::ri_wired_size">ri_wired_size</dfn>;</td></tr>
+<tr><th id="203">203</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v0::ri_resident_size" title='rusage_info_v0::ri_resident_size' data-ref="rusage_info_v0::ri_resident_size">ri_resident_size</dfn>;</td></tr>
+<tr><th id="204">204</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v0::ri_phys_footprint" title='rusage_info_v0::ri_phys_footprint' data-ref="rusage_info_v0::ri_phys_footprint">ri_phys_footprint</dfn>;</td></tr>
+<tr><th id="205">205</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v0::ri_proc_start_abstime" title='rusage_info_v0::ri_proc_start_abstime' data-ref="rusage_info_v0::ri_proc_start_abstime">ri_proc_start_abstime</dfn>;</td></tr>
+<tr><th id="206">206</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v0::ri_proc_exit_abstime" title='rusage_info_v0::ri_proc_exit_abstime' data-ref="rusage_info_v0::ri_proc_exit_abstime">ri_proc_exit_abstime</dfn>;</td></tr>
+<tr><th id="207">207</th><td>};</td></tr>
+<tr><th id="208">208</th><td></td></tr>
+<tr><th id="209">209</th><td><b>struct</b> <dfn class="type def" id="rusage_info_v1" title='rusage_info_v1' data-ref="rusage_info_v1">rusage_info_v1</dfn> {</td></tr>
+<tr><th id="210">210</th><td>	<a class="typedef" href="../_types/_uint8_t.h.html#uint8_t" title='uint8_t' data-type='unsigned char' data-ref="uint8_t">uint8_t</a>  <dfn class="decl" id="rusage_info_v1::ri_uuid" title='rusage_info_v1::ri_uuid' data-ref="rusage_info_v1::ri_uuid">ri_uuid</dfn>[<var>16</var>];</td></tr>
+<tr><th id="211">211</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v1::ri_user_time" title='rusage_info_v1::ri_user_time' data-ref="rusage_info_v1::ri_user_time">ri_user_time</dfn>;</td></tr>
+<tr><th id="212">212</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v1::ri_system_time" title='rusage_info_v1::ri_system_time' data-ref="rusage_info_v1::ri_system_time">ri_system_time</dfn>;</td></tr>
+<tr><th id="213">213</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v1::ri_pkg_idle_wkups" title='rusage_info_v1::ri_pkg_idle_wkups' data-ref="rusage_info_v1::ri_pkg_idle_wkups">ri_pkg_idle_wkups</dfn>;</td></tr>
+<tr><th id="214">214</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v1::ri_interrupt_wkups" title='rusage_info_v1::ri_interrupt_wkups' data-ref="rusage_info_v1::ri_interrupt_wkups">ri_interrupt_wkups</dfn>;</td></tr>
+<tr><th id="215">215</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v1::ri_pageins" title='rusage_info_v1::ri_pageins' data-ref="rusage_info_v1::ri_pageins">ri_pageins</dfn>;</td></tr>
+<tr><th id="216">216</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v1::ri_wired_size" title='rusage_info_v1::ri_wired_size' data-ref="rusage_info_v1::ri_wired_size">ri_wired_size</dfn>;</td></tr>
+<tr><th id="217">217</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v1::ri_resident_size" title='rusage_info_v1::ri_resident_size' data-ref="rusage_info_v1::ri_resident_size">ri_resident_size</dfn>;</td></tr>
+<tr><th id="218">218</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v1::ri_phys_footprint" title='rusage_info_v1::ri_phys_footprint' data-ref="rusage_info_v1::ri_phys_footprint">ri_phys_footprint</dfn>;</td></tr>
+<tr><th id="219">219</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v1::ri_proc_start_abstime" title='rusage_info_v1::ri_proc_start_abstime' data-ref="rusage_info_v1::ri_proc_start_abstime">ri_proc_start_abstime</dfn>;</td></tr>
+<tr><th id="220">220</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v1::ri_proc_exit_abstime" title='rusage_info_v1::ri_proc_exit_abstime' data-ref="rusage_info_v1::ri_proc_exit_abstime">ri_proc_exit_abstime</dfn>;</td></tr>
+<tr><th id="221">221</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v1::ri_child_user_time" title='rusage_info_v1::ri_child_user_time' data-ref="rusage_info_v1::ri_child_user_time">ri_child_user_time</dfn>;</td></tr>
+<tr><th id="222">222</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v1::ri_child_system_time" title='rusage_info_v1::ri_child_system_time' data-ref="rusage_info_v1::ri_child_system_time">ri_child_system_time</dfn>;</td></tr>
+<tr><th id="223">223</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v1::ri_child_pkg_idle_wkups" title='rusage_info_v1::ri_child_pkg_idle_wkups' data-ref="rusage_info_v1::ri_child_pkg_idle_wkups">ri_child_pkg_idle_wkups</dfn>;</td></tr>
+<tr><th id="224">224</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v1::ri_child_interrupt_wkups" title='rusage_info_v1::ri_child_interrupt_wkups' data-ref="rusage_info_v1::ri_child_interrupt_wkups">ri_child_interrupt_wkups</dfn>;</td></tr>
+<tr><th id="225">225</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v1::ri_child_pageins" title='rusage_info_v1::ri_child_pageins' data-ref="rusage_info_v1::ri_child_pageins">ri_child_pageins</dfn>;</td></tr>
+<tr><th id="226">226</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v1::ri_child_elapsed_abstime" title='rusage_info_v1::ri_child_elapsed_abstime' data-ref="rusage_info_v1::ri_child_elapsed_abstime">ri_child_elapsed_abstime</dfn>;</td></tr>
+<tr><th id="227">227</th><td>};</td></tr>
+<tr><th id="228">228</th><td></td></tr>
+<tr><th id="229">229</th><td><b>struct</b> <dfn class="type def" id="rusage_info_v2" title='rusage_info_v2' data-ref="rusage_info_v2">rusage_info_v2</dfn> {</td></tr>
+<tr><th id="230">230</th><td>	<a class="typedef" href="../_types/_uint8_t.h.html#uint8_t" title='uint8_t' data-type='unsigned char' data-ref="uint8_t">uint8_t</a>  <dfn class="decl" id="rusage_info_v2::ri_uuid" title='rusage_info_v2::ri_uuid' data-ref="rusage_info_v2::ri_uuid">ri_uuid</dfn>[<var>16</var>];</td></tr>
+<tr><th id="231">231</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v2::ri_user_time" title='rusage_info_v2::ri_user_time' data-ref="rusage_info_v2::ri_user_time">ri_user_time</dfn>;</td></tr>
+<tr><th id="232">232</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v2::ri_system_time" title='rusage_info_v2::ri_system_time' data-ref="rusage_info_v2::ri_system_time">ri_system_time</dfn>;</td></tr>
+<tr><th id="233">233</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v2::ri_pkg_idle_wkups" title='rusage_info_v2::ri_pkg_idle_wkups' data-ref="rusage_info_v2::ri_pkg_idle_wkups">ri_pkg_idle_wkups</dfn>;</td></tr>
+<tr><th id="234">234</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v2::ri_interrupt_wkups" title='rusage_info_v2::ri_interrupt_wkups' data-ref="rusage_info_v2::ri_interrupt_wkups">ri_interrupt_wkups</dfn>;</td></tr>
+<tr><th id="235">235</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v2::ri_pageins" title='rusage_info_v2::ri_pageins' data-ref="rusage_info_v2::ri_pageins">ri_pageins</dfn>;</td></tr>
+<tr><th id="236">236</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v2::ri_wired_size" title='rusage_info_v2::ri_wired_size' data-ref="rusage_info_v2::ri_wired_size">ri_wired_size</dfn>;</td></tr>
+<tr><th id="237">237</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v2::ri_resident_size" title='rusage_info_v2::ri_resident_size' data-ref="rusage_info_v2::ri_resident_size">ri_resident_size</dfn>;</td></tr>
+<tr><th id="238">238</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v2::ri_phys_footprint" title='rusage_info_v2::ri_phys_footprint' data-ref="rusage_info_v2::ri_phys_footprint">ri_phys_footprint</dfn>;</td></tr>
+<tr><th id="239">239</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v2::ri_proc_start_abstime" title='rusage_info_v2::ri_proc_start_abstime' data-ref="rusage_info_v2::ri_proc_start_abstime">ri_proc_start_abstime</dfn>;</td></tr>
+<tr><th id="240">240</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v2::ri_proc_exit_abstime" title='rusage_info_v2::ri_proc_exit_abstime' data-ref="rusage_info_v2::ri_proc_exit_abstime">ri_proc_exit_abstime</dfn>;</td></tr>
+<tr><th id="241">241</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v2::ri_child_user_time" title='rusage_info_v2::ri_child_user_time' data-ref="rusage_info_v2::ri_child_user_time">ri_child_user_time</dfn>;</td></tr>
+<tr><th id="242">242</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v2::ri_child_system_time" title='rusage_info_v2::ri_child_system_time' data-ref="rusage_info_v2::ri_child_system_time">ri_child_system_time</dfn>;</td></tr>
+<tr><th id="243">243</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v2::ri_child_pkg_idle_wkups" title='rusage_info_v2::ri_child_pkg_idle_wkups' data-ref="rusage_info_v2::ri_child_pkg_idle_wkups">ri_child_pkg_idle_wkups</dfn>;</td></tr>
+<tr><th id="244">244</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v2::ri_child_interrupt_wkups" title='rusage_info_v2::ri_child_interrupt_wkups' data-ref="rusage_info_v2::ri_child_interrupt_wkups">ri_child_interrupt_wkups</dfn>;</td></tr>
+<tr><th id="245">245</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v2::ri_child_pageins" title='rusage_info_v2::ri_child_pageins' data-ref="rusage_info_v2::ri_child_pageins">ri_child_pageins</dfn>;</td></tr>
+<tr><th id="246">246</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v2::ri_child_elapsed_abstime" title='rusage_info_v2::ri_child_elapsed_abstime' data-ref="rusage_info_v2::ri_child_elapsed_abstime">ri_child_elapsed_abstime</dfn>;</td></tr>
+<tr><th id="247">247</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v2::ri_diskio_bytesread" title='rusage_info_v2::ri_diskio_bytesread' data-ref="rusage_info_v2::ri_diskio_bytesread">ri_diskio_bytesread</dfn>;</td></tr>
+<tr><th id="248">248</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v2::ri_diskio_byteswritten" title='rusage_info_v2::ri_diskio_byteswritten' data-ref="rusage_info_v2::ri_diskio_byteswritten">ri_diskio_byteswritten</dfn>;</td></tr>
+<tr><th id="249">249</th><td>};</td></tr>
+<tr><th id="250">250</th><td></td></tr>
+<tr><th id="251">251</th><td><b>struct</b> <dfn class="type def" id="rusage_info_v3" title='rusage_info_v3' data-ref="rusage_info_v3">rusage_info_v3</dfn> {</td></tr>
+<tr><th id="252">252</th><td>	<a class="typedef" href="../_types/_uint8_t.h.html#uint8_t" title='uint8_t' data-type='unsigned char' data-ref="uint8_t">uint8_t</a>  <dfn class="decl" id="rusage_info_v3::ri_uuid" title='rusage_info_v3::ri_uuid' data-ref="rusage_info_v3::ri_uuid">ri_uuid</dfn>[<var>16</var>];</td></tr>
+<tr><th id="253">253</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v3::ri_user_time" title='rusage_info_v3::ri_user_time' data-ref="rusage_info_v3::ri_user_time">ri_user_time</dfn>;</td></tr>
+<tr><th id="254">254</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v3::ri_system_time" title='rusage_info_v3::ri_system_time' data-ref="rusage_info_v3::ri_system_time">ri_system_time</dfn>;</td></tr>
+<tr><th id="255">255</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v3::ri_pkg_idle_wkups" title='rusage_info_v3::ri_pkg_idle_wkups' data-ref="rusage_info_v3::ri_pkg_idle_wkups">ri_pkg_idle_wkups</dfn>;</td></tr>
+<tr><th id="256">256</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v3::ri_interrupt_wkups" title='rusage_info_v3::ri_interrupt_wkups' data-ref="rusage_info_v3::ri_interrupt_wkups">ri_interrupt_wkups</dfn>;</td></tr>
+<tr><th id="257">257</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v3::ri_pageins" title='rusage_info_v3::ri_pageins' data-ref="rusage_info_v3::ri_pageins">ri_pageins</dfn>;</td></tr>
+<tr><th id="258">258</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v3::ri_wired_size" title='rusage_info_v3::ri_wired_size' data-ref="rusage_info_v3::ri_wired_size">ri_wired_size</dfn>;</td></tr>
+<tr><th id="259">259</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v3::ri_resident_size" title='rusage_info_v3::ri_resident_size' data-ref="rusage_info_v3::ri_resident_size">ri_resident_size</dfn>;</td></tr>
+<tr><th id="260">260</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v3::ri_phys_footprint" title='rusage_info_v3::ri_phys_footprint' data-ref="rusage_info_v3::ri_phys_footprint">ri_phys_footprint</dfn>;</td></tr>
+<tr><th id="261">261</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v3::ri_proc_start_abstime" title='rusage_info_v3::ri_proc_start_abstime' data-ref="rusage_info_v3::ri_proc_start_abstime">ri_proc_start_abstime</dfn>;</td></tr>
+<tr><th id="262">262</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v3::ri_proc_exit_abstime" title='rusage_info_v3::ri_proc_exit_abstime' data-ref="rusage_info_v3::ri_proc_exit_abstime">ri_proc_exit_abstime</dfn>;</td></tr>
+<tr><th id="263">263</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v3::ri_child_user_time" title='rusage_info_v3::ri_child_user_time' data-ref="rusage_info_v3::ri_child_user_time">ri_child_user_time</dfn>;</td></tr>
+<tr><th id="264">264</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v3::ri_child_system_time" title='rusage_info_v3::ri_child_system_time' data-ref="rusage_info_v3::ri_child_system_time">ri_child_system_time</dfn>;</td></tr>
+<tr><th id="265">265</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v3::ri_child_pkg_idle_wkups" title='rusage_info_v3::ri_child_pkg_idle_wkups' data-ref="rusage_info_v3::ri_child_pkg_idle_wkups">ri_child_pkg_idle_wkups</dfn>;</td></tr>
+<tr><th id="266">266</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v3::ri_child_interrupt_wkups" title='rusage_info_v3::ri_child_interrupt_wkups' data-ref="rusage_info_v3::ri_child_interrupt_wkups">ri_child_interrupt_wkups</dfn>;</td></tr>
+<tr><th id="267">267</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v3::ri_child_pageins" title='rusage_info_v3::ri_child_pageins' data-ref="rusage_info_v3::ri_child_pageins">ri_child_pageins</dfn>;</td></tr>
+<tr><th id="268">268</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v3::ri_child_elapsed_abstime" title='rusage_info_v3::ri_child_elapsed_abstime' data-ref="rusage_info_v3::ri_child_elapsed_abstime">ri_child_elapsed_abstime</dfn>;</td></tr>
+<tr><th id="269">269</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v3::ri_diskio_bytesread" title='rusage_info_v3::ri_diskio_bytesread' data-ref="rusage_info_v3::ri_diskio_bytesread">ri_diskio_bytesread</dfn>;</td></tr>
+<tr><th id="270">270</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v3::ri_diskio_byteswritten" title='rusage_info_v3::ri_diskio_byteswritten' data-ref="rusage_info_v3::ri_diskio_byteswritten">ri_diskio_byteswritten</dfn>;</td></tr>
+<tr><th id="271">271</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v3::ri_cpu_time_qos_default" title='rusage_info_v3::ri_cpu_time_qos_default' data-ref="rusage_info_v3::ri_cpu_time_qos_default">ri_cpu_time_qos_default</dfn>;</td></tr>
+<tr><th id="272">272</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v3::ri_cpu_time_qos_maintenance" title='rusage_info_v3::ri_cpu_time_qos_maintenance' data-ref="rusage_info_v3::ri_cpu_time_qos_maintenance">ri_cpu_time_qos_maintenance</dfn>;</td></tr>
+<tr><th id="273">273</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v3::ri_cpu_time_qos_background" title='rusage_info_v3::ri_cpu_time_qos_background' data-ref="rusage_info_v3::ri_cpu_time_qos_background">ri_cpu_time_qos_background</dfn>;</td></tr>
+<tr><th id="274">274</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v3::ri_cpu_time_qos_utility" title='rusage_info_v3::ri_cpu_time_qos_utility' data-ref="rusage_info_v3::ri_cpu_time_qos_utility">ri_cpu_time_qos_utility</dfn>;</td></tr>
+<tr><th id="275">275</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v3::ri_cpu_time_qos_legacy" title='rusage_info_v3::ri_cpu_time_qos_legacy' data-ref="rusage_info_v3::ri_cpu_time_qos_legacy">ri_cpu_time_qos_legacy</dfn>;</td></tr>
+<tr><th id="276">276</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v3::ri_cpu_time_qos_user_initiated" title='rusage_info_v3::ri_cpu_time_qos_user_initiated' data-ref="rusage_info_v3::ri_cpu_time_qos_user_initiated">ri_cpu_time_qos_user_initiated</dfn>;</td></tr>
+<tr><th id="277">277</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v3::ri_cpu_time_qos_user_interactive" title='rusage_info_v3::ri_cpu_time_qos_user_interactive' data-ref="rusage_info_v3::ri_cpu_time_qos_user_interactive">ri_cpu_time_qos_user_interactive</dfn>;</td></tr>
+<tr><th id="278">278</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v3::ri_billed_system_time" title='rusage_info_v3::ri_billed_system_time' data-ref="rusage_info_v3::ri_billed_system_time">ri_billed_system_time</dfn>;</td></tr>
+<tr><th id="279">279</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v3::ri_serviced_system_time" title='rusage_info_v3::ri_serviced_system_time' data-ref="rusage_info_v3::ri_serviced_system_time">ri_serviced_system_time</dfn>;</td></tr>
+<tr><th id="280">280</th><td>};</td></tr>
+<tr><th id="281">281</th><td></td></tr>
+<tr><th id="282">282</th><td><b>struct</b> <dfn class="type def" id="rusage_info_v4" title='rusage_info_v4' data-ref="rusage_info_v4">rusage_info_v4</dfn> {</td></tr>
+<tr><th id="283">283</th><td>	<a class="typedef" href="../_types/_uint8_t.h.html#uint8_t" title='uint8_t' data-type='unsigned char' data-ref="uint8_t">uint8_t</a>  <dfn class="decl" id="rusage_info_v4::ri_uuid" title='rusage_info_v4::ri_uuid' data-ref="rusage_info_v4::ri_uuid">ri_uuid</dfn>[<var>16</var>];</td></tr>
+<tr><th id="284">284</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v4::ri_user_time" title='rusage_info_v4::ri_user_time' data-ref="rusage_info_v4::ri_user_time">ri_user_time</dfn>;</td></tr>
+<tr><th id="285">285</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v4::ri_system_time" title='rusage_info_v4::ri_system_time' data-ref="rusage_info_v4::ri_system_time">ri_system_time</dfn>;</td></tr>
+<tr><th id="286">286</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v4::ri_pkg_idle_wkups" title='rusage_info_v4::ri_pkg_idle_wkups' data-ref="rusage_info_v4::ri_pkg_idle_wkups">ri_pkg_idle_wkups</dfn>;</td></tr>
+<tr><th id="287">287</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v4::ri_interrupt_wkups" title='rusage_info_v4::ri_interrupt_wkups' data-ref="rusage_info_v4::ri_interrupt_wkups">ri_interrupt_wkups</dfn>;</td></tr>
+<tr><th id="288">288</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v4::ri_pageins" title='rusage_info_v4::ri_pageins' data-ref="rusage_info_v4::ri_pageins">ri_pageins</dfn>;</td></tr>
+<tr><th id="289">289</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v4::ri_wired_size" title='rusage_info_v4::ri_wired_size' data-ref="rusage_info_v4::ri_wired_size">ri_wired_size</dfn>;</td></tr>
+<tr><th id="290">290</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v4::ri_resident_size" title='rusage_info_v4::ri_resident_size' data-ref="rusage_info_v4::ri_resident_size">ri_resident_size</dfn>;</td></tr>
+<tr><th id="291">291</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v4::ri_phys_footprint" title='rusage_info_v4::ri_phys_footprint' data-ref="rusage_info_v4::ri_phys_footprint">ri_phys_footprint</dfn>;</td></tr>
+<tr><th id="292">292</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v4::ri_proc_start_abstime" title='rusage_info_v4::ri_proc_start_abstime' data-ref="rusage_info_v4::ri_proc_start_abstime">ri_proc_start_abstime</dfn>;</td></tr>
+<tr><th id="293">293</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v4::ri_proc_exit_abstime" title='rusage_info_v4::ri_proc_exit_abstime' data-ref="rusage_info_v4::ri_proc_exit_abstime">ri_proc_exit_abstime</dfn>;</td></tr>
+<tr><th id="294">294</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v4::ri_child_user_time" title='rusage_info_v4::ri_child_user_time' data-ref="rusage_info_v4::ri_child_user_time">ri_child_user_time</dfn>;</td></tr>
+<tr><th id="295">295</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v4::ri_child_system_time" title='rusage_info_v4::ri_child_system_time' data-ref="rusage_info_v4::ri_child_system_time">ri_child_system_time</dfn>;</td></tr>
+<tr><th id="296">296</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v4::ri_child_pkg_idle_wkups" title='rusage_info_v4::ri_child_pkg_idle_wkups' data-ref="rusage_info_v4::ri_child_pkg_idle_wkups">ri_child_pkg_idle_wkups</dfn>;</td></tr>
+<tr><th id="297">297</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v4::ri_child_interrupt_wkups" title='rusage_info_v4::ri_child_interrupt_wkups' data-ref="rusage_info_v4::ri_child_interrupt_wkups">ri_child_interrupt_wkups</dfn>;</td></tr>
+<tr><th id="298">298</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v4::ri_child_pageins" title='rusage_info_v4::ri_child_pageins' data-ref="rusage_info_v4::ri_child_pageins">ri_child_pageins</dfn>;</td></tr>
+<tr><th id="299">299</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v4::ri_child_elapsed_abstime" title='rusage_info_v4::ri_child_elapsed_abstime' data-ref="rusage_info_v4::ri_child_elapsed_abstime">ri_child_elapsed_abstime</dfn>;</td></tr>
+<tr><th id="300">300</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v4::ri_diskio_bytesread" title='rusage_info_v4::ri_diskio_bytesread' data-ref="rusage_info_v4::ri_diskio_bytesread">ri_diskio_bytesread</dfn>;</td></tr>
+<tr><th id="301">301</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v4::ri_diskio_byteswritten" title='rusage_info_v4::ri_diskio_byteswritten' data-ref="rusage_info_v4::ri_diskio_byteswritten">ri_diskio_byteswritten</dfn>;</td></tr>
+<tr><th id="302">302</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v4::ri_cpu_time_qos_default" title='rusage_info_v4::ri_cpu_time_qos_default' data-ref="rusage_info_v4::ri_cpu_time_qos_default">ri_cpu_time_qos_default</dfn>;</td></tr>
+<tr><th id="303">303</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v4::ri_cpu_time_qos_maintenance" title='rusage_info_v4::ri_cpu_time_qos_maintenance' data-ref="rusage_info_v4::ri_cpu_time_qos_maintenance">ri_cpu_time_qos_maintenance</dfn>;</td></tr>
+<tr><th id="304">304</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v4::ri_cpu_time_qos_background" title='rusage_info_v4::ri_cpu_time_qos_background' data-ref="rusage_info_v4::ri_cpu_time_qos_background">ri_cpu_time_qos_background</dfn>;</td></tr>
+<tr><th id="305">305</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v4::ri_cpu_time_qos_utility" title='rusage_info_v4::ri_cpu_time_qos_utility' data-ref="rusage_info_v4::ri_cpu_time_qos_utility">ri_cpu_time_qos_utility</dfn>;</td></tr>
+<tr><th id="306">306</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v4::ri_cpu_time_qos_legacy" title='rusage_info_v4::ri_cpu_time_qos_legacy' data-ref="rusage_info_v4::ri_cpu_time_qos_legacy">ri_cpu_time_qos_legacy</dfn>;</td></tr>
+<tr><th id="307">307</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v4::ri_cpu_time_qos_user_initiated" title='rusage_info_v4::ri_cpu_time_qos_user_initiated' data-ref="rusage_info_v4::ri_cpu_time_qos_user_initiated">ri_cpu_time_qos_user_initiated</dfn>;</td></tr>
+<tr><th id="308">308</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v4::ri_cpu_time_qos_user_interactive" title='rusage_info_v4::ri_cpu_time_qos_user_interactive' data-ref="rusage_info_v4::ri_cpu_time_qos_user_interactive">ri_cpu_time_qos_user_interactive</dfn>;</td></tr>
+<tr><th id="309">309</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v4::ri_billed_system_time" title='rusage_info_v4::ri_billed_system_time' data-ref="rusage_info_v4::ri_billed_system_time">ri_billed_system_time</dfn>;</td></tr>
+<tr><th id="310">310</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v4::ri_serviced_system_time" title='rusage_info_v4::ri_serviced_system_time' data-ref="rusage_info_v4::ri_serviced_system_time">ri_serviced_system_time</dfn>;</td></tr>
+<tr><th id="311">311</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v4::ri_logical_writes" title='rusage_info_v4::ri_logical_writes' data-ref="rusage_info_v4::ri_logical_writes">ri_logical_writes</dfn>;</td></tr>
+<tr><th id="312">312</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v4::ri_lifetime_max_phys_footprint" title='rusage_info_v4::ri_lifetime_max_phys_footprint' data-ref="rusage_info_v4::ri_lifetime_max_phys_footprint">ri_lifetime_max_phys_footprint</dfn>;</td></tr>
+<tr><th id="313">313</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v4::ri_instructions" title='rusage_info_v4::ri_instructions' data-ref="rusage_info_v4::ri_instructions">ri_instructions</dfn>;</td></tr>
+<tr><th id="314">314</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v4::ri_cycles" title='rusage_info_v4::ri_cycles' data-ref="rusage_info_v4::ri_cycles">ri_cycles</dfn>;</td></tr>
+<tr><th id="315">315</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v4::ri_billed_energy" title='rusage_info_v4::ri_billed_energy' data-ref="rusage_info_v4::ri_billed_energy">ri_billed_energy</dfn>;</td></tr>
+<tr><th id="316">316</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v4::ri_serviced_energy" title='rusage_info_v4::ri_serviced_energy' data-ref="rusage_info_v4::ri_serviced_energy">ri_serviced_energy</dfn>;</td></tr>
+<tr><th id="317">317</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v4::ri_interval_max_phys_footprint" title='rusage_info_v4::ri_interval_max_phys_footprint' data-ref="rusage_info_v4::ri_interval_max_phys_footprint">ri_interval_max_phys_footprint</dfn>;</td></tr>
+<tr><th id="318">318</th><td>	<i>// 1 reserve counter(s) remaining for future extension</i></td></tr>
+<tr><th id="319">319</th><td>	<a class="typedef" href="../_types/_uint64_t.h.html#uint64_t" title='uint64_t' data-type='unsigned long long' data-ref="uint64_t">uint64_t</a> <dfn class="decl" id="rusage_info_v4::ri_unused" title='rusage_info_v4::ri_unused' data-ref="rusage_info_v4::ri_unused">ri_unused</dfn>[<var>1</var>];</td></tr>
+<tr><th id="320">320</th><td>};</td></tr>
+<tr><th id="321">321</th><td></td></tr>
+<tr><th id="322">322</th><td><b>typedef</b> <b>struct</b> <a class="type" href="#rusage_info_v4" title='rusage_info_v4' data-ref="rusage_info_v4">rusage_info_v4</a> <dfn class="typedef" id="rusage_info_current" title='rusage_info_current' data-type='struct rusage_info_v4' data-ref="rusage_info_current">rusage_info_current</dfn>;</td></tr>
+<tr><th id="323">323</th><td></td></tr>
+<tr><th id="324">324</th><td><u>#<span data-ppcond="182">endif</span> /* __DARWIN_C_LEVEL &gt;= __DARWIN_C_FULL */</u></td></tr>
+<tr><th id="325">325</th><td></td></tr>
+<tr><th id="326">326</th><td></td></tr>
+<tr><th id="327">327</th><td></td></tr>
+<tr><th id="328">328</th><td><i>/*****</i></td></tr>
+<tr><th id="329">329</th><td><i> * RESOURCE LIMITS</i></td></tr>
+<tr><th id="330">330</th><td><i> */</i></td></tr>
+<tr><th id="331">331</th><td></td></tr>
+<tr><th id="332">332</th><td><i>/*</i></td></tr>
+<tr><th id="333">333</th><td><i> * Symbolic constants for resource limits; since all limits are representable</i></td></tr>
+<tr><th id="334">334</th><td><i> * as a type rlim_t, we are permitted to define RLIM_SAVED_* in terms of</i></td></tr>
+<tr><th id="335">335</th><td><i> * RLIM_INFINITY.</i></td></tr>
+<tr><th id="336">336</th><td><i> */</i></td></tr>
+<tr><th id="337">337</th><td><u>#define <dfn class="macro" id="_M/RLIM_INFINITY" data-ref="_M/RLIM_INFINITY">RLIM_INFINITY</dfn>   (((__uint64_t)1 &lt;&lt; 63) - 1)     /* no limit */</u></td></tr>
+<tr><th id="338">338</th><td><u>#define <dfn class="macro" id="_M/RLIM_SAVED_MAX" data-ref="_M/RLIM_SAVED_MAX">RLIM_SAVED_MAX</dfn>  RLIM_INFINITY   /* Unrepresentable hard limit */</u></td></tr>
+<tr><th id="339">339</th><td><u>#define <dfn class="macro" id="_M/RLIM_SAVED_CUR" data-ref="_M/RLIM_SAVED_CUR">RLIM_SAVED_CUR</dfn>  RLIM_INFINITY   /* Unrepresentable soft limit */</u></td></tr>
+<tr><th id="340">340</th><td></td></tr>
+<tr><th id="341">341</th><td><i>/*</i></td></tr>
+<tr><th id="342">342</th><td><i> * Possible values of the first parameter to getrlimit()/setrlimit(), to</i></td></tr>
+<tr><th id="343">343</th><td><i> * indicate for which resource the operation is being performed.</i></td></tr>
+<tr><th id="344">344</th><td><i> */</i></td></tr>
+<tr><th id="345">345</th><td><u>#define <dfn class="macro" id="_M/RLIMIT_CPU" data-ref="_M/RLIMIT_CPU">RLIMIT_CPU</dfn>      0               /* cpu time per process */</u></td></tr>
+<tr><th id="346">346</th><td><u>#define <dfn class="macro" id="_M/RLIMIT_FSIZE" data-ref="_M/RLIMIT_FSIZE">RLIMIT_FSIZE</dfn>    1               /* file size */</u></td></tr>
+<tr><th id="347">347</th><td><u>#define <dfn class="macro" id="_M/RLIMIT_DATA" data-ref="_M/RLIMIT_DATA">RLIMIT_DATA</dfn>     2               /* data segment size */</u></td></tr>
+<tr><th id="348">348</th><td><u>#define <dfn class="macro" id="_M/RLIMIT_STACK" data-ref="_M/RLIMIT_STACK">RLIMIT_STACK</dfn>    3               /* stack size */</u></td></tr>
+<tr><th id="349">349</th><td><u>#define <dfn class="macro" id="_M/RLIMIT_CORE" data-ref="_M/RLIMIT_CORE">RLIMIT_CORE</dfn>     4               /* core file size */</u></td></tr>
+<tr><th id="350">350</th><td><u>#define <dfn class="macro" id="_M/RLIMIT_AS" data-ref="_M/RLIMIT_AS">RLIMIT_AS</dfn>       5               /* address space (resident set size) */</u></td></tr>
+<tr><th id="351">351</th><td><u>#<span data-ppcond="351">if</span> <a class="macro" href="cdefs.h.html#692" title="900000L" data-ref="_M/__DARWIN_C_LEVEL">__DARWIN_C_LEVEL</a> &gt;= <a class="macro" href="cdefs.h.html#685" title="900000L" data-ref="_M/__DARWIN_C_FULL">__DARWIN_C_FULL</a></u></td></tr>
+<tr><th id="352">352</th><td><u>#define <dfn class="macro" id="_M/RLIMIT_RSS" data-ref="_M/RLIMIT_RSS">RLIMIT_RSS</dfn>      RLIMIT_AS       /* source compatibility alias */</u></td></tr>
+<tr><th id="353">353</th><td><u>#define <dfn class="macro" id="_M/RLIMIT_MEMLOCK" data-ref="_M/RLIMIT_MEMLOCK">RLIMIT_MEMLOCK</dfn>  6               /* locked-in-memory address space */</u></td></tr>
+<tr><th id="354">354</th><td><u>#define <dfn class="macro" id="_M/RLIMIT_NPROC" data-ref="_M/RLIMIT_NPROC">RLIMIT_NPROC</dfn>    7               /* number of processes */</u></td></tr>
+<tr><th id="355">355</th><td><u>#<span data-ppcond="351">endif</span>  /* __DARWIN_C_LEVEL &gt;= __DARWIN_C_FULL */</u></td></tr>
+<tr><th id="356">356</th><td><u>#define <dfn class="macro" id="_M/RLIMIT_NOFILE" data-ref="_M/RLIMIT_NOFILE">RLIMIT_NOFILE</dfn>   8               /* number of open files */</u></td></tr>
+<tr><th id="357">357</th><td><u>#<span data-ppcond="357">if</span> <a class="macro" href="cdefs.h.html#692" title="900000L" data-ref="_M/__DARWIN_C_LEVEL">__DARWIN_C_LEVEL</a> &gt;= <a class="macro" href="cdefs.h.html#685" title="900000L" data-ref="_M/__DARWIN_C_FULL">__DARWIN_C_FULL</a></u></td></tr>
+<tr><th id="358">358</th><td><u>#define <dfn class="macro" id="_M/RLIM_NLIMITS" data-ref="_M/RLIM_NLIMITS">RLIM_NLIMITS</dfn>    9               /* total number of resource limits */</u></td></tr>
+<tr><th id="359">359</th><td><u>#<span data-ppcond="357">endif</span>  /* __DARWIN_C_LEVEL &gt;= __DARWIN_C_FULL */</u></td></tr>
+<tr><th id="360">360</th><td><u>#define <dfn class="macro" id="_M/_RLIMIT_POSIX_FLAG" data-ref="_M/_RLIMIT_POSIX_FLAG">_RLIMIT_POSIX_FLAG</dfn>      0x1000  /* Set bit for strict POSIX */</u></td></tr>
+<tr><th id="361">361</th><td></td></tr>
+<tr><th id="362">362</th><td><i>/*</i></td></tr>
+<tr><th id="363">363</th><td><i> * A structure representing a resource limit.  The address of an instance</i></td></tr>
+<tr><th id="364">364</th><td><i> * of this structure is the second parameter to getrlimit()/setrlimit().</i></td></tr>
+<tr><th id="365">365</th><td><i> */</i></td></tr>
+<tr><th id="366">366</th><td><b>struct</b> <dfn class="type def" id="rlimit" title='rlimit' data-ref="rlimit">rlimit</dfn> {</td></tr>
+<tr><th id="367">367</th><td>	<a class="typedef" href="#rlim_t" title='rlim_t' data-type='__uint64_t' data-ref="rlim_t">rlim_t</a>  <dfn class="decl" id="rlimit::rlim_cur" title='rlimit::rlim_cur' data-ref="rlimit::rlim_cur">rlim_cur</dfn>;               <i>/* current (soft) limit */</i></td></tr>
+<tr><th id="368">368</th><td>	<a class="typedef" href="#rlim_t" title='rlim_t' data-type='__uint64_t' data-ref="rlim_t">rlim_t</a>  <dfn class="decl" id="rlimit::rlim_max" title='rlimit::rlim_max' data-ref="rlimit::rlim_max">rlim_max</dfn>;               <i>/* maximum value for rlim_cur */</i></td></tr>
+<tr><th id="369">369</th><td>};</td></tr>
+<tr><th id="370">370</th><td></td></tr>
+<tr><th id="371">371</th><td><u>#<span data-ppcond="371">if</span> <a class="macro" href="cdefs.h.html#692" title="900000L" data-ref="_M/__DARWIN_C_LEVEL">__DARWIN_C_LEVEL</a> &gt;= <a class="macro" href="cdefs.h.html#685" title="900000L" data-ref="_M/__DARWIN_C_FULL">__DARWIN_C_FULL</a></u></td></tr>
+<tr><th id="372">372</th><td><i>/*</i></td></tr>
+<tr><th id="373">373</th><td><i> * proc_rlimit_control()</i></td></tr>
+<tr><th id="374">374</th><td><i> *</i></td></tr>
+<tr><th id="375">375</th><td><i> * Resource limit flavors</i></td></tr>
+<tr><th id="376">376</th><td><i> */</i></td></tr>
+<tr><th id="377">377</th><td><u>#define <dfn class="macro" id="_M/RLIMIT_WAKEUPS_MONITOR" data-ref="_M/RLIMIT_WAKEUPS_MONITOR">RLIMIT_WAKEUPS_MONITOR</dfn>          0x1 /* Configure the wakeups monitor. */</u></td></tr>
+<tr><th id="378">378</th><td><u>#define <dfn class="macro" id="_M/RLIMIT_CPU_USAGE_MONITOR" data-ref="_M/RLIMIT_CPU_USAGE_MONITOR">RLIMIT_CPU_USAGE_MONITOR</dfn>        0x2 /* Configure the CPU usage monitor. */</u></td></tr>
+<tr><th id="379">379</th><td><u>#define <dfn class="macro" id="_M/RLIMIT_THREAD_CPULIMITS" data-ref="_M/RLIMIT_THREAD_CPULIMITS">RLIMIT_THREAD_CPULIMITS</dfn>         0x3 /* Configure a blocking, per-thread, CPU limits. */</u></td></tr>
+<tr><th id="380">380</th><td><u>#define <dfn class="macro" id="_M/RLIMIT_FOOTPRINT_INTERVAL" data-ref="_M/RLIMIT_FOOTPRINT_INTERVAL">RLIMIT_FOOTPRINT_INTERVAL</dfn>       0x4 /* Configure memory footprint interval tracking */</u></td></tr>
+<tr><th id="381">381</th><td></td></tr>
+<tr><th id="382">382</th><td><i>/*</i></td></tr>
+<tr><th id="383">383</th><td><i> * Flags for wakeups monitor control.</i></td></tr>
+<tr><th id="384">384</th><td><i> */</i></td></tr>
+<tr><th id="385">385</th><td><u>#define <dfn class="macro" id="_M/WAKEMON_ENABLE" data-ref="_M/WAKEMON_ENABLE">WAKEMON_ENABLE</dfn>                  0x01</u></td></tr>
+<tr><th id="386">386</th><td><u>#define <dfn class="macro" id="_M/WAKEMON_DISABLE" data-ref="_M/WAKEMON_DISABLE">WAKEMON_DISABLE</dfn>                 0x02</u></td></tr>
+<tr><th id="387">387</th><td><u>#define <dfn class="macro" id="_M/WAKEMON_GET_PARAMS" data-ref="_M/WAKEMON_GET_PARAMS">WAKEMON_GET_PARAMS</dfn>              0x04</u></td></tr>
+<tr><th id="388">388</th><td><u>#define <dfn class="macro" id="_M/WAKEMON_SET_DEFAULTS" data-ref="_M/WAKEMON_SET_DEFAULTS">WAKEMON_SET_DEFAULTS</dfn>            0x08</u></td></tr>
+<tr><th id="389">389</th><td><u>#define <dfn class="macro" id="_M/WAKEMON_MAKE_FATAL" data-ref="_M/WAKEMON_MAKE_FATAL">WAKEMON_MAKE_FATAL</dfn>              0x10 /* Configure the task so that violations are fatal. */</u></td></tr>
+<tr><th id="390">390</th><td></td></tr>
+<tr><th id="391">391</th><td><i>/*</i></td></tr>
+<tr><th id="392">392</th><td><i> * Flags for CPU usage monitor control.</i></td></tr>
+<tr><th id="393">393</th><td><i> */</i></td></tr>
+<tr><th id="394">394</th><td><u>#define <dfn class="macro" id="_M/CPUMON_MAKE_FATAL" data-ref="_M/CPUMON_MAKE_FATAL">CPUMON_MAKE_FATAL</dfn>               0x1000</u></td></tr>
+<tr><th id="395">395</th><td></td></tr>
+<tr><th id="396">396</th><td><i>/*</i></td></tr>
+<tr><th id="397">397</th><td><i> * Flags for memory footprint interval tracking.</i></td></tr>
+<tr><th id="398">398</th><td><i> */</i></td></tr>
+<tr><th id="399">399</th><td><u>#define <dfn class="macro" id="_M/FOOTPRINT_INTERVAL_RESET" data-ref="_M/FOOTPRINT_INTERVAL_RESET">FOOTPRINT_INTERVAL_RESET</dfn>        0x1 /* Reset the footprint interval counter to zero */</u></td></tr>
+<tr><th id="400">400</th><td></td></tr>
+<tr><th id="401">401</th><td><b>struct</b> <dfn class="type def" id="proc_rlimit_control_wakeupmon" title='proc_rlimit_control_wakeupmon' data-ref="proc_rlimit_control_wakeupmon">proc_rlimit_control_wakeupmon</dfn> {</td></tr>
+<tr><th id="402">402</th><td>	<a class="typedef" href="../_types/_uint32_t.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t">uint32_t</a> <dfn class="decl" id="proc_rlimit_control_wakeupmon::wm_flags" title='proc_rlimit_control_wakeupmon::wm_flags' data-ref="proc_rlimit_control_wakeupmon::wm_flags">wm_flags</dfn>;</td></tr>
+<tr><th id="403">403</th><td>	<a class="typedef" href="_types/_int32_t.h.html#int32_t" title='int32_t' data-type='int' data-ref="int32_t">int32_t</a> <dfn class="decl" id="proc_rlimit_control_wakeupmon::wm_rate" title='proc_rlimit_control_wakeupmon::wm_rate' data-ref="proc_rlimit_control_wakeupmon::wm_rate">wm_rate</dfn>;</td></tr>
+<tr><th id="404">404</th><td>};</td></tr>
+<tr><th id="405">405</th><td></td></tr>
+<tr><th id="406">406</th><td></td></tr>
+<tr><th id="407">407</th><td></td></tr>
+<tr><th id="408">408</th><td><i>/* I/O type */</i></td></tr>
+<tr><th id="409">409</th><td><u>#define <dfn class="macro" id="_M/IOPOL_TYPE_DISK" data-ref="_M/IOPOL_TYPE_DISK">IOPOL_TYPE_DISK</dfn> 0</u></td></tr>
+<tr><th id="410">410</th><td><u>#define <dfn class="macro" id="_M/IOPOL_TYPE_VFS_ATIME_UPDATES" data-ref="_M/IOPOL_TYPE_VFS_ATIME_UPDATES">IOPOL_TYPE_VFS_ATIME_UPDATES</dfn> 2</u></td></tr>
+<tr><th id="411">411</th><td></td></tr>
+<tr><th id="412">412</th><td><i>/* scope */</i></td></tr>
+<tr><th id="413">413</th><td><u>#define <dfn class="macro" id="_M/IOPOL_SCOPE_PROCESS" data-ref="_M/IOPOL_SCOPE_PROCESS">IOPOL_SCOPE_PROCESS</dfn>   0</u></td></tr>
+<tr><th id="414">414</th><td><u>#define <dfn class="macro" id="_M/IOPOL_SCOPE_THREAD" data-ref="_M/IOPOL_SCOPE_THREAD">IOPOL_SCOPE_THREAD</dfn>    1</u></td></tr>
+<tr><th id="415">415</th><td><u>#define <dfn class="macro" id="_M/IOPOL_SCOPE_DARWIN_BG" data-ref="_M/IOPOL_SCOPE_DARWIN_BG">IOPOL_SCOPE_DARWIN_BG</dfn> 2</u></td></tr>
+<tr><th id="416">416</th><td></td></tr>
+<tr><th id="417">417</th><td><i>/* I/O Priority */</i></td></tr>
+<tr><th id="418">418</th><td><u>#define <dfn class="macro" id="_M/IOPOL_DEFAULT" data-ref="_M/IOPOL_DEFAULT">IOPOL_DEFAULT</dfn>           0</u></td></tr>
+<tr><th id="419">419</th><td><u>#define <dfn class="macro" id="_M/IOPOL_IMPORTANT" data-ref="_M/IOPOL_IMPORTANT">IOPOL_IMPORTANT</dfn>         1</u></td></tr>
+<tr><th id="420">420</th><td><u>#define <dfn class="macro" id="_M/IOPOL_PASSIVE" data-ref="_M/IOPOL_PASSIVE">IOPOL_PASSIVE</dfn>           2</u></td></tr>
+<tr><th id="421">421</th><td><u>#define <dfn class="macro" id="_M/IOPOL_THROTTLE" data-ref="_M/IOPOL_THROTTLE">IOPOL_THROTTLE</dfn>          3</u></td></tr>
+<tr><th id="422">422</th><td><u>#define <dfn class="macro" id="_M/IOPOL_UTILITY" data-ref="_M/IOPOL_UTILITY">IOPOL_UTILITY</dfn>           4</u></td></tr>
+<tr><th id="423">423</th><td><u>#define <dfn class="macro" id="_M/IOPOL_STANDARD" data-ref="_M/IOPOL_STANDARD">IOPOL_STANDARD</dfn>          5</u></td></tr>
+<tr><th id="424">424</th><td></td></tr>
+<tr><th id="425">425</th><td><i>/* compatibility with older names */</i></td></tr>
+<tr><th id="426">426</th><td><u>#define <dfn class="macro" id="_M/IOPOL_APPLICATION" data-ref="_M/IOPOL_APPLICATION">IOPOL_APPLICATION</dfn>       IOPOL_STANDARD</u></td></tr>
+<tr><th id="427">427</th><td><u>#define <dfn class="macro" id="_M/IOPOL_NORMAL" data-ref="_M/IOPOL_NORMAL">IOPOL_NORMAL</dfn>            IOPOL_IMPORTANT</u></td></tr>
+<tr><th id="428">428</th><td></td></tr>
+<tr><th id="429">429</th><td></td></tr>
+<tr><th id="430">430</th><td><u>#define <dfn class="macro" id="_M/IOPOL_ATIME_UPDATES_DEFAULT" data-ref="_M/IOPOL_ATIME_UPDATES_DEFAULT">IOPOL_ATIME_UPDATES_DEFAULT</dfn>     0</u></td></tr>
+<tr><th id="431">431</th><td><u>#define <dfn class="macro" id="_M/IOPOL_ATIME_UPDATES_OFF" data-ref="_M/IOPOL_ATIME_UPDATES_OFF">IOPOL_ATIME_UPDATES_OFF</dfn>         1</u></td></tr>
+<tr><th id="432">432</th><td></td></tr>
+<tr><th id="433">433</th><td><u>#<span data-ppcond="371">endif</span> /* __DARWIN_C_LEVEL &gt;= __DARWIN_C_FULL */</u></td></tr>
+<tr><th id="434">434</th><td></td></tr>
+<tr><th id="435">435</th><td></td></tr>
+<tr><th id="436">436</th><td><a class="macro" href="cdefs.h.html#74" title="" data-ref="_M/__BEGIN_DECLS">__BEGIN_DECLS</a></td></tr>
+<tr><th id="437">437</th><td><em>int</em>     <dfn class="decl" id="getpriority" title='getpriority' data-ref="getpriority">getpriority</dfn>(<em>int</em>, <a class="typedef" href="_types/_id_t.h.html#id_t" title='id_t' data-type='__darwin_id_t' data-ref="id_t">id_t</a>);</td></tr>
+<tr><th id="438">438</th><td><u>#<span data-ppcond="438">if</span> <a class="macro" href="cdefs.h.html#692" title="900000L" data-ref="_M/__DARWIN_C_LEVEL">__DARWIN_C_LEVEL</a> &gt;= <a class="macro" href="cdefs.h.html#685" title="900000L" data-ref="_M/__DARWIN_C_FULL">__DARWIN_C_FULL</a></u></td></tr>
+<tr><th id="439">439</th><td><em>int</em>     <dfn class="decl" id="getiopolicy_np" title='getiopolicy_np' data-ref="getiopolicy_np">getiopolicy_np</dfn>(<em>int</em>, <em>int</em>) <a class="macro" href="../Availability.h.html#246" title="__attribute__((availability(macosx,introduced=10.5)))" data-ref="_M/__OSX_AVAILABLE_STARTING">__OSX_AVAILABLE_STARTING</a>(__MAC_10_5, __IPHONE_2_0);</td></tr>
+<tr><th id="440">440</th><td><u>#<span data-ppcond="438">endif</span> /* __DARWIN_C_LEVEL &gt;= __DARWIN_C_FULL */</u></td></tr>
+<tr><th id="441">441</th><td><em>int</em>     <dfn class="decl" id="_getrlimit" title='getrlimit' data-ref="_getrlimit">getrlimit</dfn>(<em>int</em>, <b>struct</b> <a class="type" href="#rlimit" title='rlimit' data-ref="rlimit">rlimit</a> *) <a class="macro" href="cdefs.h.html#590" title="__asm(&quot;_&quot; &quot;getrlimit&quot; )" data-ref="_M/__DARWIN_ALIAS">__DARWIN_ALIAS</a>(getrlimit);</td></tr>
+<tr><th id="442">442</th><td><em>int</em>     <dfn class="decl" id="getrusage" title='getrusage' data-ref="getrusage">getrusage</dfn>(<em>int</em>, <b>struct</b> <a class="type" href="#rusage" title='rusage' data-ref="rusage">rusage</a> *);</td></tr>
+<tr><th id="443">443</th><td><em>int</em>     <dfn class="decl" id="setpriority" title='setpriority' data-ref="setpriority">setpriority</dfn>(<em>int</em>, <a class="typedef" href="_types/_id_t.h.html#id_t" title='id_t' data-type='__darwin_id_t' data-ref="id_t">id_t</a>, <em>int</em>);</td></tr>
+<tr><th id="444">444</th><td><u>#<span data-ppcond="444">if</span> <a class="macro" href="cdefs.h.html#692" title="900000L" data-ref="_M/__DARWIN_C_LEVEL">__DARWIN_C_LEVEL</a> &gt;= <a class="macro" href="cdefs.h.html#685" title="900000L" data-ref="_M/__DARWIN_C_FULL">__DARWIN_C_FULL</a></u></td></tr>
+<tr><th id="445">445</th><td><em>int</em>     <dfn class="decl" id="setiopolicy_np" title='setiopolicy_np' data-ref="setiopolicy_np">setiopolicy_np</dfn>(<em>int</em>, <em>int</em>, <em>int</em>) <a class="macro" href="../Availability.h.html#246" title="__attribute__((availability(macosx,introduced=10.5)))" data-ref="_M/__OSX_AVAILABLE_STARTING">__OSX_AVAILABLE_STARTING</a>(__MAC_10_5, __IPHONE_2_0);</td></tr>
+<tr><th id="446">446</th><td><u>#<span data-ppcond="444">endif</span> /* __DARWIN_C_LEVEL &gt;= __DARWIN_C_FULL */</u></td></tr>
+<tr><th id="447">447</th><td><em>int</em>     <dfn class="decl" id="_setrlimit" title='setrlimit' data-ref="_setrlimit">setrlimit</dfn>(<em>int</em>, <em>const</em> <b>struct</b> <a class="type" href="#rlimit" title='rlimit' data-ref="rlimit">rlimit</a> *) <a class="macro" href="cdefs.h.html#590" title="__asm(&quot;_&quot; &quot;setrlimit&quot; )" data-ref="_M/__DARWIN_ALIAS">__DARWIN_ALIAS</a>(setrlimit);</td></tr>
+<tr><th id="448">448</th><td><a class="macro" href="cdefs.h.html#75" title="" data-ref="_M/__END_DECLS">__END_DECLS</a></td></tr>
+<tr><th id="449">449</th><td></td></tr>
+<tr><th id="450">450</th><td><u>#<span data-ppcond="64">endif</span>  /* !_SYS_RESOURCE_H_ */</u></td></tr>
+<tr><th id="451">451</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../xv6/mkfs.c.html'>xv6/mkfs.c</a><br/>Generated on <em>2019-Jul-19</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 2.1
+<br/>Generator usage only permitted with license.</p>
+</div></body></html>
